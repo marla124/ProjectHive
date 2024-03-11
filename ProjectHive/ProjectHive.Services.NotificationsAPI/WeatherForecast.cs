@@ -1,4 +1,4 @@
-namespace ProjectHive
+namespace ProjectHive.Services.NotificationsAPI
 {
     public class WeatherForecast
     {

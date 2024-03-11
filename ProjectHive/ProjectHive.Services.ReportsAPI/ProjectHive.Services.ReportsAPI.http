@@ -1,0 +1,6 @@
+@ProjectHive.Services.ReportsAPI_HostAddress = http://localhost:5192
+
+GET {{ProjectHive.Services.ReportsAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
