@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("ProjectHive")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("ProjectHive.Services.ProjectsAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad404c82175499e2387dbdd645b85c80998678fe")]
-[assembly: System.Reflection.AssemblyProductAttribute("ProjectHive")]
-[assembly: System.Reflection.AssemblyTitleAttribute("ProjectHive")]
+[assembly: System.Reflection.AssemblyProductAttribute("ProjectHive.Services.ProjectsAPI")]
+[assembly: System.Reflection.AssemblyTitleAttribute("ProjectHive.Services.ProjectsAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.
