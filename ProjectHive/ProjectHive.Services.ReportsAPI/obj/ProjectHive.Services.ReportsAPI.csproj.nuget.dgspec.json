@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ReportsAPI\\ProjectHive.Services.ReportsAPI.csproj": {}
+    "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ReportsAPI\\ProjectHive.Services.ReportsAPI.csproj": {}
   },
   "projects": {
-    "D:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ReportsAPI\\ProjectHive.Services.ReportsAPI.csproj": {
+    "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ReportsAPI\\ProjectHive.Services.ReportsAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ReportsAPI\\ProjectHive.Services.ReportsAPI.csproj",
+        "projectUniqueName": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ReportsAPI\\ProjectHive.Services.ReportsAPI.csproj",
         "projectName": "ProjectHive.Services.ReportsAPI",
-        "projectPath": "D:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ReportsAPI\\ProjectHive.Services.ReportsAPI.csproj",
+        "projectPath": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ReportsAPI\\ProjectHive.Services.ReportsAPI.csproj",
         "packagesPath": "C:\\Users\\Брест\\.nuget\\packages\\",
-        "outputPath": "D:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ReportsAPI\\obj\\",
+        "outputPath": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ReportsAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,6 +44,26 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\ProjectHive.Services.NotificationsAPI.props" />
+</Project>
