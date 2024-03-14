@@ -2,17 +2,16 @@
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
 
 
-namespace ProjectHive.Services.ProjectsAPI.Data
+namespace ProjectHive.Services.ProjectsAPI.Data;
+
+public class ProjectHiveProjectDbContext : DbContext
 {
-    public class ProjectHiveProjectDbContext : DbContext
-    {
-        public DbSet<Project> Projects { get; set; }
-        public DbSet<ProjectStatus> ProjectStatuses { get; set; }
-        public DbSet<Comment> Comments{ get; set; }
-        public DbSet<Tasks> Tasks { get; set; }
-        public DbSet<StatusTasks> TasksStatuses { get; set; }
+    public DbSet<Project> Projects { get; set; }
+    public DbSet<ProjectStatus> ProjectStatuses { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<Entities.Task> Tasks { get; set; }
+    public DbSet<StatusTasks> TasksStatuses { get; set; }
 
 
-        public ProjectHiveProjectDbContext(DbContextOptions<ProjectHiveProjectDbContext> options) : base(options) { }
-    }
+    public ProjectHiveProjectDbContext(DbContextOptions<ProjectHiveProjectDbContext> options) : base(options) { }
 }

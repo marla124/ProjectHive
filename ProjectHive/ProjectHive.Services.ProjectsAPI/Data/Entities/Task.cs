@@ -1,15 +1,18 @@
 ﻿
-
 namespace ProjectHive.Services.ProjectsAPI.Data.Entities
 {
-    public class Tasks
+    public class Task
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime StartExicution { get; set; }
+        public DateTime StartExecution { get; set; }
         public DateTime Deadline { get; set; }
+
+        public Guid StatusTaskId { get; set; }
         public StatusTasks StatusTask { get; set; }
-        public Project ProjectId { get; set; }
+
+
+        public Guid ProjectId { get; set; }
+        public Project Project { get; set; }
     }
 }
