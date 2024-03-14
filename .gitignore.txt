@@ -1,4 +1,8 @@
-﻿/bin/
+﻿*.bin
+*.v2
+*.vsidx
+*.suo
+*.csproj
 /out/
 /target/
 *.log
@@ -7,5 +11,5 @@
 .DS_Store
 Thumbs.db
 .idea/
-.cache/
+*.cache
 
