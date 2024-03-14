@@ -1,8 +1,6 @@
 ﻿
 
-using ProjectHive.Services.ProjectsAPI.Data.Entities;
-
-namespace ProjectHive.Services.TasksAPI.Data.Entities
+namespace ProjectHive.Services.ProjectsAPI.Data.Entities
 {
     public class Tasks
     {
@@ -11,7 +9,6 @@ namespace ProjectHive.Services.TasksAPI.Data.Entities
         public string Description { get; set; }
         public DateTime StartExicution { get; set; }
         public DateTime Deadline { get; set; }
-        public User UserId { get; set; }
         public StatusTasks StatusTask { get; set; }
         public Project ProjectId { get; set; }
     }

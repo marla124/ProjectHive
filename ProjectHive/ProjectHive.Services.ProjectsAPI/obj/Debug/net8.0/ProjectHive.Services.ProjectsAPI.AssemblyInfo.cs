@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjectHive.Services.ProjectsAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e34270700dc64e92e6c8de77ac7b9758188c0b5f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a03c3d847f01c443ca5a31425af6dc4a79a61dfe")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjectHive.Services.ProjectsAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjectHive.Services.ProjectsAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

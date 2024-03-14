@@ -200,6 +200,9 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+              "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.AuthAPI\\ProjectHive.Services.AuthAPI.csproj": {
+                "projectPath": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.AuthAPI\\ProjectHive.Services.AuthAPI.csproj"
+              },
               "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ProjectsAPI\\ProjectHive.Services.ProjectsAPI.csproj": {
                 "projectPath": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ProjectsAPI\\ProjectHive.Services.ProjectsAPI.csproj"
               }

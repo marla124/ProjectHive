@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.TasksAPI", "ProjectHive.Services.TasksAPI\ProjectHive.Services.TasksAPI.csproj", "{DFA7BE85-9E79-4BBA-8851-3E813E41E4AF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{8585ABE2-8433-4D9F-985C-36163C3556B7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.ProjectsAPI", "ProjectHive.Services.ProjectsAPI\ProjectHive.Services.ProjectsAPI.csproj", "{6038F13D-2B8D-4262-98AB-30C69B146119}"
@@ -13,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.Notifi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.ReportsAPI", "ProjectHive.Services.ReportsAPI\ProjectHive.Services.ReportsAPI.csproj", "{B6098E75-F496-48A5-BC5A-DD1ABE461BC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectHive.Services.AuthAPI", "ProjectHive.Services.AuthAPI\ProjectHive.Services.AuthAPI.csproj", "{7838206C-6C3E-43B4-880D-6F108C09416E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.AuthAPI", "ProjectHive.Services.AuthAPI\ProjectHive.Services.AuthAPI.csproj", "{7838206C-6C3E-43B4-880D-6F108C09416E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DFA7BE85-9E79-4BBA-8851-3E813E41E4AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFA7BE85-9E79-4BBA-8851-3E813E41E4AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFA7BE85-9E79-4BBA-8851-3E813E41E4AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFA7BE85-9E79-4BBA-8851-3E813E41E4AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6038F13D-2B8D-4262-98AB-30C69B146119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6038F13D-2B8D-4262-98AB-30C69B146119}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6038F13D-2B8D-4262-98AB-30C69B146119}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -46,7 +40,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{DFA7BE85-9E79-4BBA-8851-3E813E41E4AF} = {8585ABE2-8433-4D9F-985C-36163C3556B7}
 		{6038F13D-2B8D-4262-98AB-30C69B146119} = {8585ABE2-8433-4D9F-985C-36163C3556B7}
 		{439DD8B3-BDBA-413D-A8DC-B90E1C28CF0E} = {8585ABE2-8433-4D9F-985C-36163C3556B7}
 		{B6098E75-F496-48A5-BC5A-DD1ABE461BC9} = {8585ABE2-8433-4D9F-985C-36163C3556B7}
