@@ -1,0 +1,8 @@
+E:\ProjectHive\ProjectHive\ProjectHive.Services.AuthAPI\obj\Debug\net8.0\ProjectHive.Services.AuthAPI.csproj.AssemblyReference.cache
+E:\ProjectHive\ProjectHive\ProjectHive.Services.AuthAPI\obj\Debug\net8.0\ProjectHive.Services.AuthAPI.GeneratedMSBuildEditorConfig.editorconfig
+E:\ProjectHive\ProjectHive\ProjectHive.Services.AuthAPI\obj\Debug\net8.0\ProjectHive.Services.AuthAPI.AssemblyInfoInputs.cache
+E:\ProjectHive\ProjectHive\ProjectHive.Services.AuthAPI\obj\Debug\net8.0\ProjectHive.Services.AuthAPI.AssemblyInfo.cs
+E:\ProjectHive\ProjectHive\ProjectHive.Services.AuthAPI\obj\Debug\net8.0\ProjectHive.Services.AuthAPI.csproj.CoreCompileInputs.cache
+E:\ProjectHive\ProjectHive\ProjectHive.Services.AuthAPI\obj\Debug\net8.0\ProjectHive.Services.AuthAPI.MvcApplicationPartsAssemblyInfo.cs
+E:\ProjectHive\ProjectHive\ProjectHive.Services.AuthAPI\obj\Debug\net8.0\ProjectHive.Services.AuthAPI.MvcApplicationPartsAssemblyInfo.cache
+E:\ProjectHive\ProjectHive\ProjectHive.Services.AuthAPI\obj\Debug\net8.0\ProjectHive.Services.AuthAPI.sourcelink.json

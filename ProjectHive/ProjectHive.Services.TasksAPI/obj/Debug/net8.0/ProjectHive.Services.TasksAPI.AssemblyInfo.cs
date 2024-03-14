@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjectHive.Services.TasksAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e346e59c2f7e040480665ae11c1bdb98cfc9253e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e34270700dc64e92e6c8de77ac7b9758188c0b5f")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjectHive.Services.TasksAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjectHive.Services.TasksAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

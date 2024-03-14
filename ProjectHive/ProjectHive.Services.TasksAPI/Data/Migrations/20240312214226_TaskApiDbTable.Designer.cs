@@ -12,7 +12,7 @@ using ProjectHive.Services.TasksAPI.Data;
 
 namespace ProjectHive.Services.TasksAPI.Migrations
 {
-    [DbContext(typeof(ProjectHiveDbContext))]
+    [DbContext(typeof(ProjectHiveTasksDbContext))]
     [Migration("20240312214226_TaskApiDbTable")]
     partial class TaskApiDbTable
     {

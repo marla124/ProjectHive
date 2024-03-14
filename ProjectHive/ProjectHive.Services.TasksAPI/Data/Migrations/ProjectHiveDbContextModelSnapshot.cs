@@ -11,7 +11,7 @@ using ProjectHive.Services.TasksAPI.Data;
 
 namespace ProjectHive.Services.TasksAPI.Migrations
 {
-    [DbContext(typeof(ProjectHiveDbContext))]
+    [DbContext(typeof(ProjectHiveTasksDbContext))]
     partial class ProjectHiveDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

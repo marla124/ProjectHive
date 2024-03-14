@@ -9,7 +9,7 @@ namespace ProjectHive.Services.TasksAPI
                 (this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("Default");
-            services.AddDbContext<ProjectHiveDbContext>(opt => opt.UseNpgsql(connectionString));
+            services.AddDbContext<ProjectHiveTasksDbContext>(opt => opt.UseNpgsql(connectionString));
         }
     }
 }

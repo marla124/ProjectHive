@@ -4,6 +4,174 @@
     "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.TasksAPI\\ProjectHive.Services.TasksAPI.csproj": {}
   },
   "projects": {
+    "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.AuthAPI\\ProjectHive.Services.AuthAPI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.AuthAPI\\ProjectHive.Services.AuthAPI.csproj",
+        "projectName": "ProjectHive.Services.AuthAPI",
+        "projectPath": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.AuthAPI\\ProjectHive.Services.AuthAPI.csproj",
+        "packagesPath": "C:\\Users\\Брест\\.nuget\\packages\\",
+        "outputPath": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.AuthAPI\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Брест\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ProjectsAPI\\ProjectHive.Services.ProjectsAPI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ProjectsAPI\\ProjectHive.Services.ProjectsAPI.csproj",
+        "projectName": "ProjectHive.Services.ProjectsAPI",
+        "projectPath": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ProjectsAPI\\ProjectHive.Services.ProjectsAPI.csproj",
+        "packagesPath": "C:\\Users\\Брест\\.nuget\\packages\\",
+        "outputPath": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ProjectsAPI\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Брест\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.AuthAPI\\ProjectHive.Services.AuthAPI.csproj": {
+                "projectPath": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.AuthAPI\\ProjectHive.Services.AuthAPI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.TasksAPI\\ProjectHive.Services.TasksAPI.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -31,7 +199,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ProjectsAPI\\ProjectHive.Services.ProjectsAPI.csproj": {
+                "projectPath": "E:\\ProjectHive\\ProjectHive\\ProjectHive.Services.ProjectsAPI\\ProjectHive.Services.ProjectsAPI.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -70,7 +242,7 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.5.0, )"
             }
           },
           "imports": [

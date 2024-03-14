@@ -1,0 +1,6 @@
+@ProjectHive.Services.AuthAPI_HostAddress = http://localhost:5183
+
+GET {{ProjectHive.Services.AuthAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
