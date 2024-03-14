@@ -3,13 +3,8 @@
 *.vsidx
 *.suo
 *.csproj
-/out/
-/target/
 *.log
 *.lock
 *.tmp
-.DS_Store
-Thumbs.db
-.idea/
 *.cache
 
