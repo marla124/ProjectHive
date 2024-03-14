@@ -9,7 +9,7 @@ public class ProjectHiveProjectDbContext : DbContext
     public DbSet<Project> Projects { get; set; }
     public DbSet<ProjectStatus> ProjectStatuses { get; set; }
     public DbSet<Comment> Comments { get; set; }
-    public DbSet<Entities.Task> Tasks { get; set; }
+    public DbSet<ProjectTask> Tasks { get; set; }
     public DbSet<StatusTasks> TasksStatuses { get; set; }
 
 

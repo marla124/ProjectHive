@@ -1,7 +1,7 @@
 ﻿
 namespace ProjectHive.Services.ProjectsAPI.Data.Entities
 {
-    public class Task
+    public class ProjectTask
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -11,8 +11,7 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Entities
         public Guid StatusTaskId { get; set; }
         public StatusTasks StatusTask { get; set; }
 
-
-        public Guid ProjectId { get; set; }
-        public Project Project { get; set; }
+        public Guid? ProjectId { get; set; }
+        public Project? Project { get; set; }
     }
 }

@@ -9,6 +9,6 @@ public class Project : BaseEntity
     public User? Creator { get; set; }
 
     public List<User> Users { get; set; }
-    public List<Task> Tasks { get; set; }
+    public List<ProjectTask> Tasks { get; set; }
 
 }
