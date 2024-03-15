@@ -1,7 +1,7 @@
 ﻿
 namespace ProjectHive.Services.ProjectsAPI.Data.Entities
 {
-    public class User
+    public class User:BaseEntity
     {
         public string Email { get; set; }
 

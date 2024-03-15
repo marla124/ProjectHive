@@ -1,7 +1,7 @@
 ﻿
 namespace ProjectHive.Services.ProjectsAPI.Data.Entities
 {
-    public class ProjectTask
+    public class ProjectTask : BaseEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }
