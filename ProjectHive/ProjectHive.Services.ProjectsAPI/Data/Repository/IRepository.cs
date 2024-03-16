@@ -1,7 +1,7 @@
 ﻿using ProjectHive.Services.ProjectsAPI.Data.Entities;
 using System.Linq.Expressions;
 
-namespace ProjectHive.Services.ProjectsAPI.Repository
+namespace ProjectHive.Services.ProjectsAPI.Data.Repository
 {
     public interface IRepository<T> where T : BaseEntity
     {

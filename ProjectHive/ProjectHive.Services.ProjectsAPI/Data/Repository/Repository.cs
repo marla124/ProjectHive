@@ -3,9 +3,9 @@ using ProjectHive.Services.ProjectsAPI.Data;
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
 using System.Linq.Expressions;
 
-namespace ProjectHive.Services.ProjectsAPI.Repository
+namespace ProjectHive.Services.ProjectsAPI.Data.Repository
 {
-    public class Repository<T>:IRepository<T> where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly ProjectHiveProjectDbContext _dbContext;
         protected readonly DbSet<T> _dbSet;
