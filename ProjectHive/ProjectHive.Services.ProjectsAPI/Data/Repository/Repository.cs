@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProjectHive.Services.ProjectsAPI.Data;
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
 using System.Linq.Expressions;
 
@@ -37,7 +36,6 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository
             {
                 throw new ArgumentException("Incorrect id for delete", nameof(id));
             }
-
         }
 
         public async Task DeleteMany(IEnumerable<T> entities)
@@ -47,7 +45,6 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository
                 var deleteEntities = entities.Where(entity => _dbSet.Any(dbEn => dbEn.Id.Equals(entity.Id))).ToList();
                 _dbSet.RemoveRange(entities);
             }
-
         }
 
         public async Task<T> GetById(Guid id,
@@ -60,7 +57,6 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository
                     (current, include)
                         => current.Include(include));
             }
-
             return await resultQuery.FirstOrDefaultAsync(entity => entity.Id.Equals(id));
         }
 
