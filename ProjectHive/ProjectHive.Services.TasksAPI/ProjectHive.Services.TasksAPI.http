@@ -1,6 +1,0 @@
-@ProjectHive.Services.TasksAPI_HostAddress = http://localhost:5294
-
-GET {{ProjectHive.Services.TasksAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
