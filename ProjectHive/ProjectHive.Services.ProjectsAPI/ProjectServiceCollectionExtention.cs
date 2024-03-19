@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectHive.Services.ProjectsAPI;
 using ProjectHive.Services.ProjectsAPI.Data;
+using ProjectHive.Services.ProjectsAPI.Data.Repository;
+using ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase;
 
 namespace ProjectHive.Services.TasksAPI
 {
@@ -15,6 +17,9 @@ namespace ProjectHive.Services.TasksAPI
             IMapper mapper=Mapping.RegisterMaps().CreateMapper();
             services.AddSingleton(mapper);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
+using ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase;
 using System.Linq.Expressions;
 
 namespace ProjectHive.Services.ProjectsAPI.Data.Repository
