@@ -21,14 +21,14 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
-            var project = _mapper.Map<ProjectViewModel>(await _projectService.GetProjectById(id, cancellationToken));
+            var project = _mapper.Map<ProjectViewModel>(await _projectService.GetById(id, cancellationToken));
             return Ok(project);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteById(Guid id, CancellationToken cancellationToken)
         {
-            await _projectService.DeleteProjectById(id, cancellationToken);
+            await _projectService.DeleteById(id, cancellationToken);
             return Ok();
         }
 
@@ -40,7 +40,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
             {
                 dtos.Add(_mapper.Map<ProjectDto>(item));
             }
-            await _projectService.DeleteManyProject(dtos, cancellationToken);
+            await _projectService.DeleteMany(dtos, cancellationToken);
             return Ok();
         }
 
@@ -49,7 +49,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         public async Task<IActionResult> CreateProject(CreateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
             var dto = _mapper.Map<ProjectDto>(request);
-            await _projectService.CreateProject(dto, cancellationToken);
+            await _projectService.Create(dto, cancellationToken);
             return Ok();
         }
 
@@ -62,7 +62,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
             {
                 dtos.Add(_mapper.Map<ProjectDto>(item));
             }
-            await _projectService.CreateManyProject(dtos, cancellationToken);
+            await _projectService.CreateMany(dtos, cancellationToken);
             return Ok();
         }
 
@@ -70,7 +70,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         public async Task<IActionResult> UpdateProject(UpdateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
             var dto = _mapper.Map<ProjectDto>(request);
-            await _projectService.UpdateProject(dto, cancellationToken);
+            await _projectService.Update(dto, cancellationToken);
             return Ok();
         }
     }
