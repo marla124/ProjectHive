@@ -1,8 +1,7 @@
-﻿namespace ProjectHive.Services.ProjectsAPI.Dto
+﻿namespace ProjectHive.Services.ProjectsAPI.Models
 {
-    public class ProjectDto
+    public class ProjectViewModel
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public Guid StatusProjectId { get; set; }

@@ -5,14 +5,14 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        Task CreateOne(T entity);
-        Task CreateMany(IEnumerable<T> entities);
-        Task<T> GetById(Guid id,
+        Task<T> CreateOne(T entity, CancellationToken cancellationToken);
+        Task<IEnumerable<T>> CreateMany(IEnumerable<T> entities, CancellationToken cancellationToken);
+        Task<T> GetById(Guid id, CancellationToken cancellationToken,
                     params Expression<Func<T, object>>[] includes);
-        Task<T> GetByIdAsNoTracking(Guid id);
-        Task Update(T entity);
-        Task DeleteById(Guid id);
-        Task DeleteMany(IEnumerable<T> entities);
+        Task<T> GetByIdAsNoTracking(Guid id, CancellationToken cancellationToken);
+        Task<T> Update(T entity, CancellationToken cancellationToken);
+        Task DeleteById(Guid id, CancellationToken cancellationToken);
+        Task DeleteMany(IEnumerable<T> entities, CancellationToken cancellationToken);
     }
 
 }

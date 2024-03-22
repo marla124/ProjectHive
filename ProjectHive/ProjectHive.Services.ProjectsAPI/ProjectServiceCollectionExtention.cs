@@ -9,13 +9,11 @@ namespace ProjectHive.Services.TasksAPI
 {
     public static class TaskServiceCollectionExtention
     {
-        public static void RegisterServices
+        public static void RegisterServicesforProjectApi
                 (this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("Default");
             services.AddDbContext<ProjectHiveProjectDbContext>(opt => opt.UseNpgsql(connectionString));
-            IMapper mapper=Mapping.RegisterMaps().CreateMapper();
-            services.AddSingleton(mapper);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();

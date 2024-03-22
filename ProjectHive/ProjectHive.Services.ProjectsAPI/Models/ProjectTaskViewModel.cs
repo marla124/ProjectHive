@@ -1,6 +1,6 @@
 ﻿namespace ProjectHive.Services.ProjectsAPI.Models
 {
-    public class ProjectTaskModel
+    public class ProjectTaskViewModel
     {
         public string Name { get; set; }
         public string Description { get; set; }
