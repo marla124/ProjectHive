@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
+using ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase;
 using System.Linq.Expressions;
 
 namespace ProjectHive.Services.ProjectsAPI.Data.Repository
@@ -15,19 +16,21 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository
             _dbSet = _dbContext.Set<T>();
         }
 
-        public async Task CreateMany(IEnumerable<T> entities)
+        public async Task<IEnumerable<T>> CreateMany(IEnumerable<T> entities, CancellationToken cancellationToken)
         {
             await _dbSet.AddRangeAsync(entities);
+            return entities;
         }
 
-        public async Task CreateOne(T entity)
+        public async Task<T> CreateOne(T entity, CancellationToken cancellationToken)
         {
             await _dbSet.AddAsync(entity);
+            return entity;
         }
 
-        public async Task DeleteById(Guid id)
+        public async Task DeleteById(Guid id, CancellationToken cancellationToken)
         {
-            var delEntity = await GetById(id);
+            var delEntity = await GetById(id, cancellationToken: cancellationToken);
             if (delEntity != null)
             {
                 _dbSet.Remove(delEntity);
@@ -38,7 +41,7 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository
             }
         }
 
-        public async Task DeleteMany(IEnumerable<T> entities)
+        public async Task DeleteMany(IEnumerable<T> entities, CancellationToken cancellationToken)
         {
             if (entities.Any())
             {
@@ -47,7 +50,7 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository
             }
         }
 
-        public async Task<T> GetById(Guid id,
+        public async Task<T> GetById(Guid id, CancellationToken cancellationToken,
                     params Expression<Func<T, object>>[] includes)
         {
             var resultQuery = _dbSet.AsQueryable();
@@ -60,15 +63,16 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository
             return await resultQuery.FirstOrDefaultAsync(entity => entity.Id.Equals(id));
         }
 
-        public async Task<T> GetByIdAsNoTracking(Guid id)
+        public async Task<T> GetByIdAsNoTracking(Guid id, CancellationToken cancellationToken)
         {
             return await _dbSet.AsNoTracking().FirstOrDefaultAsync(entities => entities.Id.Equals(id));
         }
 
 
-        public async Task Update(T entity)
+        public async Task<T> Update(T entity, CancellationToken cancellationToken)
         {
             _dbContext.Update(entity);
+            return entity;
         }
 
     }

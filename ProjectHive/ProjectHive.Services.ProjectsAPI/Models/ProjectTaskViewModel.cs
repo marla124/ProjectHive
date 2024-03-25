@@ -1,7 +1,6 @@
-﻿
-namespace ProjectHive.Services.ProjectsAPI.Data.Entities
+﻿namespace ProjectHive.Services.ProjectsAPI.Models
 {
-    public class ProjectTask : BaseEntity
+    public class ProjectTaskViewModel
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -9,9 +8,6 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Entities
         public DateTime Deadline { get; set; }
 
         public Guid StatusTaskId { get; set; }
-        public StatusTasks StatusTask { get; set; }
-
         public Guid? ProjectId { get; set; }
-        public Project? Project { get; set; }
     }
 }
