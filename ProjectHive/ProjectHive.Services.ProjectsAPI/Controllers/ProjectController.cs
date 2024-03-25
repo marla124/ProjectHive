@@ -35,12 +35,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteManyProject(IEnumerable<ProjectViewModel> request, CancellationToken cancellationToken)
         {
-            var dtos = new List<ProjectDto>();
-            foreach (var item in request)
-            {
-                dtos.Add(_mapper.Map<ProjectDto>(item));
-            }
-            await _projectService.DeleteMany(dtos, cancellationToken);
+            await _projectService.DeleteMany(_mapper.Map<IEnumerable<ProjectDto>>(request), cancellationToken);
             return Ok();
         }
 
@@ -57,12 +52,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [Route("api/[controller]/[action]")]
         public async Task<IActionResult> CreateManyProject(IEnumerable<CreateProjectRequestViewModel> request, CancellationToken cancellationToken)
         {
-            var dtos = new List<ProjectDto>();
-            foreach (var item in request)
-            {
-                dtos.Add(_mapper.Map<ProjectDto>(item));
-            }
-            await _projectService.CreateMany(dtos, cancellationToken);
+            await _projectService.CreateMany(_mapper.Map<IEnumerable<ProjectDto>>(request), cancellationToken);
             return Ok();
         }
 
