@@ -20,7 +20,7 @@ namespace ProjectHive.IntegrationTests
                     services.Remove(descriptor);
                 services.AddDbContext<ProjectHiveProjectDbContext>(options =>
                 {
-                    options.UseInMemoryDatabase("InMemoryEmployeeTest");
+                    options.UseInMemoryDatabase("InMemoryProjectTest");
                 });
                 var sp = services.BuildServiceProvider();
                 using (var scope = sp.CreateScope())
@@ -32,7 +32,6 @@ namespace ProjectHive.IntegrationTests
                     }
                     catch (Exception ex)
                     {
-                        //Log errors or do anything you think it's needed
                         throw;
                     }
                 }
