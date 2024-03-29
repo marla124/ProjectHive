@@ -3,5 +3,5 @@
 public class StatusTasks : BaseEntity
 {
     public string Name { get; set; }
-    public List<ProjectTask> Tasks { get; set; }
+    public List<ProjectTask>? Tasks { get; set; }
 }

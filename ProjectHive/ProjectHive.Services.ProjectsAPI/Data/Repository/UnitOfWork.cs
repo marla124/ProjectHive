@@ -3,7 +3,7 @@ using ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase;
 
 namespace ProjectHive.Services.ProjectsAPI.Data.Repository
 {
-    public class UnitOfWork<TEntity> where TEntity : BaseEntity
+    public class UnitOfWork<TEntity> : IUnitOfWork<TEntity> where TEntity : BaseEntity
     {
         private readonly IRepository<Project> _projectRepository;
         private readonly IRepository<ProjectTask> _projectTaskRepository;

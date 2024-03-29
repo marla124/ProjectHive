@@ -44,22 +44,14 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
 
         public async Task CreateMany(IEnumerable<TDto> dtos, CancellationToken cancellationToken)
         {
-            var projects = new List<TEntity>();
-            foreach (var item in dtos)
-            {
-                projects.Add(_mapper.Map<TEntity>(item));
-            }
+            var projects = _mapper.Map<IEnumerable<TEntity>>(dtos);
             await _unitOfWork.Repository.CreateMany(projects, cancellationToken);
             await _unitOfWork.Commit();
         }
 
         public async Task DeleteMany(IEnumerable<TDto> dtos, CancellationToken cancellationToken)
         {
-            var projects = new List<TEntity>();
-            foreach (var item in dtos)
-            {
-                projects.Add(_mapper.Map<TEntity>(item));
-            }
+            var projects = _mapper.Map<IEnumerable<TEntity>>(dtos);
             await _unitOfWork.Repository.DeleteMany(projects, cancellationToken);
             await _unitOfWork.Commit();
         }
