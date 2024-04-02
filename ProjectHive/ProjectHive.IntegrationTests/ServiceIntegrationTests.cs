@@ -7,11 +7,11 @@ using System.Text;
 
 namespace ProjectHive.IntegrationTests
 {
-    public class ProjectControllerIntegrationTests : IDisposable, IClassFixture<TestingWebAppFactory<Program>>
+    public class ServiceIntegrationTests : IDisposable, IClassFixture<TestingWebAppFactory<Program>>
     {
         private readonly TestingWebAppFactory<Program> _server;
         private readonly HttpClient _client;
-        public ProjectControllerIntegrationTests(TestingWebAppFactory<Program> server)
+        public ServiceIntegrationTests(TestingWebAppFactory<Program> server)
         {
             _server = server;
             _client = _server.CreateClient();
