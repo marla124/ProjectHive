@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectHive.Services.ProjectsAPI;
 using ProjectHive.Services.ProjectsAPI.Data;
+using ProjectHive.Services.ProjectsAPI.Data.Entities;
 
 namespace ProjectHive.IntegrationTests
 {
@@ -29,6 +30,18 @@ namespace ProjectHive.IntegrationTests
                     try
                     {
                         appContext.Database.EnsureCreated();
+                        var testProject1 = new Project
+                        {
+                            Id = Guid.Parse("c76e47f1-14eb-4f81-881c-2ceae836fa7e"),
+                            Name = "TestProject1",
+                            Description = "This is test project",
+                            CreatedAt = DateTime.Now,
+                            UpdatedAt = DateTime.Now,
+                            CreatorUserId = Guid.NewGuid(),
+                            StatusProjectId = Guid.NewGuid(),
+                        };
+                        appContext.Projects.Add(testProject1);
+                        appContext.SaveChanges();
                     }
                     catch (Exception ex)
                     {
