@@ -1,4 +1,6 @@
 ﻿
+using ProjectHive.Service.Core.Data;
+
 namespace ProjectHive.Services.ProjectsAPI.Data.Entities;
 
 public class Comment : BaseEntity

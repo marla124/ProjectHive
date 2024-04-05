@@ -1,28 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProjectHive.Services.ProjectsAPI.Data.Entities;
-using ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase;
+using ProjectHive.Service.Core.Data;
 using System.Linq.Expressions;
 
-namespace ProjectHive.Services.ProjectsAPI.Data.Repository
+namespace ProjectHive.Services.Core.Data.Repository
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<TEntity, TDbContext> : IRepository<TEntity> where TEntity : BaseEntity where TDbContext : DbContext
     {
-        private readonly ProjectHiveProjectDbContext _dbContext;
-        protected readonly DbSet<T> _dbSet;
+        private readonly TDbContext _dbContext;
+        protected readonly DbSet<TEntity> _dbSet;
 
-        public Repository(ProjectHiveProjectDbContext dbContext)
+        public Repository(TDbContext dbContext)
         {
             _dbContext = dbContext;
-            _dbSet = _dbContext.Set<T>();
+            _dbSet = _dbContext.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<T>> CreateMany(IEnumerable<T> entities, CancellationToken cancellationToken)
+        public async Task<IEnumerable<TEntity>> CreateMany(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
         {
             await _dbSet.AddRangeAsync(entities);
             return entities;
         }
 
-        public async Task<T> CreateOne(T entity, CancellationToken cancellationToken)
+        public async Task<TEntity> CreateOne(TEntity entity, CancellationToken cancellationToken)
         {
             await _dbSet.AddAsync(entity);
             return entity;
@@ -41,7 +40,7 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository
             }
         }
 
-        public async Task DeleteMany(IEnumerable<T> entities, CancellationToken cancellationToken)
+        public async Task DeleteMany(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
         {
             if (entities.Any())
             {
@@ -50,8 +49,8 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository
             }
         }
 
-        public async Task<T> GetById(Guid id, CancellationToken cancellationToken,
-                    params Expression<Func<T, object>>[] includes)
+        public async Task<TEntity> GetById(Guid id, CancellationToken cancellationToken,
+                    params Expression<Func<TEntity, object>>[] includes)
         {
             var resultQuery = _dbSet.AsQueryable();
             if (includes.Any())
@@ -63,13 +62,13 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository
             return await resultQuery.FirstOrDefaultAsync(entity => entity.Id.Equals(id));
         }
 
-        public async Task<T> GetByIdAsNoTracking(Guid id, CancellationToken cancellationToken)
+        public async Task<TEntity> GetByIdAsNoTracking(Guid id, CancellationToken cancellationToken)
         {
             return await _dbSet.AsNoTracking().FirstOrDefaultAsync(entities => entities.Id.Equals(id));
         }
 
 
-        public async Task<T> Update(T entity, CancellationToken cancellationToken)
+        public async Task<TEntity> Update(TEntity entity, CancellationToken cancellationToken)
         {
             _dbContext.Update(entity);
             return entity;

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.Report
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.AuthAPI", "ProjectHive.Services.AuthAPI\ProjectHive.Services.AuthAPI.csproj", "{7838206C-6C3E-43B4-880D-6F108C09416E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectHive.Service.Core", "ProjectHive.Service.Core\ProjectHive.Service.Core.csproj", "{E752ABE9-B36D-40A9-9E62-9D823D506678}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{7838206C-6C3E-43B4-880D-6F108C09416E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7838206C-6C3E-43B4-880D-6F108C09416E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7838206C-6C3E-43B4-880D-6F108C09416E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E752ABE9-B36D-40A9-9E62-9D823D506678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E752ABE9-B36D-40A9-9E62-9D823D506678}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E752ABE9-B36D-40A9-9E62-9D823D506678}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E752ABE9-B36D-40A9-9E62-9D823D506678}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 		{439DD8B3-BDBA-413D-A8DC-B90E1C28CF0E} = {8585ABE2-8433-4D9F-985C-36163C3556B7}
 		{B6098E75-F496-48A5-BC5A-DD1ABE461BC9} = {8585ABE2-8433-4D9F-985C-36163C3556B7}
 		{7838206C-6C3E-43B4-880D-6F108C09416E} = {8585ABE2-8433-4D9F-985C-36163C3556B7}
+		{E752ABE9-B36D-40A9-9E62-9D823D506678} = {8585ABE2-8433-4D9F-985C-36163C3556B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DAF25C42-E33D-47DE-951F-2DF73FA2B1DA}

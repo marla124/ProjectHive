@@ -1,4 +1,6 @@
-﻿namespace ProjectHive.Services.ProjectsAPI.Data.Entities;
+﻿using ProjectHive.Service.Core.Data;
+
+namespace ProjectHive.Services.ProjectsAPI.Data.Entities;
 
 public class ProjectStatus : BaseEntity
 {

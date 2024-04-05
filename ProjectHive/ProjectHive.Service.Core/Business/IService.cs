@@ -1,4 +1,4 @@
-﻿namespace ProjectHive.Services.ProjectsAPI.Business.Services
+﻿namespace ProjectHive.Services.Core.Business
 {
     public interface IService<TDto>
     {

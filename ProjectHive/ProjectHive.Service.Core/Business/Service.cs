@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using ProjectHive.Services.ProjectsAPI.Data.Entities;
-using ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase;
+using ProjectHive.Service.Core.Data;
+using ProjectHive.Service.Core.Data.Repository;
 
-namespace ProjectHive.Services.ProjectsAPI.Business.Services
+namespace ProjectHive.Services.Core.Business
 {
     public class Service<TDto, TEntity> : IService<TDto> where TEntity : BaseEntity
     {
@@ -18,13 +18,13 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
 
         public async Task<TDto?> GetById(Guid Id, CancellationToken cancellationToken)
         {
-            var project = _mapper.Map<TDto>(await _unitOfWork.ProjectRepository.GetById(Id, cancellationToken));
+            var project = _mapper.Map<TDto>(await _unitOfWork.Repository.GetById(Id, cancellationToken));
             return project;
         }
 
         public async Task DeleteById(Guid Id, CancellationToken cancellationToken)
         {
-            await _unitOfWork.ProjectRepository.DeleteById(Id, cancellationToken);
+            await _unitOfWork.Repository.DeleteById(Id, cancellationToken);
             await _unitOfWork.Commit();
         }
 
