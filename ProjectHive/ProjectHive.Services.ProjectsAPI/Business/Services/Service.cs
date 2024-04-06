@@ -18,8 +18,8 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
 
         public async Task<TDto?> GetById(Guid Id, CancellationToken cancellationToken)
         {
-            var dto = _mapper.Map<TDto>(await _unitOfWork.ProjectRepository.GetById(Id, cancellationToken));
-            return dto;
+            var project = _mapper.Map<TDto>(await _unitOfWork.ProjectRepository.GetById(Id, cancellationToken));
+            return project;
         }
 
         public async Task DeleteById(Guid Id, CancellationToken cancellationToken)
@@ -28,35 +28,31 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
             await _unitOfWork.Commit();
         }
 
-        public async Task<TDto?> Create(TDto dto, CancellationToken cancellationToken)
+        public async Task Create(TDto dto, CancellationToken cancellationToken)
         {
-            var entity = _mapper.Map<TEntity>(dto);
-            var createdEntity = await _unitOfWork.Repository.CreateOne(entity, cancellationToken);
+            var project = _mapper.Map<TEntity>(dto);
+            await _unitOfWork.Repository.CreateOne(project, cancellationToken);
             await _unitOfWork.Commit();
-
-            return _mapper.Map<TDto>(createdEntity);
         }
 
-        public async Task<TDto?> Update(TDto dto, CancellationToken cancellationToken)
+        public async Task Update(TDto dto, CancellationToken cancellationToken)
         {
-            var entity = _mapper.Map<TEntity>(dto);
-            var updatedEntity = await _unitOfWork.Repository.Update(entity, cancellationToken);
+            var project = _mapper.Map<TEntity>(dto);
+            await _unitOfWork.Repository.Update(project, cancellationToken);
             await _unitOfWork.Commit();
-
-            return _mapper.Map<TDto>(updatedEntity);
         }
 
         public async Task CreateMany(IEnumerable<TDto> dtos, CancellationToken cancellationToken)
         {
-            var entities = _mapper.Map<IEnumerable<TEntity>>(dtos);
-            await _unitOfWork.Repository.CreateMany(entities, cancellationToken);
+            var projects = _mapper.Map<IEnumerable<TEntity>>(dtos);
+            await _unitOfWork.Repository.CreateMany(projects, cancellationToken);
             await _unitOfWork.Commit();
         }
 
         public async Task DeleteMany(IEnumerable<TDto> dtos, CancellationToken cancellationToken)
         {
-            var entities = _mapper.Map<IEnumerable<TEntity>>(dtos);
-            await _unitOfWork.Repository.DeleteMany(entities, cancellationToken);
+            var projects = _mapper.Map<IEnumerable<TEntity>>(dtos);
+            await _unitOfWork.Repository.DeleteMany(projects, cancellationToken);
             await _unitOfWork.Commit();
         }
     }

@@ -13,13 +13,11 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
     {
         private readonly IProjectService _projectService;
         private readonly IMapper _mapper;
-
         public ProjectController(IMapper mapper, IProjectService projectService)
         {
             _projectService = projectService;
             _mapper = mapper;
         }
-
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
@@ -51,8 +49,8 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         public async Task<IActionResult> CreateProject(CreateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
             var dto = _mapper.Map<ProjectDto>(request);
-
-            return Ok(_mapper.Map<ProjectViewModel>(await _projectService.Create(dto, cancellationToken)));
+            await _projectService.Create(dto, cancellationToken);
+            return Ok(request);
         }
 
         [HttpPost]
@@ -68,8 +66,8 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         public async Task<IActionResult> UpdateProject(UpdateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
             var dto = _mapper.Map<ProjectDto>(request);
-
-            return Ok(_mapper.Map<ProjectViewModel>(await _projectService.Update(dto, cancellationToken)));
+            await _projectService.Update(dto, cancellationToken);
+            return Ok(request);
         }
     }
 }

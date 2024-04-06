@@ -3,18 +3,22 @@ using ProjectHive.Services.ProjectsAPI.Data.Entities;
 using ProjectHive.Services.ProjectsAPI.Dto;
 using ProjectHive.Services.ProjectsAPI.Models;
 using ProjectHive.Services.ProjectsAPI.Models.RequestModel;
-
-namespace ProjectHive.Services.ProjectsAPI;
-
-public class Mapping : Profile
+namespace ProjectHive.Services.ProjectsAPI
 {
-    public Mapping()
+    public class Mapping : Profile
     {
-        CreateMap<ProjectDto, Project>().ReverseMap();
-        CreateMap<ProjectDto, ProjectViewModel>().ReverseMap();
-        CreateMap<ProjectDto, CreateProjectRequestViewModel>().ReverseMap();
-        CreateMap<ProjectDto, UpdateProjectRequestViewModel>().ReverseMap();
-        CreateMap<ProjectTaskDto, ProjectTaskViewModel>().ReverseMap();
-        CreateMap<ProjectTaskDto, ProjectTask>().ReverseMap();
+        public static MapperConfiguration RegisterMaps()
+        {
+            var mapping = new MapperConfiguration(config =>
+            {
+                config.CreateMap<ProjectDto, Project>().ReverseMap();
+                config.CreateMap<ProjectDto, ProjectViewModel>().ReverseMap();
+                config.CreateMap<ProjectDto, CreateProjectRequestViewModel>().ReverseMap();
+                config.CreateMap<ProjectDto, UpdateProjectRequestViewModel>().ReverseMap();
+                config.CreateMap<ProjectTaskDto, ProjectTaskViewModel>().ReverseMap();
+                config.CreateMap<ProjectTaskDto, ProjectTask>().ReverseMap();
+            });
+            return mapping;
+        }
     }
 }
