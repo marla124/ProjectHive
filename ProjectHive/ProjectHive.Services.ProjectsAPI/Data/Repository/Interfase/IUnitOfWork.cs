@@ -8,8 +8,5 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase
     public interface IUnitOfWorkProject<TEntity> where TEntity : BaseEntity, IUnitOfWork<TEntity>
     {
         public IRepository<Project> ProjectRepository { get; }
-        public IRepository<ProjectTask> ProjectTaskRepository { get; }
-
-        Task<int> Commit();
     }
 }

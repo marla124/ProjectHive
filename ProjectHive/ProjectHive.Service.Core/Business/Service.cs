@@ -1,45 +1,45 @@
 ﻿using AutoMapper;
 using ProjectHive.Service.Core.Data;
-using ProjectHive.Service.Core.Data.Repository;
+using ProjectHive.Services.Core.Data.Repository;
 
 namespace ProjectHive.Services.Core.Business
 {
-    public class Service<TDto, TEntity> : IService<TDto> where TEntity : BaseEntity
+    public class Service<TDto, TEntity, TDbContext> : IService<TDto> where TEntity : BaseEntity
     {
 
-        private readonly IUnitOfWork<TEntity> _unitOfWork;
+        private readonly IRepository<TEntity, TDbContext> _repository;
         private readonly IMapper _mapper;
 
-        public Service(IUnitOfWork<TEntity> unitOfWork, IMapper mapper)
+        public Service(IRepository<TEntity, TDbContext> repository, IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _repository = repository;
             _mapper = mapper;
         }
 
         public async Task<TDto?> GetById(Guid Id, CancellationToken cancellationToken)
         {
-            var project = _mapper.Map<TDto>(await _unitOfWork.Repository.GetById(Id, cancellationToken));
+            var project = _mapper.Map<TDto>(await _repository.GetById(Id, cancellationToken));
             return project;
         }
 
         public async Task DeleteById(Guid Id, CancellationToken cancellationToken)
         {
-            await _unitOfWork.Repository.DeleteById(Id, cancellationToken);
-            await _unitOfWork.Commit();
+            await _repository.DeleteById(Id, cancellationToken);
+            await _repository.Commit();
         }
 
         public async Task Create(TDto dto, CancellationToken cancellationToken)
         {
             var project = _mapper.Map<TEntity>(dto);
-            await _unitOfWork.Repository.CreateOne(project, cancellationToken);
-            await _unitOfWork.Commit();
+            await _repository.CreateOne(project, cancellationToken);
+            await _repository.Commit();
         }
 
         public async Task Update(TDto dto, CancellationToken cancellationToken)
         {
             var project = _mapper.Map<TEntity>(dto);
-            await _unitOfWork.Repository.Update(project, cancellationToken);
-            await _unitOfWork.Commit();
+            await _repository.Update(project, cancellationToken);
+            await _repository.Commit();
         }
 
         public async Task CreateMany(IEnumerable<TDto> dtos, CancellationToken cancellationToken)
@@ -49,8 +49,8 @@ namespace ProjectHive.Services.Core.Business
             {
                 projects.Add(_mapper.Map<TEntity>(item));
             }
-            await _unitOfWork.Repository.CreateMany(projects, cancellationToken);
-            await _unitOfWork.Commit();
+            await _repository.CreateMany(projects, cancellationToken);
+            await _repository.Commit();
         }
 
         public async Task DeleteMany(IEnumerable<TDto> dtos, CancellationToken cancellationToken)
@@ -60,9 +60,8 @@ namespace ProjectHive.Services.Core.Business
             {
                 projects.Add(_mapper.Map<TEntity>(item));
             }
-            await _unitOfWork.Repository.DeleteMany(projects, cancellationToken);
-            await _unitOfWork.Commit();
+            await _repository.DeleteMany(projects, cancellationToken);
+            await _repository.Commit();
         }
     }
 }
-

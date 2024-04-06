@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace ProjectHive.Services.Core.Data.Repository
 {
-    public class Repository<TEntity, TDbContext> : IRepository<TEntity> where TEntity : BaseEntity where TDbContext : DbContext
+    public class Repository<TEntity, TDbContext> : IRepository<TEntity, TDbContext> where TEntity : BaseEntity where TDbContext : DbContext
     {
         private readonly TDbContext _dbContext;
         protected readonly DbSet<TEntity> _dbSet;
@@ -74,5 +74,9 @@ namespace ProjectHive.Services.Core.Data.Repository
             return entity;
         }
 
+        public async Task Commit()
+        {
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
