@@ -49,8 +49,8 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         public async Task<IActionResult> CreateProject(CreateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
             var dto = _mapper.Map<ProjectDto>(request);
-            await _projectService.Create(dto, cancellationToken);
-            return Ok(request);
+
+            return Ok(_mapper.Map<ProjectViewModel>(await _projectService.Create(dto, cancellationToken)));
         }
 
         [HttpPost]
@@ -66,8 +66,8 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         public async Task<IActionResult> UpdateProject(UpdateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
             var dto = _mapper.Map<ProjectDto>(request);
-            await _projectService.Update(dto, cancellationToken);
-            return Ok(request);
+
+            return Ok(_mapper.Map<ProjectViewModel>(await _projectService.Update(dto, cancellationToken)));
         }
     }
 }

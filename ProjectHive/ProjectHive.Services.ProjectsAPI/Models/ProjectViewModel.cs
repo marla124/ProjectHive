@@ -1,10 +1,7 @@
 ﻿namespace ProjectHive.Services.ProjectsAPI.Models
 {
-    public class ProjectViewModel
+    public class ProjectViewModel : BaseProjectViewModel
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public Guid StatusProjectId { get; set; }
-        public Guid? CreatorUserId { get; set; }
+        public Guid Id { get; set; }
     }
 }
