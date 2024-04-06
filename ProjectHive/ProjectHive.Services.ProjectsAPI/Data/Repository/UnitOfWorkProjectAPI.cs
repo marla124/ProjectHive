@@ -1,29 +1,20 @@
-﻿using ProjectHive.Service.Core.Data;
-using ProjectHive.Services.Core.Data.Repository;
+﻿using ProjectHive.Services.Core.Data.Repository;
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
 using ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase;
 
-namespace ProjectHive.Services.ProjectsAPI.Data.Repository
+namespace ProjectHive.Services.ProjectsAPI.Data.Repository;
+
+public class UnitOfWorkProject(ProjectHiveProjectDbContext dbContext,
+    IRepository<Project, ProjectHiveProjectDbContext> projectRepository,
+    IRepository<ProjectTask, ProjectHiveProjectDbContext> projectTaskRepository) : IUnitOfWorkProject
 {
-    public class UnitOfWork<TEntity> where TEntity : BaseEntity
+
+    public IRepository<Project, ProjectHiveProjectDbContext> ProjectRepository => projectRepository;
+
+    public IRepository<ProjectTask, ProjectHiveProjectDbContext> ProjectTaskRepository => projectTaskRepository;
+
+    public async Task<int> Commit()
     {
-        private readonly IRepository<Project> _projectRepository;
-        private readonly IRepository<ProjectTask> _projectTaskRepository;
-        private readonly IRepository<TEntity> _repository;
-        private readonly ProjectHiveProjectDbContext _dbContext;
-        public UnitOfWork(ProjectHiveProjectDbContext dbContext, IRepository<Project> projectRepository, IRepository<ProjectTask> projectTaskRepository, IRepository<TEntity> repository)
-        {
-            _dbContext = dbContext;
-            _projectRepository = projectRepository;
-            _projectTaskRepository = projectTaskRepository;
-            _repository = repository;
-        }
-        public IRepository<Project> ProjectRepository => _projectRepository;
-        public IRepository<ProjectTask> ProjectTaskRepository => _projectTaskRepository;
-        public IRepository<TEntity> Repository => _repository;
-        public async Task<int> Commit()
-        {
-            return await _dbContext.SaveChangesAsync();
-        }
+        return await dbContext.SaveChangesAsync();
     }
 }

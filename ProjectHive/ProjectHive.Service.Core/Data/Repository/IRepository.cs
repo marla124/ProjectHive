@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace ProjectHive.Services.Core.Data.Repository
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IRepository<T, TDbContext> where T : BaseEntity
     {
         Task<T> CreateOne(T entity, CancellationToken cancellationToken);
         Task<IEnumerable<T>> CreateMany(IEnumerable<T> entities, CancellationToken cancellationToken);
@@ -13,6 +13,8 @@ namespace ProjectHive.Services.Core.Data.Repository
         Task<T> Update(T entity, CancellationToken cancellationToken);
         Task DeleteById(Guid id, CancellationToken cancellationToken);
         Task DeleteMany(IEnumerable<T> entities, CancellationToken cancellationToken);
+
+        Task Commit();
     }
 
 }

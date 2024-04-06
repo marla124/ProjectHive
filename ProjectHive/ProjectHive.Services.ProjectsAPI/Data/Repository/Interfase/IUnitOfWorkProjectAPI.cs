@@ -1,14 +1,12 @@
-﻿using ProjectHive.Service.Core.Data;
-using ProjectHive.Service.Core.Data.Repository;
-using ProjectHive.Services.Core.Data.Repository;
+﻿using ProjectHive.Services.Core.Data.Repository;
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
 
 namespace ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase
 {
-    public interface IUnitOfWorkProject<TEntity> where TEntity : BaseEntity, IUnitOfWork<TEntity>
+    public interface IUnitOfWorkProject
     {
-        public IRepository<Project> ProjectRepository { get; }
-        public IRepository<ProjectTask> ProjectTaskRepository { get; }
+        public IRepository<Project, ProjectHiveProjectDbContext> ProjectRepository { get; }
+        public IRepository<ProjectTask, ProjectHiveProjectDbContext> ProjectTaskRepository { get; }
 
         Task<int> Commit();
     }
