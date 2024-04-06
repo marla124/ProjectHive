@@ -5,7 +5,7 @@ using ProjectHive.Services.ProjectsAPI.Models;
 using ProjectHive.Services.ProjectsAPI.Models.RequestModel;
 namespace ProjectHive.Services.ProjectsAPI
 {
-    public class Mapping
+    public class Mapping : Profile
     {
         public static MapperConfiguration RegisterMaps()
         {
