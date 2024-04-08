@@ -1,5 +1,4 @@
-﻿namespace ProjectHive.Services.ProjectsAPI.Data.Entities;
-
+﻿namespace ProjectHive.Services.Core.Data;
 public class BaseEntity
 {
     public Guid Id { get; set; }

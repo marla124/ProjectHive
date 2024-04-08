@@ -1,4 +1,4 @@
-﻿
+﻿using ProjectHive.Services.Core.Data;
 namespace ProjectHive.Services.ProjectsAPI.Data.Entities
 {
     public class ProjectTask : BaseEntity
