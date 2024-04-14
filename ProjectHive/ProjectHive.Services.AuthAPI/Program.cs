@@ -1,4 +1,6 @@
 
+using ProjectHive.Services.TasksAPI;
+
 namespace ProjectHive.Services.AuthAPI;
 
 public class Program
@@ -22,11 +24,13 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        builder.Services.RegisterServicesforAuthApi(builder.Configuration);
+        builder.Services.ConfigureJwt(builder.Configuration);
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
-
 
         app.MapControllers();
 

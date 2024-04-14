@@ -1,13 +1,13 @@
 ﻿
-namespace ProjectHive.Services.AuthAPI.Data.Entities
+using ProjectHive.Services.Core.Data;
+
+namespace ProjectHive.Services.AuthAPI.Data.Entities;
+
+public class User : BaseEntity
 {
-    public class User
-    {
-        public Guid Id { get; set; }
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
-        public Guid UserStatusId { get; set; }
-        public UserRole UserStatus { get; set; }
-        public List<RefreshToken> RefreshTokens { get; set; }
-    }
+    public string Email { get; set; }
+    public string PasswordHash { get; set; }
+    public Guid UserRoleId { get; set; }
+    public UserRole UserRole { get; set; }
+    public List<RefreshToken> RefreshTokens { get; set; }
 }
