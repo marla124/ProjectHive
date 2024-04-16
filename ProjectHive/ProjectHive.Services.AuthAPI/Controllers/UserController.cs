@@ -2,24 +2,18 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjectHive.Services.AuthAPI.Dto;
 using ProjectHive.Services.AuthAPI.Model;
+using ProjectHive.Services.AuthAPI.Models;
 using ProjectHive.Services.AuthAPI.Models.RequestModel;
 using ProjectHive.Services.AuthAPI.Services;
 
 namespace ProjectHive.Services.AuthAPI.Controllers;
 
-public class UserController : Controller
+public class UserController(IUserService userService, IMapper mapper) : Controller
 {
-    private readonly IUserService _userService;
-    private readonly IMapper _mapper;
-    public UserController(IMapper mapper, IUserService userService)
-    {
-        _userService = userService;
-        _mapper = mapper;
-    }
     [HttpGet("[action]/{id}")]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
-        var project = _mapper.Map<UserViewModel>(await _userService.GetById(id, cancellationToken));
+        var project = mapper.Map<UserViewModel>(await userService.GetById(id, cancellationToken));
         if (project == null)
         {
             return NotFound();
@@ -30,25 +24,26 @@ public class UserController : Controller
     [HttpDelete("[action]/{id}")]
     public async Task<IActionResult> DeleteById(Guid id, CancellationToken cancellationToken)
     {
-        await _userService.DeleteById(id, cancellationToken);
+        await userService.DeleteById(id, cancellationToken);
         return Ok();
     }
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> CreateUser(CreateUserRequestViewModel request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateUser(RegisterModel request, CancellationToken cancellationToken)
     {
-        var dto = _mapper.Map<UserDto>(request);
+        var dto = mapper.Map<UserDto>(request);
 
-        return Ok(_mapper.Map<UserViewModel>(await _userService.Create(dto, cancellationToken)));
+        mapper.Map<UserViewModel>(await userService.RegisterUser(dto, cancellationToken));
+        return Ok();
     }
 
     [HttpPatch]
     [Route("[action]")]
     public async Task<IActionResult> UpdateUser(UpdateUserRequestViewModel request, CancellationToken cancellationToken)
     {
-        var dto = _mapper.Map<UserDto>(request);
+        var dto = mapper.Map<UserDto>(request);
 
-        return Ok(_mapper.Map<UserViewModel>(await _userService.Update(dto, cancellationToken)));
+        return Ok(mapper.Map<UserViewModel>(await userService.Update(dto, cancellationToken)));
     }
 }

@@ -77,4 +77,20 @@ public class Repository<TEntity, TDbContext> : IRepository<TEntity, TDbContext> 
     {
         await _dbContext.SaveChangesAsync();
     }
+
+    public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes)
+    {
+        var resultQuery = _dbSet.Where(expression);
+        if (includes.Any())
+        {
+            resultQuery = includes.Aggregate(resultQuery,
+                (current, include) => current.Include(include));
+        }
+        return resultQuery;
+    }
+
+    public async Task<List<TEntity>> FindBy()
+    {
+        return await _dbSet.ToListAsync();
+    }
 }

@@ -8,6 +8,11 @@ namespace ProjectHive.Services.AuthAPI.Services
 {
     public class TokenService(IConfiguration configuration) : ITokenService
     {
+        public Task<Guid> AddRefreshToken(string email, string v)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<string> GenerateJwtToken(UserDto userDto)
         {
             var isLifetime = int.TryParse(configuration["Jwt:Lifetime"], out var lifetime);

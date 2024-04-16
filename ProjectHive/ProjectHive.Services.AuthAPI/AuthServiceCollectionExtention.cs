@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjectHive.Services.AuthAPI.Data;
+using ProjectHive.Services.AuthAPI.Services;
 using System.Text;
 
 namespace ProjectHive.Services.TasksAPI;
@@ -13,6 +14,9 @@ public static class AuthServiceCollectionExtention
     {
         var connectionString = configuration.GetConnectionString("Default");
         services.AddDbContext<ProjectHiveAuthDbContext>(opt => opt.UseNpgsql(connectionString));
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     }
 
     public static void ConfigureJwt
