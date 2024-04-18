@@ -5,27 +5,27 @@ using ProjectHive.Services.AuthAPI.Data;
 using ProjectHive.Services.AuthAPI.Data.Entities;
 using ProjectHive.Services.AuthAPI.Data.Repository;
 using ProjectHive.Services.AuthAPI.Data.Repository.Interface;
-using ProjectHive.Services.AuthAPI.Dto;
 using ProjectHive.Services.AuthAPI.Services;
-using ProjectHive.Services.Core.Business;
 using ProjectHive.Services.Core.Data.Repository;
 using System.Text;
 
 namespace ProjectHive.Services.AuthAPI;
 
-public static class AuthServiceCollectionExtention
+public static class AuthServiceCollectionExtension
 {
-    public static void RegisterServicesforAuthApi
+    public static void RegisterServicesForAuthApi
     (this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Default");
         services.AddDbContext<ProjectHiveAuthDbContext>(opt => opt.UseNpgsql(connectionString));
+
+        services.AddScoped<IAuthRepository, AuthRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRepository<UserRole, ProjectHiveAuthDbContext>, Repository<UserRole, ProjectHiveAuthDbContext>>();
+
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<IService<UserDto>, Service<UserDto, User, ProjectHiveAuthDbContext>>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ITokenService, TokenService>();
-        services.AddScoped<IAuthRepository, AuthRepository>();
-        services.AddScoped<IRepository<User, ProjectHiveAuthDbContext>, Repository<User, ProjectHiveAuthDbContext>>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     }
 

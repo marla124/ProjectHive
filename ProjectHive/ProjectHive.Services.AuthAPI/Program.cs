@@ -7,7 +7,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.ConfigureJwt(builder.Configuration);
-        builder.Services.RegisterServicesforAuthApi(builder.Configuration);
+        builder.Services.RegisterServicesForAuthApi(builder.Configuration);
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
