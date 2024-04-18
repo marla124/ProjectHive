@@ -11,13 +11,13 @@ public class UnitOfWork(
     IAuthRepository authRepository)
     : IUnitOfWork
 {
-    public ProjectHiveAuthDbContext DbContext { get; } = dbContext;
+
     public IUserRepository UserRepository { get; } = userRepository;
     public IRepository<UserRole, ProjectHiveAuthDbContext> UserRoleRepository { get; } = userRoleRepository;
     public IAuthRepository AuthRepository { get; } = authRepository;
 
     public async Task<int> Commit()
     {
-        return await DbContext.SaveChangesAsync();
+        return await dbContext.SaveChangesAsync();
     }
 }
