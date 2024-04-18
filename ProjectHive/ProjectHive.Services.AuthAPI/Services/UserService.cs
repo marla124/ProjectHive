@@ -22,6 +22,7 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
         this.unitOfWork = unitOfWork;
         this.userRepository = userRepository;
         this.configuration = configuration;
+        this.mapper = mapper;
     }
 
     public async Task<int> RegisterUser(UserDto dto, CancellationToken cancellationToken)
@@ -70,4 +71,11 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
     {
         return mapper.Map<UserDto>(userRepository.GetByEmail(email, cancellationToken));
     }
+
+    public async Task<UserDto> GetUserByRefreshToken(Guid refreshToken, CancellationToken cancellationToken)
+    {
+        var user = await userRepository.GetByRefreshToken(refreshToken, cancellationToken);
+        return mapper.Map<UserDto>(user);
+    }
+
 }

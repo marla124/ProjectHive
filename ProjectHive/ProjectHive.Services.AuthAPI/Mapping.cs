@@ -16,5 +16,6 @@ public class Mapping : Profile
         CreateMap<UserDto, UserViewModel>().ReverseMap();
         CreateMap<UserDto, CreateUserRequestViewModel>().ReverseMap();
         CreateMap<UserDto, UpdateUserRequestViewModel>().ReverseMap();
+        CreateMap<RefreshToken, RefreshTokenDto>().ReverseMap();
     }
 }

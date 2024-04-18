@@ -7,6 +7,7 @@ public interface IUnitOfWork
 {
     public IRepository<User, ProjectHiveAuthDbContext> UserRepository { get; }
     public IRepository<UserRole, ProjectHiveAuthDbContext> UserRoleRepository { get; }
+    public IAuthRepository AuthRepository { get; }
 
     Task<int> Commit();
 }

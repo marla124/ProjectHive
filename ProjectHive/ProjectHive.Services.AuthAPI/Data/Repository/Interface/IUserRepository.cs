@@ -8,4 +8,6 @@ public interface IUserRepository : IRepository<User, ProjectHiveAuthDbContext>
 {
     public Task<User> GetByEmail(string email, CancellationToken cancellationToken,
             params Expression<Func<User, object>>[] includes);
+
+    public Task<User> GetByRefreshToken(Guid refreshToken, CancellationToken cancellationToken);
 }
