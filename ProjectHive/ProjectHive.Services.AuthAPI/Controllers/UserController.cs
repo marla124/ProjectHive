@@ -34,9 +34,8 @@ public class UserController(IUserService userService, IMapper mapper) : Controll
     {
         var dto = mapper.Map<UserDto>(request);
 
-        var user = await userService.RegisterUser(dto, cancellationToken);
-
-        //mapper.Map<UserViewModel>(user);
+        mapper.Map<UserViewModel>(await userService.RegisterUser(dto, cancellationToken));
+        var user = await userService.GetByEmail(request.Email, cancellationToken);
         return Created($"users/{user.Id}", null);
     }
 

@@ -25,21 +25,11 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
         this._mapper = mapper;
     }
 
-    public async Task<User> RegisterUser(UserDto dto, CancellationToken cancellationToken)
+    public async Task<int> RegisterUser(UserDto dto, CancellationToken cancellationToken)
     {
         var userRole = await _unitOfWork.UserRoleRepository
         .FindBy(role => role.Role
         .Equals("User")).FirstOrDefaultAsync(cancellationToken);
-
-        var userRole1 = new UserRole()
-        {
-            Id = Guid.NewGuid(),
-            Role = Guid.NewGuid().ToString()
-        };
-
-        await _unitOfWork.UserRoleRepository.CreateOne(userRole1, cancellationToken);
-        await _unitOfWork.Commit(cancellationToken);
-
         var user = new User()
         {
             Id = Guid.NewGuid(),
@@ -47,13 +37,11 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
             PasswordHash = MdHashGenerate(dto.Password),
             UpdatedAt = DateTime.UtcNow,
             CreatedAt = DateTime.UtcNow,
-            UserRoleId = userRole1.Id,
+            UserRoleId = userRole.Id,
         };
         await _unitOfWork.UserRepository.CreateOne(user, cancellationToken);
 
-        await _unitOfWork.Commit(cancellationToken);
-
-        return user;
+        return await _unitOfWork.Commit(cancellationToken);
     }
     private string MdHashGenerate(string input)
     {
