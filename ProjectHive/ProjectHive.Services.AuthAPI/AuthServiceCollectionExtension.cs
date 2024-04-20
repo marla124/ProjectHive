@@ -17,7 +17,12 @@ public static class AuthServiceCollectionExtension
     (this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Default");
-        services.AddDbContext<ProjectHiveAuthDbContext>(opt => opt.UseNpgsql(connectionString));
+        //services.AddDbContext<ProjectHiveAuthDbContext>(opt => opt.UseNpgsql(connectionString));
+
+        services.AddDbContext<ProjectHiveAuthDbContext>(options =>
+        {
+            options.UseInMemoryDatabase("InMemoryProjectTest");
+        });
 
         services.AddScoped<IAuthRepository, AuthRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
