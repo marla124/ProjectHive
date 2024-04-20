@@ -12,7 +12,8 @@ public interface IRepository<TEntity, TDbContext> where TEntity : BaseEntity
     Task DeleteById(Guid id, CancellationToken cancellationToken);
     Task DeleteMany(IEnumerable<TEntity> entities, CancellationToken cancellationToken);
 
-    Task Commit();
-    public Task<List<TEntity>> FindBy();
-    public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes);
+    Task Commit(CancellationToken cancellationToken);
+    public Task<List<TEntity>> FindBy(CancellationToken cancellationToken);
+    public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> expression,
+        params Expression<Func<TEntity, object>>[] includes);
 }

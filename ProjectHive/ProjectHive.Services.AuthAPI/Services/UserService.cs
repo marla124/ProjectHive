@@ -12,24 +12,24 @@ namespace ProjectHive.Services.AuthAPI.Services;
 
 public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUserService
 {
-    private readonly IUserRepository userRepository;
-    private readonly IUnitOfWork unitOfWork;
-    private readonly IConfiguration configuration;
-    private readonly IMapper mapper;
+    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IConfiguration _configuration;
+    private readonly IMapper _mapper;
     public UserService(IUserRepository userRepository, IMapper mapper,
         IUnitOfWork unitOfWork, IConfiguration configuration) : base(userRepository, mapper)
     {
-        this.unitOfWork = unitOfWork;
-        this.userRepository = userRepository;
-        this.configuration = configuration;
-        this.mapper = mapper;
+        this._unitOfWork = unitOfWork;
+        this._userRepository = userRepository;
+        this._configuration = configuration;
+        this._mapper = mapper;
     }
 
     public async Task<int> RegisterUser(UserDto dto, CancellationToken cancellationToken)
     {
-        var userRole = await unitOfWork.UserRoleRepository
+        var userRole = await _unitOfWork.UserRoleRepository
         .FindBy(role => role.Role
-        .Equals("User")).FirstOrDefaultAsync();
+        .Equals("User")).FirstOrDefaultAsync(cancellationToken);
         var user = new User()
         {
             Id = Guid.NewGuid(),
@@ -39,15 +39,15 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
             CreatedAt = DateTime.UtcNow,
             UserRoleId = userRole.Id,
         };
-        await unitOfWork.UserRepository.CreateOne(user, cancellationToken);
+        await _unitOfWork.UserRepository.CreateOne(user, cancellationToken);
 
-        return await unitOfWork.Commit();
+        return await _unitOfWork.Commit(cancellationToken);
     }
     private string MdHashGenerate(string input)
     {
         using (MD5 md5 = MD5.Create())
         {
-            var salt = configuration["AppSettings:PasswordSalt"];
+            var salt = _configuration["AppSettings:PasswordSalt"];
             byte[] inputBytes = Encoding.UTF8.GetBytes($"{input}{salt}");
             byte[] HashBytes = md5.ComputeHash(inputBytes);
             return Convert.ToHexString(HashBytes);
@@ -55,27 +55,27 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
     }
     public bool IsUserExists(string email)
     {
-        return unitOfWork.UserRepository
+        return _unitOfWork.UserRepository
             .FindBy(user => user.Email.Equals(email)).Any();
     }
 
-    public async Task<bool> CheckPasswordCorrect(string email, string password)
+    public async Task<bool> CheckPasswordCorrect(string email, string password, CancellationToken cancellationToken)
     {
-        var currentPasswordHash = (await unitOfWork.UserRepository
-            .FindBy(user => user.Email.Equals(email)).FirstOrDefaultAsync())?.PasswordHash;
+        var currentPasswordHash = (await _unitOfWork.UserRepository
+            .FindBy(user => user.Email.Equals(email)).FirstOrDefaultAsync(cancellationToken))?.PasswordHash;
         var passwordHash = MdHashGenerate(password);
         return currentPasswordHash?.Equals(passwordHash) ?? false;
     }
 
     public async Task<UserDto> GetByEmail(string email, CancellationToken cancellationToken)
     {
-        return mapper.Map<UserDto>(userRepository.GetByEmail(email, cancellationToken));
+        return _mapper.Map<UserDto>(_userRepository.GetByEmail(email, cancellationToken));
     }
 
     public async Task<UserDto> GetUserByRefreshToken(Guid refreshToken, CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetByRefreshToken(refreshToken, cancellationToken);
-        return mapper.Map<UserDto>(user);
+        var user = await _userRepository.GetByRefreshToken(refreshToken, cancellationToken);
+        return _mapper.Map<UserDto>(user);
     }
 
 }

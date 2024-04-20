@@ -4,7 +4,7 @@ using ProjectHive.Services.AuthAPI.Dto;
 using ProjectHive.Services.AuthAPI.Model;
 using ProjectHive.Services.AuthAPI.Models;
 using ProjectHive.Services.AuthAPI.Models.RequestModel;
-namespace ProjectHive.Services.ProjectsAPI;
+namespace ProjectHive.Services.AuthAPI;
 
 public class Mapping : Profile
 {

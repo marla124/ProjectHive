@@ -9,5 +9,5 @@ public interface IUnitOfWork
     public IRepository<UserRole, ProjectHiveAuthDbContext> UserRoleRepository { get; }
     public IAuthRepository AuthRepository { get; }
 
-    Task<int> Commit();
+    Task<int> Commit(CancellationToken cancellationToken);
 }

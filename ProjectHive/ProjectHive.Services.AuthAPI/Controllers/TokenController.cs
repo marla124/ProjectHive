@@ -10,7 +10,7 @@ public class TokenController(ITokenService tokenService, IUserService userServic
     [Route("[action]")]
     public async Task<ActionResult> GenerateToken(LoginModel request, CancellationToken cancellationToken)
     {
-        var isUserCorrect = await userService.CheckPasswordCorrect(request.Email, request.Password);
+        var isUserCorrect = await userService.CheckPasswordCorrect(request.Email, request.Password, cancellationToken);
         if (isUserCorrect)
         {
             var userAgent = HttpContext.Request.Headers["User-Agent"].ToString();
@@ -48,8 +48,8 @@ public class TokenController(ITokenService tokenService, IUserService userServic
     [Route("Revoke")]
     public async Task<IActionResult> RevokeToken(RefreshTokenModel request, CancellationToken cancellationToken)
     {
-        var IsRefreshTokenValid = await tokenService.CheckRefreshToken(request.RefreshToken, cancellationToken);
-        if (IsRefreshTokenValid)
+        var isRefreshTokenValid = await tokenService.CheckRefreshToken(request.RefreshToken, cancellationToken);
+        if (isRefreshTokenValid)
         {
             await tokenService.RemoveRefreshToken(request.RefreshToken, cancellationToken);
             return Ok();

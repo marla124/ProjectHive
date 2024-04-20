@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjectHive.Service.Core\ProjectHive.Service.Core.csproj" />
+    <ProjectReference Include="..\ProjectHive.Service.Core\ProjectHive.Services.Core.csproj" />
   </ItemGroup>
 
 </Project>

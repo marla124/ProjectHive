@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.AuthAP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.IntegrationTests", "ProjectHive.IntegrationTests\ProjectHive.IntegrationTests.csproj", "{72F0880E-023D-4019-B1A6-61F0A39AC150}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectHive.Service.Core", "ProjectHive.Service.Core\ProjectHive.Service.Core.csproj", "{3806833F-6818-48D5-853E-F7CCEBF162A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.Core", "ProjectHive.Service.Core\ProjectHive.Services.Core.csproj", "{3806833F-6818-48D5-853E-F7CCEBF162A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

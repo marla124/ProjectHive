@@ -16,8 +16,8 @@ public class UnitOfWork(
     public IRepository<UserRole, ProjectHiveAuthDbContext> UserRoleRepository { get; } = userRoleRepository;
     public IAuthRepository AuthRepository { get; } = authRepository;
 
-    public async Task<int> Commit()
+    public async Task<int> Commit(CancellationToken cancellationToken)
     {
-        return await dbContext.SaveChangesAsync();
+        return await dbContext.SaveChangesAsync(cancellationToken);
     }
 }
