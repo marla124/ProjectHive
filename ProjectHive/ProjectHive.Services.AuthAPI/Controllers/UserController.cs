@@ -8,6 +8,8 @@ using ProjectHive.Services.AuthAPI.Services;
 
 namespace ProjectHive.Services.AuthAPI.Controllers;
 
+[Route("api/[controller]")]
+[ApiController]
 public class UserController(IUserService userService, IMapper mapper) : Controller
 {
     [HttpGet("[action]/{id}")]
@@ -28,13 +30,12 @@ public class UserController(IUserService userService, IMapper mapper) : Controll
         return Ok();
     }
 
-    [HttpPost]
-    [Route("[action]")]
+    [HttpPost("[action]")]
     public async Task<IActionResult> CreateUser(RegisterModel request, CancellationToken cancellationToken)
     {
         var dto = mapper.Map<UserDto>(request);
 
-        mapper.Map<UserViewModel>(await userService.RegisterUser(dto, cancellationToken));
+        await userService.RegisterUser(dto, cancellationToken);
         var user = await userService.GetByEmail(request.Email, cancellationToken);
         return Created($"users/{user.Id}", null);
     }

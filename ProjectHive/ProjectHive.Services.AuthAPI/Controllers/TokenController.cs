@@ -3,7 +3,8 @@ using ProjectHive.Services.AuthAPI.Models;
 using ProjectHive.Services.AuthAPI.Services;
 
 namespace ProjectHive.Services.AuthAPI.Controllers;
-
+[Route("api/[controller]")]
+[ApiController]
 public class TokenController(ITokenService tokenService, IUserService userService) : Controller
 {
     [HttpPost]

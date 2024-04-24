@@ -49,8 +49,9 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
             StatusProjectId = Guid.NewGuid(),
             CreatorUserId = Guid.NewGuid()
         };
+        var uri = $"{BaseUrl}/CreateProject";
         var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync($"{BaseUrl}/CreateProject", content);
+        var response = await _httpClient.PostAsync(uri, content);
 
         response.EnsureSuccessStatusCode();
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);

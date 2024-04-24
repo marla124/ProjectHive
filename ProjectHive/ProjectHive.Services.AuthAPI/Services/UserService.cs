@@ -69,7 +69,7 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
 
     public async Task<UserDto> GetByEmail(string email, CancellationToken cancellationToken)
     {
-        return _mapper.Map<UserDto>(_userRepository.GetByEmail(email, cancellationToken));
+        return _mapper.Map<UserDto>(await _userRepository.GetByEmail(email, cancellationToken));
     }
 
     public async Task<UserDto> GetUserByRefreshToken(Guid refreshToken, CancellationToken cancellationToken)
