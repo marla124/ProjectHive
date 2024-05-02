@@ -2,23 +2,20 @@
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectHive.Services.AuthAPI.Data;
-using ProjectHive.Services.AuthAPI.Data.Entities;
 using ProjectHive.Services.ProjectsAPI;
 using ProjectHive.Services.ProjectsAPI.Data;
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
 
-namespace ProjectHive.IntegrationTests;
+namespace ProjectHive.IntegrationTestsForProject;
 
-public class BaseIntegrationTest : IDisposable
+public class BaseIntegrationTestForProject : IDisposable
 {
     private readonly ProjectHiveProjectDbContext? _dbContextForProject;
-    private readonly ProjectHiveAuthDbContext? _dbContextForAuth;
 
     protected readonly HttpClient _httpClient;
     private readonly WebApplicationFactory<Program> _webApplicationFactory;
 
-    public BaseIntegrationTest()
+    public BaseIntegrationTestForProject()
     {
         _webApplicationFactory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
         {
@@ -32,15 +29,6 @@ public class BaseIntegrationTest : IDisposable
                 {
                     options.UseInMemoryDatabase("InMemoryProjectTest");
                 });
-
-                var descriptorAuth = services.SingleOrDefault(d => d.ServiceType ==
-                        typeof(DbContextOptions<ProjectHiveAuthDbContext>));
-                if (descriptorAuth != null)
-                    services.Remove(descriptorAuth);
-                services.AddDbContext<ProjectHiveAuthDbContext>(options =>
-                {
-                    options.UseInMemoryDatabase("InMemoryAuthTest");
-                });
             });
         });
 
@@ -49,9 +37,6 @@ public class BaseIntegrationTest : IDisposable
         _httpClient = _webApplicationFactory.CreateClient();
         _dbContextForProject = serviceProvider.GetService<ProjectHiveProjectDbContext>()!;
         _dbContextForProject?.Database.EnsureCreated();
-
-        _dbContextForAuth = serviceProvider.GetService<ProjectHiveAuthDbContext>()!;
-        _dbContextForAuth?.Database.EnsureCreated();
     }
 
     protected async Task<Project> PopulateProgectToDatabase()
@@ -71,29 +56,11 @@ public class BaseIntegrationTest : IDisposable
 
         return project;
     }
-    protected async Task<RefreshToken> PopulateTokenToDatabase()
-    {
-        var token = new RefreshToken
-        {
-            Id = Guid.NewGuid(),
-            CreatedAt = DateTime.Now,
-            ExpiringAt = DateTime.Now,
-            AssociateDeviceName = "name",
-            UserId = Guid.NewGuid()
-        };
-
-        _dbContextForAuth!.RefreshTokens.Add(token);
-        await _dbContextForAuth.SaveChangesAsync();
-
-        return token;
-    }
 
     public void Dispose()
     {
         _dbContextForProject?.Database.EnsureDeleted();
         _dbContextForProject?.Dispose();
-        _dbContextForAuth?.Database.EnsureDeleted();
-        _dbContextForAuth?.Dispose();
         _httpClient.Dispose();
 
         GC.SuppressFinalize(this);

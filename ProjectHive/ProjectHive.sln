@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.Report
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.AuthAPI", "ProjectHive.Services.AuthAPI\ProjectHive.Services.AuthAPI.csproj", "{7838206C-6C3E-43B4-880D-6F108C09416E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.IntegrationTests", "ProjectHive.IntegrationTests\ProjectHive.IntegrationTests.csproj", "{72F0880E-023D-4019-B1A6-61F0A39AC150}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.IntegrationTestsForProjects", "ProjectHive.IntegrationTests\ProjectHive.IntegrationTestsForProjects.csproj", "{72F0880E-023D-4019-B1A6-61F0A39AC150}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.Core", "ProjectHive.Service.Core\ProjectHive.Services.Core.csproj", "{3806833F-6818-48D5-853E-F7CCEBF162A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectHive.IntegrationTestsForAuth", "ProjectHive.IntegrationTestsForAuth\ProjectHive.IntegrationTestsForAuth.csproj", "{871CEFF2-C5D5-4182-8A25-D7952DED5D13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{3806833F-6818-48D5-853E-F7CCEBF162A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3806833F-6818-48D5-853E-F7CCEBF162A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3806833F-6818-48D5-853E-F7CCEBF162A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{871CEFF2-C5D5-4182-8A25-D7952DED5D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{871CEFF2-C5D5-4182-8A25-D7952DED5D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{871CEFF2-C5D5-4182-8A25-D7952DED5D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{871CEFF2-C5D5-4182-8A25-D7952DED5D13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

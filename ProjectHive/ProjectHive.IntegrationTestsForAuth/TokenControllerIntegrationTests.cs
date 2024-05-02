@@ -3,18 +3,19 @@ using ProjectHive.Services.AuthAPI.Models;
 using System.Net;
 using System.Text;
 
-namespace ProjectHive.IntegrationTests;
+namespace ProjectHive.IntegrationTestsForAuth;
 
-public class TokenControllerIntegrationTests : BaseIntegrationTest
+public class TokenControllerIntegrationTests : BaseIntegrationTestForAuth
 {
     private const string BaseUrl = "/api/Token";
 
     [Fact]
     public async Task GenerateToken_ReturnSuccess()
     {
+        var user = await PopulateUserToDatabase();
         var model = new LoginModel
         {
-            Email = "testemail2@gmail.com",
+            Email = user.Email,
             Password = "password"
         };
         var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
@@ -28,9 +29,10 @@ public class TokenControllerIntegrationTests : BaseIntegrationTest
     [Fact]
     public async Task Refresh_ReturnSuccess()
     {
+        var token = await PopulateTokenToDatabase();
         var model = new RefreshTokenModel
         {
-            RefreshToken = Guid.NewGuid(),
+            RefreshToken = token.Id,
         };
         var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
         var uri = $"{BaseUrl}/Refresh";
@@ -44,8 +46,12 @@ public class TokenControllerIntegrationTests : BaseIntegrationTest
     public async Task DeleteById_ReturnSuccess()
     {
         var token = await PopulateTokenToDatabase();
-
-        var response = await _httpClient.DeleteAsync($"{BaseUrl}/Revoke/{token.Id}");
+        var model = new RefreshTokenModel()
+        {
+            RefreshToken = token.Id
+        };
+        var uri = $"{BaseUrl}/Revoke/{model.RefreshToken}";
+        var response = await _httpClient.DeleteAsync(uri);
         response.EnsureSuccessStatusCode();
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }

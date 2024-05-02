@@ -46,13 +46,13 @@ public class TokenController(ITokenService tokenService, IUserService userServic
     }
 
     [HttpDelete]
-    [Route("Revoke")]
-    public async Task<IActionResult> RevokeToken(RefreshTokenModel request, CancellationToken cancellationToken)
+    [Route("Revoke/{refreshToken}")]
+    public async Task<IActionResult> RevokeToken(Guid refreshToken, CancellationToken cancellationToken)
     {
-        var isRefreshTokenValid = await tokenService.CheckRefreshToken(request.RefreshToken, cancellationToken);
+        var isRefreshTokenValid = await tokenService.CheckRefreshToken(refreshToken, cancellationToken);
         if (isRefreshTokenValid)
         {
-            await tokenService.RemoveRefreshToken(request.RefreshToken, cancellationToken);
+            await tokenService.RemoveRefreshToken(refreshToken, cancellationToken);
             return Ok();
         }
         return Unauthorized();

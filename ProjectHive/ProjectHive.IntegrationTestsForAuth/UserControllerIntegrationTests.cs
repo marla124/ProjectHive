@@ -4,9 +4,9 @@ using ProjectHive.Services.AuthAPI.Models;
 using System.Net;
 using System.Text;
 
-namespace ProjectHive.IntegrationTests;
+namespace ProjectHive.IntegrationTestsForAuth;
 
-public class UserControllerIntegrationTests : BaseIntegrationTest
+public class UserControllerIntegrationTests : BaseIntegrationTestForAuth
 {
     private const string BaseUrl = "/api/User";
 
@@ -15,7 +15,7 @@ public class UserControllerIntegrationTests : BaseIntegrationTest
     {
         var model = new RegisterModel
         {
-            Email = "testemail2@gmail.com",
+            Email = "testemail3@gmail.com",
             Password = "password",
             PasswordConfirmation = "password"
         };
