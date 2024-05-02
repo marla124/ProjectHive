@@ -18,7 +18,11 @@ jobs:
       with:
         dotnet-version: '5.0.408'
     - name: Restore dependencies
-      run: dotnet restore
+      run: |
+        dotnet restore \ProjectHive.Services.AuthAPI\ProjectHive.Services.AuthAPI.csproj
+        dotnet restore \ProjectHive.Services.ProjectsAPI\ProjectHive.Services.ProjectsAPI.csproj
+        dotnet restore \ProjectHive.Services.NotificationsAPI\ProjectHive.Services.NotificationsAPI.csproj
+        dotnet restore \ProjectHive.Services.ReportsAPI\ProjectHive.Services.ReportsAPI.csproj
     - name: Build
       run: dotnet build --no-restore
     - name: Test
