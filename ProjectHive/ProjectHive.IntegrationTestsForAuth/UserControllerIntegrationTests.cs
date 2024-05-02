@@ -24,7 +24,7 @@ public class UserControllerIntegrationTests : BaseIntegrationTestForAuth
         var response = await _httpClient.PostAsync(uri, content);
 
         response.EnsureSuccessStatusCode();
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         var returnedUser = JsonConvert.DeserializeObject<UserViewModel>(await response.Content.ReadAsStringAsync());
 
         Assert.Equal(model.Email, returnedUser!.Email);

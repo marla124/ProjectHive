@@ -1,3 +1,5 @@
+using ProjectHive.Services.AuthAPI.Extensions;
+
 namespace ProjectHive.Services.AuthAPI;
 
 public class Program
@@ -14,6 +16,9 @@ public class Program
 
 
         var app = builder.Build();
+
+        // Seed the database
+        app.PrepareDatabase().GetAwaiter().GetResult();
 
         if (app.Environment.IsDevelopment())
         {
