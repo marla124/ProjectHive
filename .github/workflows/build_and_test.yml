@@ -19,10 +19,12 @@ jobs:
         dotnet-version: '5.0.408'
     - name: Restore dependencies
       run: |
-        dotnet restore E:\ProjectHive\ProjectHive\ProjectHive.Services.AuthAPI\ProjectHive.Services.AuthAPI.csproj
-        dotnet restore E:\ProjectHive\ProjectHive\ProjectHive.Services.ProjectsAPI\ProjectHive.Services.ProjectsAPI.csproj
-        dotnet restore E:\ProjectHive\ProjectHive\ProjectHive.Services.NotificationsAPI\ProjectHive.Services.NotificationsAPI.csproj
-        dotnet restore E:\ProjectHive\ProjectHive\ProjectHive.Services.ReportsAPI\ProjectHive.Services.ReportsAPI.csproj
+        dotnet restore ProjectHive/ProjectHive.Services.AuthAPI/ProjectHive.Services.AuthAPI.csproj
+        dotnet restore ProjectHive/ProjectHive.Services.ProjectsAPI/ProjectHive.Services.ProjectsAPI.csproj
+        dotnet restore ProjectHive/ProjectHive.Services.NotificationsAPI/ProjectHive.Services.NotificationsAPI.csproj
+        dotnet restore ProjectHive/ProjectHive.Services.ReportsAPI/ProjectHive.Services.ReportsAPI.csproj
+        dotnet restore ProjectHive/ProjectHive.Services.Core/ProjectHive.Services.Core.csproj
+        dotnet restore ProjectHive/ProjectHive.csproj
     - name: Build
       run: dotnet build --no-restore
     - name: Test
