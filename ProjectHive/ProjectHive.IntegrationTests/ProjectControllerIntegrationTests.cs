@@ -4,9 +4,9 @@ using ProjectHive.Services.ProjectsAPI.Models.RequestModel;
 using System.Net;
 using System.Text;
 
-namespace ProjectHive.IntegrationTestsForProject;
+namespace ProjectHive.ProjectAPI.IntegrationTests;
 
-public class ProjectControllerIntegrationTests : BaseIntegrationTestForProject
+public class ProjectControllerIntegrationTests : BaseIntegrationTest
 {
     private const string BaseUrl = "/api/Project";
 

@@ -4,9 +4,9 @@ using ProjectHive.Services.AuthAPI.Models;
 using System.Net;
 using System.Text;
 
-namespace ProjectHive.IntegrationTestsForAuth;
+namespace ProjectHive.AuthAPI.IntegrationTests;
 
-public class UserControllerIntegrationTests : BaseIntegrationTestForAuth
+public class UserControllerIntegrationTests : BaseIntegrationTest
 {
     private const string BaseUrl = "/api/User";
 

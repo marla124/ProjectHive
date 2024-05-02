@@ -6,16 +6,16 @@ using ProjectHive.Services.AuthAPI;
 using ProjectHive.Services.AuthAPI.Data;
 using ProjectHive.Services.AuthAPI.Data.Entities;
 
-namespace ProjectHive.IntegrationTestsForAuth;
+namespace ProjectHive.AuthAPI.IntegrationTests;
 
-public class BaseIntegrationTestForAuth : IDisposable
+public class BaseIntegrationTest : IDisposable
 {
     private readonly ProjectHiveAuthDbContext? _dbContextForAuth;
 
     protected readonly HttpClient _httpClient;
     private readonly WebApplicationFactory<Program> _webApplicationFactory;
 
-    public BaseIntegrationTestForAuth()
+    public BaseIntegrationTest()
     {
         _webApplicationFactory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
         {

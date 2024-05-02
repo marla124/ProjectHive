@@ -6,16 +6,16 @@ using ProjectHive.Services.ProjectsAPI;
 using ProjectHive.Services.ProjectsAPI.Data;
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
 
-namespace ProjectHive.IntegrationTestsForProject;
+namespace ProjectHive.ProjectAPI.IntegrationTests;
 
-public class BaseIntegrationTestForProject : IDisposable
+public class BaseIntegrationTest : IDisposable
 {
     private readonly ProjectHiveProjectDbContext? _dbContextForProject;
 
     protected readonly HttpClient _httpClient;
     private readonly WebApplicationFactory<Program> _webApplicationFactory;
 
-    public BaseIntegrationTestForProject()
+    public BaseIntegrationTest()
     {
         _webApplicationFactory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
         {
