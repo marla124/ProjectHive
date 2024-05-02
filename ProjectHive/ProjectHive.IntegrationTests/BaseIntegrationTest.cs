@@ -6,11 +6,12 @@ using ProjectHive.Services.ProjectsAPI;
 using ProjectHive.Services.ProjectsAPI.Data;
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
 
-namespace ProjectHive.IntegrationTests;
+namespace ProjectHive.ProjectAPI.IntegrationTests;
 
 public class BaseIntegrationTest : IDisposable
 {
-    private readonly ProjectHiveProjectDbContext? _dbContext;
+    private readonly ProjectHiveProjectDbContext? _dbContextForProject;
+
     protected readonly HttpClient _httpClient;
     private readonly WebApplicationFactory<Program> _webApplicationFactory;
 
@@ -20,10 +21,10 @@ public class BaseIntegrationTest : IDisposable
         {
             builder.ConfigureTestServices(services =>
             {
-                var descriptor = services.SingleOrDefault(d => d.ServiceType ==
+                var descriptorProject = services.SingleOrDefault(d => d.ServiceType ==
                         typeof(DbContextOptions<ProjectHiveProjectDbContext>));
-                if (descriptor != null)
-                    services.Remove(descriptor);
+                if (descriptorProject != null)
+                    services.Remove(descriptorProject);
                 services.AddDbContext<ProjectHiveProjectDbContext>(options =>
                 {
                     options.UseInMemoryDatabase("InMemoryProjectTest");
@@ -34,8 +35,8 @@ public class BaseIntegrationTest : IDisposable
         var serviceProvider = _webApplicationFactory.Services.CreateScope().ServiceProvider;
 
         _httpClient = _webApplicationFactory.CreateClient();
-        _dbContext = serviceProvider.GetService<ProjectHiveProjectDbContext>()!;
-        _dbContext?.Database.EnsureCreated();
+        _dbContextForProject = serviceProvider.GetService<ProjectHiveProjectDbContext>()!;
+        _dbContextForProject?.Database.EnsureCreated();
     }
 
     protected async Task<Project> PopulateProgectToDatabase()
@@ -50,16 +51,16 @@ public class BaseIntegrationTest : IDisposable
             StatusProjectId = Guid.NewGuid(),
         };
 
-        _dbContext!.Projects.Add(project);
-        await _dbContext.SaveChangesAsync();
+        _dbContextForProject!.Projects.Add(project);
+        await _dbContextForProject.SaveChangesAsync();
 
         return project;
     }
 
     public void Dispose()
     {
-        _dbContext?.Database.EnsureDeleted();
-        _dbContext?.Dispose();
+        _dbContextForProject?.Database.EnsureDeleted();
+        _dbContextForProject?.Dispose();
         _httpClient.Dispose();
 
         GC.SuppressFinalize(this);

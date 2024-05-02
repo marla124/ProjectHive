@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjectHive.Services.ProjectsAPI\ProjectHive.Services.ProjectsAPI.csproj" />
+    <ProjectReference Include="..\ProjectHive.Services.AuthAPI\ProjectHive.Services.AuthAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

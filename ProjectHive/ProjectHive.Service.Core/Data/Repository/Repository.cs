@@ -16,13 +16,13 @@ public class Repository<TEntity, TDbContext> : IRepository<TEntity, TDbContext> 
 
     public async Task<IEnumerable<TEntity>> CreateMany(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
     {
-        await _dbSet.AddRangeAsync(entities);
+        await _dbSet.AddRangeAsync(entities, cancellationToken);
         return entities;
     }
 
     public async Task<TEntity> CreateOne(TEntity entity, CancellationToken cancellationToken)
     {
-        await _dbSet.AddAsync(entity);
+        await _dbSet.AddAsync(entity, cancellationToken);
         return entity;
     }
 
@@ -58,12 +58,12 @@ public class Repository<TEntity, TDbContext> : IRepository<TEntity, TDbContext> 
                 (current, include)
                     => current.Include(include));
         }
-        return await resultQuery.FirstOrDefaultAsync(entity => entity.Id.Equals(id));
+        return await resultQuery.FirstOrDefaultAsync(entity => entity.Id.Equals(id), cancellationToken);
     }
 
     public async Task<TEntity> GetByIdAsNoTracking(Guid id, CancellationToken cancellationToken)
     {
-        return await _dbSet.AsNoTracking().FirstOrDefaultAsync(entities => entities.Id.Equals(id));
+        return await _dbSet.AsNoTracking().FirstOrDefaultAsync(entities => entities.Id.Equals(id), cancellationToken);
     }
 
 
@@ -73,8 +73,24 @@ public class Repository<TEntity, TDbContext> : IRepository<TEntity, TDbContext> 
         return entity;
     }
 
-    public async Task Commit()
+    public async Task Commit(CancellationToken cancellationToken)
     {
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes)
+    {
+        var resultQuery = _dbSet.Where(expression);
+        if (includes.Any())
+        {
+            resultQuery = includes.Aggregate(resultQuery,
+                (current, include) => current.Include(include));
+        }
+        return resultQuery;
+    }
+
+    public async Task<List<TEntity>> FindBy(CancellationToken cancellationToken)
+    {
+        return await _dbSet.ToListAsync(cancellationToken);
     }
 }

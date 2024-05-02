@@ -1,9 +1,9 @@
-﻿namespace ProjectHive.Services.AuthAPI.Data.Entities
+﻿using ProjectHive.Services.Core.Data;
+
+namespace ProjectHive.Services.AuthAPI.Data.Entities;
+
+public class UserRole : BaseEntity
 {
-    public class UserRole
-    {
-        public int Id { get; set; }
-        public string Role { get; set; }
-        public List<User> Users { get; set; }
-    }
+    public string Role { get; set; }
+    public List<User> Users { get; set; }
 }

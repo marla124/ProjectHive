@@ -25,14 +25,14 @@ public class Service<TDto, TEntity, TDbContext> : IService<TDto> where TEntity :
     public async Task DeleteById(Guid Id, CancellationToken cancellationToken)
     {
         await _repository.DeleteById(Id, cancellationToken);
-        await _repository.Commit();
+        await _repository.Commit(cancellationToken);
     }
 
     public async Task<TDto?> Create(TDto dto, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<TEntity>(dto);
         var createdEntity = await _repository.CreateOne(entity, cancellationToken);
-        await _repository.Commit();
+        await _repository.Commit(cancellationToken);
         return _mapper.Map<TDto>(createdEntity);
     }
 
@@ -40,7 +40,7 @@ public class Service<TDto, TEntity, TDbContext> : IService<TDto> where TEntity :
     {
         var entity = _mapper.Map<TEntity>(dto);
         var createdEntity = await _repository.Update(entity, cancellationToken);
-        await _repository.Commit();
+        await _repository.Commit(cancellationToken);
         return _mapper.Map<TDto>(createdEntity);
     }
 
@@ -48,13 +48,13 @@ public class Service<TDto, TEntity, TDbContext> : IService<TDto> where TEntity :
     {
         var entities = _mapper.Map<IEnumerable<TEntity>>(dtos);
         await _repository.CreateMany(entities, cancellationToken);
-        await _repository.Commit();
+        await _repository.Commit(cancellationToken);
     }
 
     public async Task DeleteMany(IEnumerable<TDto> dtos, CancellationToken cancellationToken)
     {
         var entities = _mapper.Map<IEnumerable<TEntity>>(dtos);
         await _repository.DeleteMany(entities, cancellationToken);
-        await _repository.Commit();
+        await _repository.Commit(cancellationToken);
     }
 }
