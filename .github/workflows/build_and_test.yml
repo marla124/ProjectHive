@@ -18,13 +18,7 @@ jobs:
       with:
         dotnet-version: '8.0.x'
     - name: Restore dependencies
-      run: |
-        dotnet restore ProjectHive/ProjectHive.Services.AuthAPI/ProjectHive.Services.AuthAPI.csproj
-        dotnet restore ProjectHive/ProjectHive.Services.ProjectsAPI/ProjectHive.Services.ProjectsAPI.csproj
-        dotnet restore ProjectHive/ProjectHive.Services.NotificationsAPI/ProjectHive.Services.NotificationsAPI.csproj
-        dotnet restore ProjectHive/ProjectHive.Services.ReportsAPI/ProjectHive.Services.ReportsAPI.csproj
-        dotnet restore ProjectHive/ProjectHive.Services.Core/ProjectHive.Services.Core.csproj
-        dotnet restore ProjectHive/ProjectHive.csproj
+      run: dotnet tool restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
