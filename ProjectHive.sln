@@ -5,19 +5,19 @@ VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{8585ABE2-8433-4D9F-985C-36163C3556B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.ProjectsAPI", "ProjectHive.Services.ProjectsAPI\ProjectHive.Services.ProjectsAPI.csproj", "{6038F13D-2B8D-4262-98AB-30C69B146119}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.ProjectsAPI", "ProjectHive\ProjectHive.Services.ProjectsAPI\ProjectHive.Services.ProjectsAPI.csproj", "{6038F13D-2B8D-4262-98AB-30C69B146119}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.NotificationsAPI", "ProjectHive.Services.NotificationsAPI\ProjectHive.Services.NotificationsAPI.csproj", "{439DD8B3-BDBA-413D-A8DC-B90E1C28CF0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.NotificationsAPI", "ProjectHive\ProjectHive.Services.NotificationsAPI\ProjectHive.Services.NotificationsAPI.csproj", "{439DD8B3-BDBA-413D-A8DC-B90E1C28CF0E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.ReportsAPI", "ProjectHive.Services.ReportsAPI\ProjectHive.Services.ReportsAPI.csproj", "{B6098E75-F496-48A5-BC5A-DD1ABE461BC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.ReportsAPI", "ProjectHive\ProjectHive.Services.ReportsAPI\ProjectHive.Services.ReportsAPI.csproj", "{B6098E75-F496-48A5-BC5A-DD1ABE461BC9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.AuthAPI", "ProjectHive.Services.AuthAPI\ProjectHive.Services.AuthAPI.csproj", "{7838206C-6C3E-43B4-880D-6F108C09416E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.AuthAPI", "ProjectHive\ProjectHive.Services.AuthAPI\ProjectHive.Services.AuthAPI.csproj", "{7838206C-6C3E-43B4-880D-6F108C09416E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.ProjectAPI.IntegrationTests", "ProjectHive.IntegrationTests\ProjectHive.ProjectAPI.IntegrationTests.csproj", "{72F0880E-023D-4019-B1A6-61F0A39AC150}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.ProjectAPI.IntegrationTests", "ProjectHive\ProjectHive.IntegrationTests\ProjectHive.ProjectAPI.IntegrationTests.csproj", "{72F0880E-023D-4019-B1A6-61F0A39AC150}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.Core", "ProjectHive.Service.Core\ProjectHive.Services.Core.csproj", "{3806833F-6818-48D5-853E-F7CCEBF162A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.Services.Core", "ProjectHive\ProjectHive.Service.Core\ProjectHive.Services.Core.csproj", "{3806833F-6818-48D5-853E-F7CCEBF162A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.AuthAPI.IntegrationTests", "ProjectHive.IntegrationTestsForAuth\ProjectHive.AuthAPI.IntegrationTests.csproj", "{871CEFF2-C5D5-4182-8A25-D7952DED5D13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHive.AuthAPI.IntegrationTests", "ProjectHive\ProjectHive.IntegrationTestsForAuth\ProjectHive.AuthAPI.IntegrationTests.csproj", "{871CEFF2-C5D5-4182-8A25-D7952DED5D13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
