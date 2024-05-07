@@ -1,6 +1,7 @@
 ﻿namespace ProjectHive.Services.ProjectsAPI.Models.RequestModel
 {
-    public class UpdateTaskRequestViewModel
+    public class UpdateTaskRequestViewModel : BaseProjectTaskViewModel
     {
+        Guid? Id { get; set; }
     }
 }

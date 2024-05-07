@@ -19,10 +19,10 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
     public UserService(IUserRepository userRepository, IMapper mapper,
         IUnitOfWork unitOfWork, IConfiguration configuration) : base(userRepository, mapper)
     {
-        this._unitOfWork = unitOfWork;
-        this._userRepository = userRepository;
-        this._configuration = configuration;
-        this._mapper = mapper;
+        _unitOfWork = unitOfWork;
+        _userRepository = userRepository;
+        _configuration = configuration;
+        _mapper = mapper;
     }
 
     public async Task<int> RegisterUser(UserDto dto, CancellationToken cancellationToken)

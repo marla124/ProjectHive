@@ -17,7 +17,8 @@ public static class TaskServiceCollectionExtention
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         services.AddScoped<IProjectRepository, ProjectRepository>();
-
         services.AddScoped<IProjectService, ProjectService>();
+        services.AddScoped<IProjectTaskService, ProjectTaskService>();
+        services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
     }
 }

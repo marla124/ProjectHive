@@ -13,8 +13,8 @@ public class UnitOfWork(ProjectHiveProjectDbContext dbContext,
 
     public IRepository<ProjectTask, ProjectHiveProjectDbContext> ProjectTaskRepository => projectTaskRepository;
 
-    public async Task<int> Commit()
+    public async Task<int> Commit(CancellationToken cancellationToken)
     {
-        return await dbContext.SaveChangesAsync();
+        return await dbContext.SaveChangesAsync(cancellationToken);
     }
 }
