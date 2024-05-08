@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProjectHive.Services.ProjectsAPI.Data;
@@ -11,9 +12,11 @@ using ProjectHive.Services.ProjectsAPI.Data;
 namespace ProjectHive.Services.ProjectsAPI.Migrations
 {
     [DbContext(typeof(ProjectHiveProjectDbContext))]
-    partial class ProjectHiveProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240508215657_EditTask")]
+    partial class EditTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,7 +151,7 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
 
                     b.HasIndex("StatusTaskId");
 
-                    b.ToTable("ProjectTasks");
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.StatusTasks", b =>

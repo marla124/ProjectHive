@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProjectHive.Services.Core.Data.Repository;
 using ProjectHive.Services.ProjectsAPI.Business.Services;
 using ProjectHive.Services.ProjectsAPI.Data;
+using ProjectHive.Services.ProjectsAPI.Data.Entities;
 using ProjectHive.Services.ProjectsAPI.Data.Repository;
 using ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase;
 
@@ -14,11 +16,16 @@ public static class TaskServiceCollectionExtention
         var connectionString = configuration.GetConnectionString("Default");
         services.AddDbContext<ProjectHiveProjectDbContext>(opt => opt.UseNpgsql(connectionString));
 
-        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
         services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
+        services.AddScoped<IRepository<Project, ProjectHiveProjectDbContext>, Repository<Project, ProjectHiveProjectDbContext>>();
+        services.AddScoped<IRepository<StatusTasks, ProjectHiveProjectDbContext>, Repository<StatusTasks, ProjectHiveProjectDbContext>>();
+        services.AddScoped<IRepository<ProjectTask, ProjectHiveProjectDbContext>, Repository<ProjectTask, ProjectHiveProjectDbContext>>();
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<IProjectTaskService, ProjectTaskService>();
-        services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
     }
 }

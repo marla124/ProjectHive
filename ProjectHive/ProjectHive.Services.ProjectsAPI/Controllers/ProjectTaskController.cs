@@ -48,7 +48,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         {
             var dto = _mapper.Map<ProjectTaskDto>(request);
 
-            return Ok(_mapper.Map<ProjectTaskViewModel>(await _taskService.Create(dto, cancellationToken)));
+            return Ok(_mapper.Map<ProjectTaskViewModel>(await _taskService.CreateTask(dto, cancellationToken)));
         }
 
         [HttpPost]

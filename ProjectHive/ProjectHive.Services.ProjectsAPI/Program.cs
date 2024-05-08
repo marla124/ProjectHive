@@ -1,3 +1,6 @@
+
+using ProjectHive.Services.ProjectAPI.Extensions;
+
 namespace ProjectHive.Services.ProjectsAPI;
 
 public class Program
@@ -15,6 +18,7 @@ public class Program
         builder.Services.AddSwaggerGen();
         builder.Services.RegisterServicesforProjectApi(builder.Configuration);
         var app = builder.Build();
+        app.PrepareDatabase().GetAwaiter().GetResult();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())

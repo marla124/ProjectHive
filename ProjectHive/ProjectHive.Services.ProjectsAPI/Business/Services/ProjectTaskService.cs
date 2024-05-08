@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ProjectHive.Services.Core.Business;
 using ProjectHive.Services.ProjectsAPI.Data;
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
@@ -21,22 +22,31 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
             _configuration = configuration;
         }
 
-        public async Task<ProjectTaskDto> CreateTask(ProjectTaskDto dto, CancellationToken cancellationToken)
+        public async Task<int> CreateTask(ProjectTaskDto dto, CancellationToken cancellationToken)
         {
-            var task = new ProjectTask()
-            {
-                Deadline = dto.Deadline,
-                Description = dto.Description,
-                Name = dto.Name,
-                CreatedAt = DateTime.UtcNow,
-                Id = dto.Id,
-                ProjectId = dto.ProjectId,
-                StartExecution = dto.StartExecution,
-                StatusTaskId = dto.StatusTaskId,
-            };
-            await _unitOfWork.ProjectTaskRepository.CreateOne(task, cancellationToken);
+            var status = _unitOfWork.StatusTaskRepository.FindBy(s => s.Name == "Open");
 
-            return await _unitOfWork.Commit(cancellationToken);
+            if (status != null)
+            {
+                var task = new ProjectTask()
+                {
+                    Deadline = dto.Deadline,
+                    Description = dto.Description,
+                    Name = dto.Name,
+                    CreatedAt = DateTime.UtcNow,
+                    Id = Guid.NewGuid(),
+                    ProjectId = dto.ProjectId,
+                    StatusTaskId = status.SingleOrDefaultAsync().Result.Id,
+                };
+                await _unitOfWork.ProjectTaskRepository.CreateOne(task, cancellationToken);
+
+                return await _unitOfWork.Commit(cancellationToken);
+            }
+            else
+            {
+                throw new Exception("statusId not found");
+            }
+
         }
     }
 }
