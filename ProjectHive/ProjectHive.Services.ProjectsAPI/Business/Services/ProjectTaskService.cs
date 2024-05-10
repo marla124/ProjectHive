@@ -11,21 +11,23 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
     public class ProjectTaskService : Service<ProjectTaskDto, ProjectTask, ProjectHiveProjectDbContext>, IProjectTaskService
     {
         private readonly IProjectTaskRepository _projectTaskRepository;
+        private readonly IProjectRepository _projectRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        public ProjectTaskService(IProjectTaskRepository projectTaskRepository, IMapper mapper, IUnitOfWork unitOfWork, IConfiguration configuration) : base(projectTaskRepository, mapper)
+        public ProjectTaskService(IProjectTaskRepository projectTaskRepository, IMapper mapper, IUnitOfWork unitOfWork, IConfiguration configuration, IProjectRepository projectRepository) : base(projectTaskRepository, mapper)
         {
             _unitOfWork = unitOfWork;
             _projectTaskRepository = projectTaskRepository;
             _mapper = mapper;
             _configuration = configuration;
+            _projectRepository = projectRepository;
         }
 
         public async Task<int> CreateTask(ProjectTaskDto dto, CancellationToken cancellationToken)
         {
-            var status = _unitOfWork.StatusTaskRepository.FindBy(s => s.Name == "Open");
-
+            var project = await _projectRepository.FindBy(p => p.Name == dto.ProjectName).FirstOrDefaultAsync(cancellationToken);
+            var status = await _unitOfWork.StatusTaskRepository.FindBy(s => s.Name == "Open").FirstOrDefaultAsync(cancellationToken);
             if (status != null)
             {
                 var task = new ProjectTask()
@@ -35,8 +37,8 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
                     Name = dto.Name,
                     CreatedAt = DateTime.UtcNow,
                     Id = Guid.NewGuid(),
-                    ProjectId = dto.ProjectId,
-                    StatusTaskId = status.SingleOrDefaultAsync().Result.Id,
+                    ProjectId = project.Id,
+                    StatusTaskId = status.Id,
                 };
                 await _unitOfWork.ProjectTaskRepository.CreateOne(task, cancellationToken);
 

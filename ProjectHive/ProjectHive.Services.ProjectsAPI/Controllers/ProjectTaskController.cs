@@ -7,6 +7,8 @@ using ProjectHive.Services.ProjectsAPI.Models.RequestModel;
 
 namespace ProjectHive.Services.ProjectsAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class ProjectTaskController : Controller
     {
         private readonly IProjectTaskService _taskService;

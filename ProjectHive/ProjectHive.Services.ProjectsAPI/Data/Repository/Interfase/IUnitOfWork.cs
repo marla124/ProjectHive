@@ -8,6 +8,7 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase
         public IRepository<Project, ProjectHiveProjectDbContext> ProjectRepository { get; }
         public IRepository<ProjectTask, ProjectHiveProjectDbContext> ProjectTaskRepository { get; }
         public IRepository<StatusTasks, ProjectHiveProjectDbContext> StatusTaskRepository { get; }
+        public IRepository<ProjectStatus, ProjectHiveProjectDbContext> ProjectStatusRepository { get; }
 
         Task<int> Commit(CancellationToken cancellationToken);
     }

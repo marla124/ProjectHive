@@ -39,7 +39,7 @@ public class BaseIntegrationTest : IDisposable
         _dbContextForProject?.Database.EnsureCreated();
     }
 
-    protected async Task<Project> PopulateProgectToDatabase()
+    protected async Task<Project> PopulateProgectToDatabaseProject()
     {
         var project = new Project
         {

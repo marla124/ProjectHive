@@ -50,7 +50,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         {
             var dto = _mapper.Map<ProjectDto>(request);
 
-            return Ok(_mapper.Map<ProjectViewModel>(await _projectService.Create(dto, cancellationToken)));
+            return Ok(_mapper.Map<ProjectViewModel>(await _projectService.CreateProject(dto, cancellationToken)));
         }
 
         [HttpPost]

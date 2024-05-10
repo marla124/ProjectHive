@@ -13,7 +13,7 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
     [Fact]
     public async Task GetById_ProjectExists_ReturnSuccess()
     {
-        var project = await PopulateProgectToDatabase();
+        var project = await PopulateProgectToDatabaseProject();
 
         var response = await _httpClient.GetAsync($"{BaseUrl}/GetById/{project.Id}");
 
@@ -32,7 +32,7 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
     [Fact]
     public async Task DeleteById_ReturnSuccess()
     {
-        var project = await PopulateProgectToDatabase();
+        var project = await PopulateProgectToDatabaseProject();
 
         var response = await _httpClient.DeleteAsync($"{BaseUrl}/DeleteById/{project.Id}");
         response.EnsureSuccessStatusCode();
@@ -64,7 +64,7 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
     [Fact]
     public async Task Update_ReturnSuccess()
     {
-        var project = await PopulateProgectToDatabase();
+        var project = await PopulateProgectToDatabaseProject();
 
         var model = new UpdateProjectRequestViewModel
         {
