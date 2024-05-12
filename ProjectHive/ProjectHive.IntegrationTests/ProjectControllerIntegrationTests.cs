@@ -45,9 +45,7 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
         var model = new CreateProjectRequestViewModel
         {
             Name = "Project1289",
-            Description = "This is project1289",
-            StatusProjectId = Guid.NewGuid(),
-            CreatorUserId = Guid.NewGuid()
+            Description = "This is project1289"
         };
         var uri = $"{BaseUrl}/CreateProject";
         var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
@@ -70,9 +68,7 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
         {
             Id = project.Id,
             Name = "TestProject1",
-            Description = "This is test project update",
-            StatusProjectId = Guid.NewGuid(),
-            CreatorUserId = Guid.NewGuid()
+            Description = "This is test project update"
         };
         var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
         var response = await _httpClient.PatchAsync($"{BaseUrl}/UpdateProject", content);

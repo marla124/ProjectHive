@@ -14,13 +14,12 @@ public class ProjectTasksControllerIntegrationTests : BaseIntegrationTest
     public async Task Create_ReturnSuccess()
     {
         var project = await PopulateProgectToDatabaseProject();
-
         var model = new CreateTaskRequestViewModel
         {
             Name = "name",
             Description = "description",
             Deadline = DateTime.Now,
-            ProjectName = project.Name,
+            ProjectName = project.Name
         };
         var uri = $"{BaseUrl}/CreateTask";
         var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
@@ -32,5 +31,16 @@ public class ProjectTasksControllerIntegrationTests : BaseIntegrationTest
 
         Assert.Equal(model.Name, returnedProject!.Name);
         Assert.Equal(model.Description, returnedProject.Description);
+    }
+
+    [Fact]
+    public async Task GetById_ProjectExists_ReturnSuccess()
+    {
+        var task = await PopulateProgectToDatabaseTask();
+
+        var response = await _httpClient.GetAsync($"{BaseUrl}/GetById/{task.Id}");
+
+        response.EnsureSuccessStatusCode();
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 }
