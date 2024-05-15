@@ -49,8 +49,16 @@ public class BaseIntegrationTest : IDisposable
         };
 
         await _dbContextForProject.ProjectStatuses.AddRangeAsync(statusList);
-        await _dbContextForProject.SaveChangesAsync();
         var processingStatus = statusList.First(s => s.Name == "Processing");
+
+        var user = new User()
+        {
+            Id = Guid.NewGuid(),
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now,
+            Email = "testemail@gmail.com"
+        };
+        _dbContextForProject.Users.Add(user);
 
         var project = new Project
         {
@@ -58,11 +66,11 @@ public class BaseIntegrationTest : IDisposable
             Description = "This is test project",
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
-            CreatorUserId = Guid.NewGuid(),
+            CreatorUserId = user.Id,
             StatusProjectId = processingStatus.Id,
         };
-
         _dbContextForProject!.Projects.Add(project);
+
         await _dbContextForProject.SaveChangesAsync();
 
         return project;
@@ -93,7 +101,6 @@ public class BaseIntegrationTest : IDisposable
             Id = Guid.NewGuid(),
             StatusTaskId = openStatus.Id
         };
-
         _dbContextForProject!.ProjectTasks.Add(projectTask);
         await _dbContextForProject.SaveChangesAsync();
 

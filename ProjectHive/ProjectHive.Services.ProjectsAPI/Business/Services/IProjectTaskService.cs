@@ -5,6 +5,6 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
 {
     public interface IProjectTaskService : IService<ProjectTaskDto>
     {
-        Task<int> CreateTask(ProjectTaskDto dto, CancellationToken cancellationToken);
+        Task<ProjectTaskDto> CreateTask(ProjectTaskDto dto, CancellationToken cancellationToken);
     }
 }

@@ -24,9 +24,17 @@ public class ProjectService : Service<ProjectDto, Project, ProjectHiveProjectDbC
         _projectRepository = projectRepository;
         _httpContextAccessor = httpContextAccessor;
     }
-    public async Task<int> CreateProject(ProjectDto dto, CancellationToken cancellationToken)
+    public async Task<ProjectDto> CreateProject(ProjectDto dto, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = _httpContextAccessor.HttpContext.User.FindFirstValue("userId");
+        var user = await _unitOfWork.UserRepository.FindBy(u => u.Id == Guid.Parse(userId)).FirstOrDefaultAsync(cancellationToken);
+
+        if (user == null)
+        {
+            user = new User { Id = Guid.Parse(userId) };
+            await _unitOfWork.UserRepository.CreateOne(user, cancellationToken);
+            await _unitOfWork.Commit(cancellationToken);
+        }
         var status = await _unitOfWork.ProjectStatusRepository.FindBy(s => s.Name == "Processing").FirstOrDefaultAsync(cancellationToken);
         if (status != null)
         {
@@ -40,9 +48,9 @@ public class ProjectService : Service<ProjectDto, Project, ProjectHiveProjectDbC
                 UpdatedAt = DateTime.Now,
                 CreatorUserId = Guid.Parse(userId)
             };
-            await _unitOfWork.ProjectRepository.CreateOne(project, cancellationToken);
-
-            return await _unitOfWork.Commit(cancellationToken);
+            var createdTask = _mapper.Map<ProjectDto>(await _unitOfWork.ProjectRepository.CreateOne(project, cancellationToken));
+            await _unitOfWork.Commit(cancellationToken);
+            return createdTask;
         }
         else
         {

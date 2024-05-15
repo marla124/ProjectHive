@@ -14,6 +14,7 @@ public class ProjectTasksControllerIntegrationTests : BaseIntegrationTest
     public async Task Create_ReturnSuccess()
     {
         var project = await PopulateProgectToDatabaseProject();
+        var task = await PopulateProgectToDatabaseTask();
         var model = new CreateTaskRequestViewModel
         {
             Name = "name",

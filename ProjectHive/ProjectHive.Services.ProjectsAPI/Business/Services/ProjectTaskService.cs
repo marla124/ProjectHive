@@ -24,7 +24,7 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
             _projectRepository = projectRepository;
         }
 
-        public async Task<int> CreateTask(ProjectTaskDto dto, CancellationToken cancellationToken)
+        public async Task<ProjectTaskDto> CreateTask(ProjectTaskDto dto, CancellationToken cancellationToken)
         {
             var project = await _projectRepository.FindBy(p => p.Name == dto.ProjectName).FirstOrDefaultAsync(cancellationToken);
             var status = await _unitOfWork.StatusTaskRepository.FindBy(s => s.Name == "Open").FirstOrDefaultAsync(cancellationToken);
@@ -40,9 +40,9 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
                     ProjectId = project.Id,
                     StatusTaskId = status.Id,
                 };
-                await _unitOfWork.ProjectTaskRepository.CreateOne(task, cancellationToken);
-
-                return await _unitOfWork.Commit(cancellationToken);
+                var createdTask = _mapper.Map<ProjectTaskDto>(await _unitOfWork.ProjectTaskRepository.CreateOne(task, cancellationToken));
+                await _unitOfWork.Commit(cancellationToken);
+                return createdTask;
             }
             else
             {

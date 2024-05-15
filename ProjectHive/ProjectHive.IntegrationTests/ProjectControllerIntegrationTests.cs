@@ -63,7 +63,6 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
     public async Task Update_ReturnSuccess()
     {
         var project = await PopulateProgectToDatabaseProject();
-
         var model = new UpdateProjectRequestViewModel
         {
             Id = project.Id,

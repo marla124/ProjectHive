@@ -22,6 +22,7 @@ public static class TaskServiceCollectionExtention
         services.AddScoped<IRepository<Project, ProjectHiveProjectDbContext>, Repository<Project, ProjectHiveProjectDbContext>>();
         services.AddScoped<IRepository<StatusTasks, ProjectHiveProjectDbContext>, Repository<StatusTasks, ProjectHiveProjectDbContext>>();
         services.AddScoped<IRepository<ProjectTask, ProjectHiveProjectDbContext>, Repository<ProjectTask, ProjectHiveProjectDbContext>>();
+        services.AddScoped<IRepository<User, ProjectHiveProjectDbContext>, Repository<User, ProjectHiveProjectDbContext>>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IProjectService, ProjectService>();

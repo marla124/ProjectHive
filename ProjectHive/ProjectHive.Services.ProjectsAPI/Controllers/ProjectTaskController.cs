@@ -49,8 +49,8 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         public async Task<IActionResult> CreateTask(CreateTaskRequestViewModel request, CancellationToken cancellationToken)
         {
             var dto = _mapper.Map<ProjectTaskDto>(request);
-
-            return Ok(_mapper.Map<ProjectTaskViewModel>(await _taskService.CreateTask(dto, cancellationToken)));
+            var task = await _taskService.CreateTask(dto, cancellationToken);
+            return Ok(_mapper.Map<ProjectTaskViewModel>(task));
         }
 
         [HttpPost]

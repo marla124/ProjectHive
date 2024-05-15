@@ -57,7 +57,8 @@ namespace ProjectHive.Services.AuthAPI.Services
                 new Claim(ClaimTypes.Email, userDto.Email),
                 new Claim(ClaimTypes.Role, "Admin"),
                 new Claim("aud",aud),
-                new Claim("iss",iss)
+                new Claim("iss",iss),
+                new Claim("userId", userDto.Id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(lifetime),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)

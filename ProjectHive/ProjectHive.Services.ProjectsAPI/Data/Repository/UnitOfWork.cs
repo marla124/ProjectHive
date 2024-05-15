@@ -8,7 +8,8 @@ public class UnitOfWork(ProjectHiveProjectDbContext dbContext,
     IRepository<Project, ProjectHiveProjectDbContext> projectRepository,
     IRepository<StatusTasks, ProjectHiveProjectDbContext> statusTaskRepository,
     IRepository<ProjectTask, ProjectHiveProjectDbContext> projectTaskRepository,
-    IRepository<ProjectStatus, ProjectHiveProjectDbContext> projectStatusRepository) : IUnitOfWork
+    IRepository<ProjectStatus, ProjectHiveProjectDbContext> projectStatusRepository,
+    IRepository<User, ProjectHiveProjectDbContext> userRepository) : IUnitOfWork
 {
 
     public IRepository<Project, ProjectHiveProjectDbContext> ProjectRepository => projectRepository;
@@ -16,6 +17,7 @@ public class UnitOfWork(ProjectHiveProjectDbContext dbContext,
     public IRepository<ProjectTask, ProjectHiveProjectDbContext> ProjectTaskRepository => projectTaskRepository;
     public IRepository<StatusTasks, ProjectHiveProjectDbContext> StatusTaskRepository => statusTaskRepository;
     public IRepository<ProjectStatus, ProjectHiveProjectDbContext> ProjectStatusRepository => projectStatusRepository;
+    public IRepository<User, ProjectHiveProjectDbContext> UserRepository => userRepository;
 
     public async Task<int> Commit(CancellationToken cancellationToken)
     {
