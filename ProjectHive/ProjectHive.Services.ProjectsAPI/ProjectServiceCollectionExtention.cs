@@ -17,14 +17,16 @@ public static class TaskServiceCollectionExtention
         services.AddDbContext<ProjectHiveProjectDbContext>(opt => opt.UseNpgsql(connectionString));
 
         services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
+        services.AddScoped<IRepository<User, ProjectHiveProjectDbContext>, Repository<User, ProjectHiveProjectDbContext>>();
         services.AddScoped<IRepository<ProjectStatus, ProjectHiveProjectDbContext>, Repository<ProjectStatus, ProjectHiveProjectDbContext>>();
         services.AddScoped<IRepository<Project, ProjectHiveProjectDbContext>, Repository<Project, ProjectHiveProjectDbContext>>();
         services.AddScoped<IRepository<StatusTasks, ProjectHiveProjectDbContext>, Repository<StatusTasks, ProjectHiveProjectDbContext>>();
         services.AddScoped<IRepository<ProjectTask, ProjectHiveProjectDbContext>, Repository<ProjectTask, ProjectHiveProjectDbContext>>();
-        services.AddScoped<IRepository<User, ProjectHiveProjectDbContext>, Repository<User, ProjectHiveProjectDbContext>>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUserService, UserService>();
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<IProjectTaskService, ProjectTaskService>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
