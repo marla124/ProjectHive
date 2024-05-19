@@ -14,7 +14,8 @@ public static class TaskServiceCollectionExtention
             (this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Default");
-        services.AddDbContext<ProjectHiveProjectDbContext>(opt => opt.UseNpgsql(connectionString));
+        //services.AddDbContext<ProjectHiveProjectDbContext>(opt => opt.UseNpgsql(connectionString));
+        services.AddDbContext<ProjectHiveProjectDbContext>(opt => opt.UseInMemoryDatabase("connectionString"));
 
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
