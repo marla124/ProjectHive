@@ -1,6 +1,8 @@
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectHive.Services.ProjectAPI.Extensions;
+using System.Text;
 
 namespace ProjectHive.Services.ProjectsAPI;
 
@@ -45,6 +47,28 @@ public class Program
                     }
                 });
         });
+
+        builder.Services.AddAuthentication(x =>
+        {
+            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(o =>
+        {
+            o.RequireHttpsMetadata = false;
+            var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]);
+            o.SaveToken = true;
+            o.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ClockSkew = TimeSpan.Zero,
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
+        });
+
         var app = builder.Build();
         app.PrepareDatabaseProject().GetAwaiter().GetResult();
         app.PrepareDatabaseTasks().GetAwaiter().GetResult();
@@ -59,8 +83,9 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        app.UseAuthorization();
+        app.UseAuthentication();
 
+        app.UseAuthorization();
 
         app.MapControllers();
 
