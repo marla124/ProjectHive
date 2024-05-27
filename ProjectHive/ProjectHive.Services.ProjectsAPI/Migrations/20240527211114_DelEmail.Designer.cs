@@ -12,8 +12,8 @@ using ProjectHive.Services.ProjectsAPI.Data;
 namespace ProjectHive.Services.ProjectsAPI.Migrations
 {
     [DbContext(typeof(ProjectHiveProjectDbContext))]
-    [Migration("20240508224227_EditTasks")]
-    partial class EditTasks
+    [Migration("20240527211114_DelEmail")]
+    partial class DelEmail
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -183,10 +183,6 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");

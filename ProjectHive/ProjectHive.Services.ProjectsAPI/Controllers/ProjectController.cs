@@ -43,9 +43,10 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [Route("[action]")]
         public async Task<IActionResult> CreateProject(CreateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
-            var userId = GetUserId();
+            var userId = Guid.Parse(GetUserId());
 
             var dto = mapper.Map<ProjectDto>(request);
+            dto.CreatorUserId = userId;
 
             return Ok(mapper.Map<ProjectViewModel>(await projectService.CreateProject(dto, cancellationToken)));
         }

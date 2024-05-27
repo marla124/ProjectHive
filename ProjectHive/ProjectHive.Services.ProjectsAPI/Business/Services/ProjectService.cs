@@ -25,29 +25,29 @@ public class ProjectService : Service<ProjectDto, Project, ProjectHiveProjectDbC
         _httpContextAccessor = httpContextAccessor;
         _userService = userService;
     }
-    public async Task<ProjectDto> CreateProject(ProjectDto dto, CancellationToken cancellationToken)
-    {
-        var user = _userService.CreateUser(cancellationToken);
-        var status = await _unitOfWork.ProjectStatusRepository.FindBy(s => s.Name == "Processing").FirstOrDefaultAsync(cancellationToken);
-        if (status != null)
+        public async Task<ProjectDto> CreateProject(ProjectDto dto, CancellationToken cancellationToken)
         {
-            var project = new Project()
+            var user = await _userService.CreateUser(dto, cancellationToken);
+            var status = await _unitOfWork.ProjectStatusRepository.FindBy(s => s.Name == "Processing").FirstOrDefaultAsync(cancellationToken);
+            if (status != null)
             {
-                Id = Guid.NewGuid(),
-                Name = dto.Name,
-                CreatedAt = DateTime.Now,
-                Description = dto.Description,
-                StatusProjectId = status.Id,
-                UpdatedAt = DateTime.Now,
-                CreatorUserId = user.Result.Id,
-            };
-            var createdTask = _mapper.Map<ProjectDto>(await _unitOfWork.ProjectRepository.CreateOne(project, cancellationToken));
-            await _unitOfWork.Commit(cancellationToken);
-            return createdTask;
+                var project = new Project()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = dto.Name,
+                    CreatedAt = DateTime.UtcNow,
+                    Description = dto.Description,
+                    StatusProjectId = status.Id,
+                    UpdatedAt = DateTime.UtcNow,
+                    CreatorUserId = user.Id,
+                };
+                var createdTask = _mapper.Map<ProjectDto>(await _unitOfWork.ProjectRepository.CreateOne(project, cancellationToken));
+                await _unitOfWork.Commit(cancellationToken);
+                return createdTask;
+            }
+            else
+            {
+                throw new Exception("statusId not found");
+            }
         }
-        else
-        {
-            throw new Exception("statusId not found");
-        }
-    }
 }

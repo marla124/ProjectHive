@@ -14,26 +14,24 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
-        public UserService(IUserRepository repository, IMapper mapper, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork) : base(repository, mapper)
+        public UserService(IUserRepository repository, IMapper mapper, IUnitOfWork unitOfWork) : base(repository, mapper)
         {
-            _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<UserDto> CreateUser(CancellationToken cancellationToken)
+        public async Task<UserDto> CreateUser(ProjectDto dto, CancellationToken cancellationToken)
         {
-            var userId = _httpContextAccessor.HttpContext.User.FindFirstValue("userId");
-            var user = await _unitOfWork.UserRepository.FindBy(u => u.Id == Guid.Parse(userId)).FirstOrDefaultAsync(cancellationToken);
+            var user = await _unitOfWork.UserRepository.FindBy(u => u.Id == dto.CreatorUserId).FirstOrDefaultAsync(cancellationToken);
 
             if (user == null)
             {
-                user = new User { Id = Guid.Parse(userId) };
+                user = new User { Id = dto.CreatorUserId };
                 await _unitOfWork.UserRepository.CreateOne(user, cancellationToken);
                 await _unitOfWork.Commit(cancellationToken);
                 return _mapper.Map<UserDto>(user);
             }
-            throw new Exception("user not found");
+            return _mapper.Map<UserDto>(user);
         }
     }
 }

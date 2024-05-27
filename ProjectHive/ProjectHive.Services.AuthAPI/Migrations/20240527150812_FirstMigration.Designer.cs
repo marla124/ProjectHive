@@ -12,8 +12,8 @@ using ProjectHive.Services.AuthAPI.Data;
 namespace ProjectHive.Services.AuthAPI.Migrations
 {
     [DbContext(typeof(ProjectHiveAuthDbContext))]
-    [Migration("20240421195138_Update")]
-    partial class Update
+    [Migration("20240527150812_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

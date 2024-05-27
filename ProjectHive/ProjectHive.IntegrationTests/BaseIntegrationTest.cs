@@ -55,8 +55,7 @@ public class BaseIntegrationTest : IDisposable
         {
             Id = Guid.NewGuid(),
             CreatedAt = DateTime.Now,
-            UpdatedAt = DateTime.Now,
-            Email = "testemail@gmail.com"
+            UpdatedAt = DateTime.Now
         };
         _dbContextForProject.Users.Add(user);
 
@@ -87,7 +86,7 @@ public class BaseIntegrationTest : IDisposable
         };
 
         await _dbContextForProject.TasksStatuses.AddRangeAsync(statusList);
-        await _dbContextForProject.SaveChangesAsync();
+
         var openStatus = statusList.First(s => s.Name == "Open");
         var project = await PopulateProgectToDatabaseProject();
         var projectTask = new ProjectTask

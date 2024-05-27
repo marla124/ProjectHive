@@ -5,5 +5,5 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services;
 
 public interface IUserService : IService<UserDto>
 {
-    public Task<UserDto> CreateUser(CancellationToken cancellationToken);
+    public Task<UserDto> CreateUser(ProjectDto dto, CancellationToken cancellationToken);
 }
