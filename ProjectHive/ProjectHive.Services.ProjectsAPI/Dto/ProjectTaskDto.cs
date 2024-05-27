@@ -8,6 +8,6 @@
         public DateTime StartExecution { get; set; }
         public DateTime Deadline { get; set; }
         public Guid StatusTaskId { get; set; }
-        public Guid? ProjectId { get; set; }
+        public string? ProjectName { get; set; }
     }
 }

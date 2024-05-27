@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectHive.Services.ProjectsAPI.Business.Services;
 using ProjectHive.Services.ProjectsAPI.Dto;
@@ -9,19 +10,13 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectController : Controller
+    [Authorize]
+    public class ProjectController(IMapper mapper, IProjectService projectService) : BaseController
     {
-        private readonly IProjectService _projectService;
-        private readonly IMapper _mapper;
-        public ProjectController(IMapper mapper, IProjectService projectService)
-        {
-            _projectService = projectService;
-            _mapper = mapper;
-        }
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
-            var project = _mapper.Map<ProjectViewModel>(await _projectService.GetById(id, cancellationToken));
+            var project = mapper.Map<ProjectViewModel>(await projectService.GetById(id, cancellationToken));
             if (project == null)
             {
                 return NotFound();
@@ -32,7 +27,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [HttpDelete("[action]/{id}")]
         public async Task<IActionResult> DeleteById(Guid id, CancellationToken cancellationToken)
         {
-            await _projectService.DeleteById(id, cancellationToken);
+            await projectService.DeleteById(id, cancellationToken);
             return Ok();
         }
 
@@ -40,7 +35,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [Route("[action]")]
         public async Task<IActionResult> DeleteManyProject(IEnumerable<ProjectViewModel> request, CancellationToken cancellationToken)
         {
-            await _projectService.DeleteMany(_mapper.Map<IEnumerable<ProjectDto>>(request), cancellationToken);
+            await projectService.DeleteMany(mapper.Map<IEnumerable<ProjectDto>>(request), cancellationToken);
             return Ok();
         }
 
@@ -48,16 +43,19 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [Route("[action]")]
         public async Task<IActionResult> CreateProject(CreateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
-            var dto = _mapper.Map<ProjectDto>(request);
+            var userId = Guid.Parse(GetUserId());
 
-            return Ok(_mapper.Map<ProjectViewModel>(await _projectService.Create(dto, cancellationToken)));
+            var dto = mapper.Map<ProjectDto>(request);
+            dto.CreatorUserId = userId;
+
+            return Ok(mapper.Map<ProjectViewModel>(await projectService.CreateProject(dto, cancellationToken)));
         }
 
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> CreateManyProject(IEnumerable<CreateProjectRequestViewModel> request, CancellationToken cancellationToken)
         {
-            await _projectService.CreateMany(_mapper.Map<IEnumerable<ProjectDto>>(request), cancellationToken);
+            await projectService.CreateMany(mapper.Map<IEnumerable<ProjectDto>>(request), cancellationToken);
             return Ok();
         }
 
@@ -65,9 +63,9 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [Route("[action]")]
         public async Task<IActionResult> UpdateProject(UpdateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
-            var dto = _mapper.Map<ProjectDto>(request);
+            var dto = mapper.Map<ProjectDto>(request);
 
-            return Ok(_mapper.Map<ProjectViewModel>(await _projectService.Update(dto, cancellationToken)));
+            return Ok(mapper.Map<ProjectViewModel>(await projectService.Update(dto, cancellationToken)));
         }
     }
 }

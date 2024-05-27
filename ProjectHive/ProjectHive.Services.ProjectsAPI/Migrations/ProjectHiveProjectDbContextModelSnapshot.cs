@@ -17,7 +17,7 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -136,9 +136,6 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                     b.Property<Guid?>("ProjectId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("StartExecution")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid>("StatusTaskId")
                         .HasColumnType("uuid");
 
@@ -151,7 +148,7 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
 
                     b.HasIndex("StatusTaskId");
 
-                    b.ToTable("Tasks");
+                    b.ToTable("ProjectTasks");
                 });
 
             modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.StatusTasks", b =>
@@ -183,10 +180,6 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");

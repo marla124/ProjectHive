@@ -12,15 +12,15 @@ using ProjectHive.Services.ProjectsAPI.Data;
 namespace ProjectHive.Services.ProjectsAPI.Migrations
 {
     [DbContext(typeof(ProjectHiveProjectDbContext))]
-    [Migration("20240328115911_InitMigration")]
-    partial class InitMigration
+    [Migration("20240527144022_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -70,7 +70,7 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("CreatorId")
+                    b.Property<Guid>("CreatorUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Description")
@@ -89,7 +89,7 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatorId");
+                    b.HasIndex("CreatorUserId");
 
                     b.HasIndex("StatusProjectId");
 
@@ -126,11 +126,10 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("Deadline")
+                    b.Property<DateTime?>("Deadline")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -139,9 +138,6 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
 
                     b.Property<Guid?>("ProjectId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime>("StartExecution")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("StatusTaskId")
                         .HasColumnType("uuid");
@@ -155,7 +151,7 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
 
                     b.HasIndex("StatusTaskId");
 
-                    b.ToTable("Tasks");
+                    b.ToTable("ProjectTasks");
                 });
 
             modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.StatusTasks", b =>
@@ -192,17 +188,27 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ProjectId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.UserProject", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserId", "ProjectId");
+
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Users");
+                    b.ToTable("UserProjects");
                 });
 
             modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.Comment", b =>
@@ -230,9 +236,11 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
 
             modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.Project", b =>
                 {
-                    b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.User", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
+                    b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.User", "CreatorUser")
+                        .WithMany("CreatedProjects")
+                        .HasForeignKey("CreatorUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.ProjectStatus", "StatusProject")
                         .WithMany("Projects")
@@ -240,7 +248,7 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Creator");
+                    b.Navigation("CreatorUser");
 
                     b.Navigation("StatusProject");
                 });
@@ -262,11 +270,23 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                     b.Navigation("StatusTask");
                 });
 
-            modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.User", b =>
+            modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.UserProject", b =>
                 {
-                    b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.Project", null)
-                        .WithMany("Users")
-                        .HasForeignKey("ProjectId");
+                    b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.Project", "Project")
+                        .WithMany("UserProjects")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.User", "User")
+                        .WithMany("UserProjects")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.Comment", b =>
@@ -278,7 +298,7 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                 {
                     b.Navigation("Tasks");
 
-                    b.Navigation("Users");
+                    b.Navigation("UserProjects");
                 });
 
             modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.ProjectStatus", b =>
@@ -294,6 +314,10 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
             modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.User", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("CreatedProjects");
+
+                    b.Navigation("UserProjects");
                 });
 #pragma warning restore 612, 618
         }
