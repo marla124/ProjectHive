@@ -1,5 +1,4 @@
-﻿
-using ProjectHive.Services.Core.Data;
+﻿using ProjectHive.Services.Core.Data;
 
 namespace ProjectHive.Services.AuthAPI.Data.Entities;
 

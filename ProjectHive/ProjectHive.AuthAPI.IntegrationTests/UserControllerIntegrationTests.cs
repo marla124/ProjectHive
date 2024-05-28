@@ -11,7 +11,7 @@ public class UserControllerIntegrationTests : BaseIntegrationTest
     private const string BaseUrl = "/api/User";
 
     [Fact]
-    public async Task Create_ReturnSuccess()
+        public async Task Create_ReturnSuccess()
     {
         var model = new RegisterModel
         {
