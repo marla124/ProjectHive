@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjectHive.Service.Core\ProjectHive.Services.Core.csproj" />
     <ProjectReference Include="..\ProjectHive.Services.AuthAPI\ProjectHive.Services.AuthAPI.csproj" />
     <ProjectReference Include="..\ProjectHive.Services.Core\ProjectHive.Services.Core.csproj" />
   </ItemGroup>
