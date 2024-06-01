@@ -2,11 +2,26 @@ import React, { useState } from 'react';
 import Navbar from './Navbar';
 import "../styles/register.css";
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
 export default function RegistrationForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [response, setResponse] = useState(""); 
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = { email, password }; // Определение данных для отправки
+    axios
+      .post("http://localhost:5183/api/User/CreateUser", data)
+      .then((response) => {
+        setResponse(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="block">
@@ -14,7 +29,7 @@ export default function RegistrationForm() {
       <div className="container">
         <div className="registration form">
           <header>Signup</header>
-          <form action="#">
+          <form onSubmit={handleSubmit}>
             <input type="text" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Create a password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <input type="password" placeholder="Confirm your password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
@@ -27,6 +42,11 @@ export default function RegistrationForm() {
           </div>
         </div>
       </div>
+      {response && (
+        <p>
+          Данные успешно отправлены: ({response.email})
+        </p>
+      )}
     </div>
   );
 }
