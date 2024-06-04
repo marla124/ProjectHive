@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProjectHive.AuthAPI.IntegrationTests\ProjectHive.AuthAPI.IntegrationTests.csproj" />
     <ProjectReference Include="..\ProjectHive.Services.ProjectsAPI\ProjectHive.Services.ProjectsAPI.csproj" />
   </ItemGroup>
 

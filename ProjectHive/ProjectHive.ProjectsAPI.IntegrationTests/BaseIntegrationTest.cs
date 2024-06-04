@@ -2,16 +2,21 @@
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using ProjectHive.Services.ProjectsAPI;
 using ProjectHive.Services.ProjectsAPI.Data;
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text;
 
 namespace ProjectHive.ProjectAPI.IntegrationTests;
 
 public class BaseIntegrationTest : IDisposable
 {
     private readonly ProjectHiveProjectDbContext? _dbContextForProject;
-
     protected readonly HttpClient _httpClient;
     private readonly WebApplicationFactory<Program> _webApplicationFactory;
 
@@ -33,10 +38,34 @@ public class BaseIntegrationTest : IDisposable
         });
 
         var serviceProvider = _webApplicationFactory.Services.CreateScope().ServiceProvider;
-
         _httpClient = _webApplicationFactory.CreateClient();
+        var fakeUserJwt = CreateJwtForFakeUser();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", fakeUserJwt);
+
         _dbContextForProject = serviceProvider.GetService<ProjectHiveProjectDbContext>()!;
         _dbContextForProject?.Database.EnsureCreated();
+    }
+
+    private string CreateJwtForFakeUser()
+    {
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("EB622E6F-F21D-44ED-9798-D993A8126605"));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+        var claims = new[] {
+        new Claim(JwtRegisteredClaimNames.Sub, "UserTest"),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim("userId", "1DFFFC38-0530-4E64-A1F7-1904A5A72017"),
+        new Claim(ClaimTypes.Role, "Admin")
+        };
+
+        var token = new JwtSecurityToken(
+            issuer: "ProjectHive",
+            audience: "ProjectHive",
+            claims: claims,
+            expires: DateTime.Now.AddMinutes(5),
+            signingCredentials: credentials);
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
     protected async Task<Project> PopulateProgectToDatabaseProject()
