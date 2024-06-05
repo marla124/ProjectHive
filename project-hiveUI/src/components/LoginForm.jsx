@@ -13,7 +13,7 @@ export default function LoginForm() {
     event.preventDefault();
     const data = { email, password }; 
     axios
-      .post("http://localhost:5183/api/Token/GenerateToken", data)
+      .post("/api/Token/GenerateToken", data)
       .then((response) => {
         setResponse(response.data);
       })
@@ -32,7 +32,7 @@ export default function LoginForm() {
             <input type="text" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <a href="/">Forgot password?</a>
-            <input type="submit" className="button" value="Login" /> {/* Изменение типа кнопки на "submit" */}
+            <input type="submit" className="button" value="Login" />
           </form>
           <div className="signup">
             <span className="signup">Don't have an account? 

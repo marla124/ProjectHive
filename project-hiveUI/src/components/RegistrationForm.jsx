@@ -12,9 +12,13 @@ export default function RegistrationForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = { email, password }; // Определение данных для отправки
+    const data = { email, password }; 
     axios
-      .post("http://localhost:5183/api/User/CreateUser", data)
+      .post("/api/User/CreateUser", data, {
+        headers: {
+        'Content-Type': 'application/json'
+      },
+    })
       .then((response) => {
         setResponse(response.data);
       })
@@ -33,7 +37,7 @@ export default function RegistrationForm() {
             <input type="text" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Create a password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <input type="password" placeholder="Confirm your password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-            <input type="button" className="button" value="Signup" />
+            <input type="submit" className="button" value="Signup" />
           </form>
           <div className="signup">
             <span className="signup">Already have an account? 
