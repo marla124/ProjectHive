@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FluentValidation;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjectHive.Services.AuthAPI.Data;
@@ -7,7 +10,9 @@ using ProjectHive.Services.AuthAPI.Data.Repository;
 using ProjectHive.Services.AuthAPI.Data.Repository.Interface;
 using ProjectHive.Services.AuthAPI.Services;
 using ProjectHive.Services.Core.Data.Repository;
+using FluentValidation;
 using System.Text;
+using ProjectHive.Services.AuthAPI.FluentValidation;
 
 namespace ProjectHive.Services.AuthAPI;
 
@@ -19,6 +24,8 @@ public static class AuthServiceCollectionExtension
         var connectionString = configuration.GetConnectionString("Default");
         services.AddDbContext<ProjectHiveAuthDbContext>(opt => opt.UseNpgsql(connectionString));
 
+        services.AddValidatorsFromAssemblyContaining<UserRegisterValidator>();
+        services.AddValidatorsFromAssemblyContaining<UserUpdateValidator>();
         services.AddScoped<IAuthRepository, AuthRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRepository<UserRole, ProjectHiveAuthDbContext>, Repository<UserRole, ProjectHiveAuthDbContext>>();

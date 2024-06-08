@@ -1,10 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
+using Microsoft.EntityFrameworkCore;
+using ProjectHive.Services.AuthAPI.FluentValidation;
 using ProjectHive.Services.Core.Data.Repository;
 using ProjectHive.Services.ProjectsAPI.Business.Services;
 using ProjectHive.Services.ProjectsAPI.Data;
 using ProjectHive.Services.ProjectsAPI.Data.Entities;
 using ProjectHive.Services.ProjectsAPI.Data.Repository;
 using ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase;
+using ProjectHive.Services.ProjectsAPI.Models.RequestModel;
 
 namespace ProjectHive.Services.ProjectsAPI;
 
@@ -15,6 +18,11 @@ public static class TaskServiceCollectionExtention
     {
         var connectionString = configuration.GetConnectionString("Default");
         services.AddDbContext<ProjectHiveProjectDbContext>(opt => opt.UseNpgsql(connectionString));
+
+        services.AddValidatorsFromAssemblyContaining<CreateProjectRequestViewModel>();
+        services.AddValidatorsFromAssemblyContaining<CreateTaskRequestViewModel>();
+        services.AddValidatorsFromAssemblyContaining<UpdateTaskRequestViewModel>();
+        services.AddValidatorsFromAssemblyContaining<UpdateProjectRequestViewModel>();
 
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<IUserRepository, UserRepository>();

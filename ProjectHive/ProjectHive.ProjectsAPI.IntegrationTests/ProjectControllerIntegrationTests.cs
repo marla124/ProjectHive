@@ -65,7 +65,6 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
         var project = await PopulateProgectToDatabaseProject();
         var model = new UpdateProjectRequestViewModel
         {
-            Id = project.Id,
             Name = "TestProject1",
             Description = "This is test project update"
         };
@@ -76,7 +75,6 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
         var returnedProject = JsonConvert.DeserializeObject<ProjectViewModel>(await response.Content.ReadAsStringAsync());
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        Assert.Equal(model.Id, returnedProject!.Id);
         Assert.Equal(model.Name, returnedProject.Name);
         Assert.Equal(model.Description, returnedProject.Description);
     }
