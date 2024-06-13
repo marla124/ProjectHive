@@ -5,11 +5,7 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
-.block{
-  min-height: 100vh;
-  width: 100%;
-}
-.container{
+.registration-container{
   position: absolute;
   top: 50%;
   left: 50%;
@@ -20,16 +16,7 @@
   border-radius: 7px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.3);
 }
-#check:checked ~ .registration{
-  display: block;
-}
-#check:checked ~ .login{
-  display: none;
-}
-#check{
-  display: none;
-}
-.container .form{
+.registration-container .form{
   padding: 2rem;
 }
 .form header{
@@ -48,6 +35,9 @@
    border-radius: 6px;
    outline: none;
  }
+ input:invalid {
+  border-color: red;
+}
  .form input:focus{
    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
  }
@@ -69,17 +59,8 @@
   cursor: pointer;
   transition: 0.4s;
 }
-.form input.button:hover{
-  background:#0f2d4e;
-}
-.signup{
+.signin{
   font-size: 17px;
   text-align: center;
 }
-.signup label{
-  color:#0f2d4e;
-  cursor: pointer;
-}
-.signup label:hover{
-  text-decoration: underline;
-}
+

@@ -14,7 +14,7 @@ export default function RegistrationForm() {
     event.preventDefault();
     const data = { email, password }; 
     axios
-      .post("/api/User/CreateUser", data, {
+      .post("http://localhost:5183/api/User/CreateUser", data, {
         headers: {
         'Content-Type': 'application/json'
       },
@@ -30,17 +30,17 @@ export default function RegistrationForm() {
   return (
     <div className="block">
       <Navbar />
-      <div className="container">
+      <div className="registration-container">
         <div className="registration form">
           <header>Signup</header>
           <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="Create a password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <input type="password" placeholder="Confirm your password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+            <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+            <input type="password" placeholder="Create a password" value={password} onChange={(e) => setPassword(e.target.value)} required minlength="8" maxlength="64"/>
+            <input type="password" placeholder="Confirm your password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required/>
             <input type="submit" className="button" value="Signup" />
           </form>
-          <div className="signup">
-            <span className="signup">Already have an account? 
+          <div className="signin">
+            <span className="signin">Already have an account? 
               <Link to="/login"><label htmlFor="check"> Login</label></Link>
             </span>
           </div>

@@ -13,7 +13,7 @@ export default function LoginForm() {
     event.preventDefault();
     const data = { email, password }; 
     axios
-      .post("/api/Token/GenerateToken", data)
+      .post("http://localhost:5183/api/Token/GenerateToken", data)
       .then((response) => {
         setResponse(response.data);
       })
@@ -25,12 +25,12 @@ export default function LoginForm() {
   return (
     <div className="block">
       <Navbar />
-      <div className="container">
+      <div className="login-container">
         <div className="login form">
           <header>Login</header>
           <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+            <input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required minlength="8" maxlength="64"/>
             <a href="/">Forgot password?</a>
             <input type="submit" className="button" value="Login" />
           </form>
