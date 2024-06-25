@@ -18,7 +18,7 @@ public class Program
         {
             options.AddDefaultPolicy(policyBuilder =>
             {
-                policyBuilder.WithOrigins("http://localhost:3001")
+                policyBuilder.WithOrigins("http://localhost:3000")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
             });
@@ -26,7 +26,6 @@ public class Program
 
         var app = builder.Build();
 
-        // Seed the database
         app.PrepareDatabase().GetAwaiter().GetResult();
 
         if (app.Environment.IsDevelopment())
@@ -35,6 +34,7 @@ public class Program
             app.UseSwaggerUI();
         }
 
+        app.UseCors();
         app.UseHttpsRedirection();
 
         app.UseAuthentication();

@@ -1,30 +1,28 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
 import "../styles/register.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 export default function RegistrationForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [response, setResponse] = useState(""); 
-
-  const handleSubmit = (event) => {
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const navigate = useNavigate();
+  
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = { email, password }; 
-    axios
-      .post("http://localhost:5183/api/User/CreateUser", data, {
-        headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-      .then((response) => {
-        setResponse(response.data);
-      })
-      .catch((error) => {
+    const data = { email, password, passwordConfirmation }; 
+    try {
+    const response= await 
+    axios.post("http://localhost:5183/api/User/CreateUser", data);
+      if (response.status === 201 && response.status === 200) {
+        navigate('/login');
+      }
+    }
+    catch(error) {
         console.log(error);
-      });
+      };
   };
 
   return (
@@ -35,8 +33,8 @@ export default function RegistrationForm() {
           <header>Signup</header>
           <form onSubmit={handleSubmit}>
             <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
-            <input type="password" placeholder="Create a password" value={password} onChange={(e) => setPassword(e.target.value)} required minlength="8" maxlength="64"/>
-            <input type="password" placeholder="Confirm your password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required/>
+            <input type="password" placeholder="Create a password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength="8" maxLength="64"/>
+            <input type="password" placeholder="Confirm your password" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} required/>
             <input type="submit" className="button" value="Signup" />
           </form>
           <div className="signin">
@@ -46,11 +44,6 @@ export default function RegistrationForm() {
           </div>
         </div>
       </div>
-      {response && (
-        <p>
-          Данные успешно отправлены: ({response.email})
-        </p>
-      )}
     </div>
   );
 }
