@@ -16,7 +16,7 @@ export default function RegistrationForm() {
     try {
     const response= await 
     axios.post("http://localhost:5183/api/User/CreateUser", data);
-      if (response.status === 201 && response.status === 200) {
+      if (response.status === 201 || response.status === 200) {
         navigate('/login');
       }
     }

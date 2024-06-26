@@ -1,4 +1,5 @@
 import "../styles/menu.css";
+import { Link } from 'react-router-dom';
 import React from "react";
 
 export default function Menu() {
@@ -14,25 +15,25 @@ export default function Menu() {
                 <a href="#">
                     <i className="icon-home" aria-hidden="true"></i>
                     <span className="link_name">Home</span>
-                    </a>
+                </a>
                 </li>
                 <li className="create-report-link">
                 <a href="#">
                     <i className="icon-sheet" aria-hidden="true"></i>
                     <span className="link_name">Reports</span>
-                    </a>
+                </a>
                 </li>
                 <li className="my-projects-link">
-                <a href="#">
+                <Link to="/projects">
                     <i className="icon-file_open" aria-hidden="true"></i>
                     <span className="link_name">Projects</span>
-                    </a>
+                </Link>
                 </li>
                 <li className="my-tasks-link">
                 <a href="#">
                     <i className="icon-attachment" aria-hidden="true"></i>
                     <span className="link_name">Tasks</span>
-                    </a>
+                </a>
                 </li>
             </ul>
         </div>

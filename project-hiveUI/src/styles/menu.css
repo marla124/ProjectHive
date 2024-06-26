@@ -7,6 +7,7 @@
 }
 
 .menu-right {
+  flex-shrink: 0;
   width: 260px;
   height: 100vh;
   background-color: #0f2d4e;

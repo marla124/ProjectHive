@@ -1,0 +1,16 @@
+.projects-container {
+  display: flex;
+  justify-content: flex-start;
+}
+.projects-list{
+  margin-top: 40px;
+  margin-left: 110px;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.title-header{
+  margin-bottom: 30px;
+  margin-left: 10px;
+}
