@@ -8,7 +8,9 @@ export default function Navbar() {
     return (
         <div className="header_menu">
             <div className="logo">
+            <Link to="/" className='logo-text'>
                 <h1>ProjectHive</h1>
+            </Link>
             </div>
             <div className="button_items">
                 <Link to="/search" className="search_butt">

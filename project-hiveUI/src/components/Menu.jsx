@@ -12,10 +12,10 @@ export default function Menu() {
 
             <ul className="item-links">
                 <li className="home-link">
-                <a href="#">
+                <Link to="/">
                     <i className="icon-home" aria-hidden="true"></i>
                     <span className="link_name">Home</span>
-                </a>
+                </Link>
                 </li>
                 <li className="create-report-link">
                 <a href="#">
@@ -30,10 +30,10 @@ export default function Menu() {
                 </Link>
                 </li>
                 <li className="my-tasks-link">
-                <a href="#">
+                <Link to="/mytasks">
                     <i className="icon-attachment" aria-hidden="true"></i>
                     <span className="link_name">Tasks</span>
-                </a>
+                </Link>
                 </li>
             </ul>
         </div>

@@ -1,0 +1,16 @@
+.page-mytasks-container {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .list-mytasks{
+    margin-top: 40px;
+    margin-left: 110px;
+  }
+  .mytask {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .title-header-mytasks{
+    margin-bottom: 30px;
+    margin-left: 10px;
+  }

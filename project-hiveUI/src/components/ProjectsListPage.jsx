@@ -3,6 +3,7 @@
     import Menu from './Menu';
     import "../styles/projects.css"
     import ProjectItem from './ProjectItem';
+    import { Link} from 'react-router-dom';
 
     export default function ProjectsListPage(){
         const [projects, setProjects] = useState([
@@ -22,10 +23,13 @@
             <div className='projects-list'>
                 <h1 className='title-header'>My Projects</h1>
                 <div className='list'>
-                    {projects.map(project => 
-                        <ProjectItem project={project} key ={project.id}/>
-                    )}
+                    {projects.map(project => (
+                    <Link to={`/projects/${project.id}`} key={project.id}>
+                        <ProjectItem project={project} />
+                    </Link>
+                    ))}
                 </div>
+
             </div>
         </div>  
         </div>

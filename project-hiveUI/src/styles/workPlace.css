@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.tasks-container {
+    display: flex;
+}
+
+.tasks-list {
+    margin-top: 40px;
+    margin-left: 110px;
+    display: flex;
+    flex-wrap: wrap;
+    color: #0f2d4e;
+}
+.column-body{
+    margin-top: 10px;
+    overflow-y: auto;
+    max-height: 100vh;
+}
