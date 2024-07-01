@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using ProjectHive.Services.ProjectsAPI.Models;
 using ProjectHive.Services.ProjectsAPI.Models.RequestModel;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace ProjectHive.ProjectAPI.IntegrationTests;
@@ -14,7 +15,6 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
     public async Task GetById_ProjectExists_ReturnSuccess()
     {
         var project = await PopulateProgectToDatabaseProject();
-
         var response = await _httpClient.GetAsync($"{BaseUrl}/GetById/{project.Id}");
 
         response.EnsureSuccessStatusCode();
