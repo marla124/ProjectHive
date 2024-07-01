@@ -2,6 +2,5 @@
 {
     public class UpdateTaskRequestViewModel : BaseProjectTaskViewModel
     {
-        Guid? Id { get; set; }
     }
 }
