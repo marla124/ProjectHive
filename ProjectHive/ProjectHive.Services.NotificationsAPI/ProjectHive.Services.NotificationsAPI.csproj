@@ -25,7 +25,10 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Data\Entities\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectHive.Services.Core\ProjectHive.Services.Core.csproj" />
   </ItemGroup>
 
 </Project>
