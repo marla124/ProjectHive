@@ -54,6 +54,11 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
             return Convert.ToHexString(HashBytes);
         }
     }
+    public async Task<UserDto> GetByEmail(string email, CancellationToken cancellationToken)
+    {
+        var user = await _userRepository.GetByEmail(email, cancellationToken);
+        return _mapper.Map<UserDto>(user);
+    }
     public bool IsUserExists(string email)
     {
         return _unitOfWork.UserRepository

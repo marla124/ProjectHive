@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjectHive.Services.AuthAPI.Data;
@@ -10,7 +8,6 @@ using ProjectHive.Services.AuthAPI.Data.Repository;
 using ProjectHive.Services.AuthAPI.Data.Repository.Interface;
 using ProjectHive.Services.AuthAPI.Services;
 using ProjectHive.Services.Core.Data.Repository;
-using FluentValidation;
 using System.Text;
 using ProjectHive.Services.AuthAPI.FluentValidation;
 using FluentValidation.AspNetCore;
