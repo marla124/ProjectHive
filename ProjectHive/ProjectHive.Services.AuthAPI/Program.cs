@@ -14,10 +14,18 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policyBuilder =>
+            {
+                policyBuilder.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
+        });
 
         var app = builder.Build();
 
-        // Seed the database
         app.PrepareDatabase().GetAwaiter().GetResult();
 
         if (app.Environment.IsDevelopment())
@@ -25,6 +33,8 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseCors();
         app.UseHttpsRedirection();
 
         app.UseAuthentication();
