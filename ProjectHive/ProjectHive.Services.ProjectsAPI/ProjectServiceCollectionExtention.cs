@@ -1,6 +1,9 @@
 ﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using ProjectHive.Services.AuthAPI.FluentValidation;
+using ProjectHive.Services.AuthAPI.Models.RequestModel;
+using ProjectHive.Services.AuthAPI.Models;
 using ProjectHive.Services.Core.Data.Repository;
 using ProjectHive.Services.ProjectsAPI.Business.Services;
 using ProjectHive.Services.ProjectsAPI.Data;
@@ -8,6 +11,7 @@ using ProjectHive.Services.ProjectsAPI.Data.Entities;
 using ProjectHive.Services.ProjectsAPI.Data.Repository;
 using ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase;
 using ProjectHive.Services.ProjectsAPI.Models.RequestModel;
+using ProjectHive.Services.ProjectsAPI.FluentValidation;
 
 namespace ProjectHive.Services.ProjectsAPI;
 
@@ -19,10 +23,12 @@ public static class TaskServiceCollectionExtention
         var connectionString = configuration.GetConnectionString("Default");
         services.AddDbContext<ProjectHiveProjectDbContext>(opt => opt.UseNpgsql(connectionString));
 
-        services.AddValidatorsFromAssemblyContaining<CreateProjectRequestViewModel>();
-        services.AddValidatorsFromAssemblyContaining<CreateTaskRequestViewModel>();
-        services.AddValidatorsFromAssemblyContaining<UpdateTaskRequestViewModel>();
-        services.AddValidatorsFromAssemblyContaining<UpdateProjectRequestViewModel>();
+        services.AddFluentValidationAutoValidation();
+
+        services.AddScoped<IValidator<CreateProjectRequestViewModel>, CreateProjectValidator>();
+        services.AddScoped<IValidator<CreateTaskRequestViewModel>, CreateTaskValidator>(); 
+        services.AddScoped<IValidator<UpdateProjectRequestViewModel>, UpdateProjectValidator>();
+        services.AddScoped<IValidator<UpdateTaskRequestViewModel>, UpdateTaskValidator>();
 
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<IUserRepository, UserRepository>();

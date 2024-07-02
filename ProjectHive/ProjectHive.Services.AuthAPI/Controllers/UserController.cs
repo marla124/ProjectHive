@@ -12,7 +12,7 @@ namespace ProjectHive.Services.AuthAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserController(IUserService userService, IMapper mapper, IValidator<RegisterModel> userRegisterValidator) : Controller
+public class UserController(IUserService userService, IMapper mapper) : Controller
 {
     [HttpGet("[action]/{id}")]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
@@ -35,11 +35,10 @@ public class UserController(IUserService userService, IMapper mapper, IValidator
     [HttpPost("[action]")]
     public async Task<IActionResult> CreateUser(RegisterModel request, CancellationToken cancellationToken)
     {
-        if ((await userRegisterValidator.ValidateAsync(request)).IsValid)
+        if (ModelState.IsValid)
         {
             var dto = mapper.Map<UserDto>(request);
-            await userService.RegisterUser(dto, cancellationToken);
-            var user = await userService.GetByEmail(request.Email, cancellationToken);
+            var user=await userService.RegisterUser(dto, cancellationToken);
             return Created($"users/{user.Id}", user);
         }
         else
@@ -52,8 +51,15 @@ public class UserController(IUserService userService, IMapper mapper, IValidator
     [Route("[action]")]
     public async Task<IActionResult> UpdateUser(UpdateUserRequestViewModel request, CancellationToken cancellationToken)
     {
-        var dto = mapper.Map<UserDto>(request);
+        if (ModelState.IsValid)
+        {
+            var dto = mapper.Map<UserDto>(request);
 
-        return Ok(mapper.Map<UserViewModel>(await userService.Update(dto, cancellationToken)));
+            return Ok(mapper.Map<UserViewModel>(await userService.Update(dto, cancellationToken)));
+        }
+        else
+        {
+            return BadRequest();
+        }
     }
 }
