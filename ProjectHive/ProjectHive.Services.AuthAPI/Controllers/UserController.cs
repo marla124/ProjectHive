@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using ProjectHive.Services.AuthAPI.Dto;
+using ProjectHive.Services.AuthAPI.FluentValidation;
 using ProjectHive.Services.AuthAPI.Model;
 using ProjectHive.Services.AuthAPI.Models;
 using ProjectHive.Services.AuthAPI.Models.RequestModel;
@@ -33,19 +35,31 @@ public class UserController(IUserService userService, IMapper mapper) : Controll
     [HttpPost("[action]")]
     public async Task<IActionResult> CreateUser(RegisterModel request, CancellationToken cancellationToken)
     {
-        var dto = mapper.Map<UserDto>(request);
-
-        await userService.RegisterUser(dto, cancellationToken);
-        var user = await userService.GetByEmail(request.Email, cancellationToken);
-        return Created($"users/{user.Id}", user);
+        if (ModelState.IsValid)
+        {
+            var dto = mapper.Map<UserDto>(request);
+            var user=await userService.RegisterUser(dto, cancellationToken);
+            return Created($"users/{user.Id}", user);
+        }
+        else
+        {
+            return BadRequest();
+        }
     }
 
     [HttpPatch]
     [Route("[action]")]
     public async Task<IActionResult> UpdateUser(UpdateUserRequestViewModel request, CancellationToken cancellationToken)
     {
-        var dto = mapper.Map<UserDto>(request);
+        if (ModelState.IsValid)
+        {
+            var dto = mapper.Map<UserDto>(request);
 
-        return Ok(mapper.Map<UserViewModel>(await userService.Update(dto, cancellationToken)));
+            return Ok(mapper.Map<UserViewModel>(await userService.Update(dto, cancellationToken)));
+        }
+        else
+        {
+            return BadRequest();
+        }
     }
 }

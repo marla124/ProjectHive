@@ -43,12 +43,19 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [Route("[action]")]
         public async Task<IActionResult> CreateProject(CreateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
-            var userId = Guid.Parse(GetUserId());
+            if (ModelState.IsValid)
+            {
+                var userId = Guid.Parse(GetUserId());
 
-            var dto = mapper.Map<ProjectDto>(request);
-            dto.CreatorUserId = userId;
+                var dto = mapper.Map<ProjectDto>(request);
+                dto.CreatorUserId = userId;
 
-            return Ok(mapper.Map<ProjectViewModel>(await projectService.CreateProject(dto, cancellationToken)));
+                return Ok(mapper.Map<ProjectViewModel>(await projectService.CreateProject(dto, cancellationToken)));
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
@@ -63,9 +70,16 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [Route("[action]")]
         public async Task<IActionResult> UpdateProject(UpdateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
-            var dto = mapper.Map<ProjectDto>(request);
+            if (ModelState.IsValid)
+            {
+                var dto = mapper.Map<ProjectDto>(request);
 
-            return Ok(mapper.Map<ProjectViewModel>(await projectService.Update(dto, cancellationToken)));
+                return Ok(mapper.Map<ProjectViewModel>(await projectService.Update(dto, cancellationToken)));
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }
