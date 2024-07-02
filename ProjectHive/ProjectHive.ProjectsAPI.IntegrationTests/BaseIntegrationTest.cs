@@ -46,7 +46,7 @@ public class BaseIntegrationTest : IDisposable
         _dbContextForProject?.Database.EnsureCreated();
     }
 
-    private string CreateJwtForFakeUser()
+    private static string CreateJwtForFakeUser()
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("EB622E6F-F21D-44ED-9798-D993A8126605"));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -72,12 +72,12 @@ public class BaseIntegrationTest : IDisposable
     {
         var statusList = new List<ProjectStatus>
         {
-        new ProjectStatus { Name = "Processing" },
-        new ProjectStatus { Name = "Distributing" },
-        new ProjectStatus { Name = "Abandoned" }
+        new() { Name = "Processing" },
+        new() { Name = "Distributing" },
+        new() { Name = "Abandoned" }
         };
 
-        await _dbContextForProject.ProjectStatuses.AddRangeAsync(statusList);
+        await _dbContextForProject!.ProjectStatuses.AddRangeAsync(statusList);
         var processingStatus = statusList.First(s => s.Name == "Processing");
 
         var user = new User()
@@ -86,7 +86,7 @@ public class BaseIntegrationTest : IDisposable
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now
         };
-        _dbContextForProject.Users.Add(user);
+        _dbContextForProject!.Users.Add(user);
 
         var project = new Project
         {
@@ -108,10 +108,10 @@ public class BaseIntegrationTest : IDisposable
     {
         var statusList = new List<StatusTasks>
         {
-           new StatusTasks { Name = "Open" },
-           new StatusTasks { Name = "In Progress" },
-           new StatusTasks { Name = "Done" },
-           new StatusTasks { Name = "Cancelled" },
+           new() { Name = "Open" },
+           new() { Name = "In Progress" },
+           new() { Name = "Done" },
+           new() { Name = "Cancelled" },
         };
 
         await _dbContextForProject.TasksStatuses.AddRangeAsync(statusList);
