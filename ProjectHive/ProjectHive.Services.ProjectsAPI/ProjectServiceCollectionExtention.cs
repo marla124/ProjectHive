@@ -23,6 +23,15 @@ public static class TaskServiceCollectionExtention
         var connectionString = configuration.GetConnectionString("Default");
         services.AddDbContext<ProjectHiveProjectDbContext>(opt => opt.UseNpgsql(connectionString));
 
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policyBuilder =>
+            {
+                policyBuilder.WithOrigins("http://localhost:3001")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
+        });
         services.AddFluentValidationAutoValidation();
 
         services.AddScoped<IValidator<CreateProjectRequestViewModel>, CreateProjectValidator>();

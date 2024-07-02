@@ -79,16 +79,6 @@ public class Program
             app.UseSwaggerUI();
         }
 
-        builder.Services.AddCors(options =>
-        {
-            options.AddDefaultPolicy(policyBuilder =>
-            {
-                policyBuilder.WithOrigins("http://localhost:3001")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-            });
-        });
-
         app.UseHttpsRedirection();
 
         app.UseAuthentication();
