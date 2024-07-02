@@ -19,13 +19,13 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
     public UserService(IUserRepository userRepository, IMapper mapper,
         IUnitOfWork unitOfWork, IConfiguration configuration) : base(userRepository, mapper)
     {
-        this._unitOfWork = unitOfWork;
-        this._userRepository = userRepository;
-        this._configuration = configuration;
-        this._mapper = mapper;
+        _unitOfWork = unitOfWork;
+        _userRepository = userRepository;
+        _configuration = configuration;
+        _mapper = mapper;
     }
 
-    public async Task<int> RegisterUser(UserDto dto, CancellationToken cancellationToken)
+    public async Task<UserDto> RegisterUser(UserDto dto, CancellationToken cancellationToken)
     {
         var userRole = await _unitOfWork.UserRoleRepository
         .FindBy(role => role.Role
@@ -41,7 +41,8 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
         };
         await _unitOfWork.UserRepository.CreateOne(user, cancellationToken);
 
-        return await _unitOfWork.Commit(cancellationToken);
+        await _unitOfWork.Commit(cancellationToken);
+        return _mapper.Map<UserDto>(user);
     }
     private string MdHashGenerate(string input)
     {
@@ -52,6 +53,11 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
             byte[] HashBytes = md5.ComputeHash(inputBytes);
             return Convert.ToHexString(HashBytes);
         }
+    }
+    public async Task<UserDto> GetByEmail(string email, CancellationToken cancellationToken)
+    {
+        var user = await _userRepository.GetByEmail(email, cancellationToken);
+        return _mapper.Map<UserDto>(user);
     }
     public bool IsUserExists(string email)
     {
@@ -65,11 +71,6 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
             .FindBy(user => user.Email.Equals(email)).FirstOrDefaultAsync(cancellationToken))?.PasswordHash;
         var passwordHash = MdHashGenerate(password);
         return currentPasswordHash?.Equals(passwordHash) ?? false;
-    }
-
-    public async Task<UserDto> GetByEmail(string email, CancellationToken cancellationToken)
-    {
-        return _mapper.Map<UserDto>(await _userRepository.GetByEmail(email, cancellationToken));
     }
 
     public async Task<UserDto> GetUserByRefreshToken(Guid refreshToken, CancellationToken cancellationToken)
