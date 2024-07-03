@@ -8,6 +8,7 @@ public interface IRepository<TEntity, TDbContext> where TEntity : BaseEntity
     Task<TEntity> GetById(Guid id, CancellationToken cancellationToken,
                 params Expression<Func<TEntity, object>>[] includes);
     Task<TEntity> GetByIdAsNoTracking(Guid id, CancellationToken cancellationToken);
+    public IQueryable<TEntity> GetAsQueryable();
     Task<TEntity> Update(TEntity entity, CancellationToken cancellationToken);
     Task DeleteById(Guid id, CancellationToken cancellationToken);
     Task DeleteMany(IEnumerable<TEntity> entities, CancellationToken cancellationToken);
