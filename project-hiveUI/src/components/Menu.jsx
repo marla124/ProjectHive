@@ -1,6 +1,6 @@
 import "../styles/menu.css";
 import { Link } from 'react-router-dom';
-import React from "react";
+import React, {useState} from "react";
 
 export default function Menu() {
 
@@ -9,7 +9,6 @@ export default function Menu() {
             <button className="create-button">
                 <i className="icon-pen"></i> Create
             </button>
-
             <ul className="item-links">
                 <li className="home-link">
                 <Link to="/">

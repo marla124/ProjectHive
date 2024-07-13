@@ -12,7 +12,6 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
         builder.Services.AddControllers();
 
         builder.Services.AddEndpointsApiExplorer();
@@ -66,19 +65,26 @@ public class Program
                 IssuerSigningKey = new SymmetricSecurityKey(key)
             };
         });
-
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policyBuilder =>
+            {
+                policyBuilder.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
+        });
         var app = builder.Build();
         app.PrepareDatabaseProject().GetAwaiter().GetResult();
         app.PrepareDatabaseTasks().GetAwaiter().GetResult();
 
 
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
+        app.UseCors();
         app.UseHttpsRedirection();
 
         app.UseAuthentication();

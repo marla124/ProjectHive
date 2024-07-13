@@ -8,9 +8,13 @@
 }
 .list {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap;text-decoration: none !important;
 }
 .title-header{
   margin-bottom: 30px;
   margin-left: 10px;
+}
+.projects-list a {
+  text-decoration: none;
+  color: #0f2d4e;
 }
