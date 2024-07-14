@@ -1,14 +1,18 @@
 import "../styles/menu.css";
 import { Link } from 'react-router-dom';
 import React, {useState} from "react";
+import CreateProjectForm from './CreateProjectForm';
 
 export default function Menu() {
 
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    
     return (
         <div className="menu-right">
-            <button className="create-button">
+            <button className="create-button" onClick={() => setModalIsOpen(true)}>
                 <i className="icon-pen"></i> Create
             </button>
+            <CreateProjectForm isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} />
             <ul className="item-links">
                 <li className="home-link">
                 <Link to="/">

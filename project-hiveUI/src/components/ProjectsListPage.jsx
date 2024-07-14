@@ -34,7 +34,7 @@ export default function ProjectsListPage() {
           'Accept': 'application/json'
         }
       });
-      setProjects(response.data); // Обновляем состояние проектов
+      setProjects(response.data); 
     } catch (error) {
       console.error('Ошибка при выполнении запроса', error);
     }

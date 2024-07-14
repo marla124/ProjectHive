@@ -29,6 +29,16 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
             return Ok(task);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetProjectTasks()
+        {
+            var projects = (await _taskService.GetMany())
+            .Select(dto => _mapper.Map<ProjectTaskDto>(dto))
+            .ToArray();
+
+            return Ok(projects);
+        }
+
         [HttpDelete("[action]/{id}")]
         public async Task<IActionResult> DeleteById(Guid id, CancellationToken cancellationToken)
         {
