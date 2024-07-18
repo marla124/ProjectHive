@@ -1,6 +1,7 @@
 .projects-container {
   display: flex;
-  justify-content: flex-start;
+    margin: 0 auto;
+    justify-content: flex-start;
 }
 .projects-list{
   margin-top: 40px;

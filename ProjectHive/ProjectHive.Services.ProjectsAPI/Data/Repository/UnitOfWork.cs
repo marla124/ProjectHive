@@ -17,6 +17,7 @@ public class UnitOfWork(ProjectHiveProjectDbContext dbContext,
     public IRepository<ProjectTask, ProjectHiveProjectDbContext> ProjectTaskRepository => projectTaskRepository;
     public IRepository<StatusTasks, ProjectHiveProjectDbContext> StatusTaskRepository => statusTaskRepository;
     public IRepository<ProjectStatus, ProjectHiveProjectDbContext> ProjectStatusRepository => projectStatusRepository;
+    public IRepository<StatusTasks, ProjectHiveProjectDbContext> ProjectTaskStatusRepository => statusTaskRepository;
     public IRepository<User, ProjectHiveProjectDbContext> UserRepository => userRepository;
 
     public async Task<int> Commit(CancellationToken cancellationToken)

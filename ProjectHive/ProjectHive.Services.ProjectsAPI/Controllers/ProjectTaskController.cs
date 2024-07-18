@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using ProjectHive.Services.ProjectsAPI.Business.Services;
 using ProjectHive.Services.ProjectsAPI.Dto;
@@ -12,11 +13,13 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
     public class ProjectTaskController : Controller
     {
         private readonly IProjectTaskService _taskService;
+        private readonly IProjectTaskStatusService _taskStatusService;
         private readonly IMapper _mapper;
-        public ProjectTaskController(IMapper mapper, IProjectTaskService projectService)
+        public ProjectTaskController(IMapper mapper, IProjectTaskService projectService, IProjectTaskStatusService taskStatusService)
         {
             _taskService = projectService;
             _mapper = mapper;
+            _taskStatusService= taskStatusService;
         }
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
@@ -29,14 +32,35 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
             return Ok(task);
         }
 
-        [HttpGet("[action]")]
-        public async Task<IActionResult> GetProjectTasks()
+        [HttpGet("[action]/{projectId}")]
+        public async Task<IActionResult> GetProjectTasks(Guid projectId)
         {
-            var projects = (await _taskService.GetMany())
+            var tasks = (await _taskService.GetMany())
+            .Where(dto=>dto.ProjectId==projectId)
             .Select(dto => _mapper.Map<ProjectTaskDto>(dto))
             .ToArray();
 
-            return Ok(projects);
+            return Ok(tasks);
+        }
+
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> GetUsersProjectTasks(Guid userId)
+        {
+            var tasks = (await _taskService.GetMany())
+            .Where(dto => dto.UserId == userId)
+            .Select(dto => _mapper.Map<ProjectTaskDto>(dto))
+            .ToArray();
+
+            return Ok(tasks);
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetStatusProjectTasks()
+        {
+            var projectTaskStatuses= (await _taskStatusService.GetMany())
+            .Select(dto => _mapper.Map<ProjectTaskStatusDto>(dto))
+            .ToArray();
+
+            return Ok(projectTaskStatuses);
         }
 
         [HttpDelete("[action]/{id}")]

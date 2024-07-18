@@ -26,7 +26,6 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
 
         public async Task<ProjectTaskDto> CreateTask(ProjectTaskDto dto, CancellationToken cancellationToken)
         {
-            var project = await _projectRepository.FindBy(p => p.Name == dto.ProjectName).FirstOrDefaultAsync(cancellationToken);
             var status = await _unitOfWork.StatusTaskRepository.FindBy(s => s.Name == "Open").FirstOrDefaultAsync(cancellationToken);
             if (status != null)
             {
@@ -37,7 +36,7 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
                     Name = dto.Name,
                     CreatedAt = DateTime.UtcNow,
                     Id = Guid.NewGuid(),
-                    ProjectId = project.Id,
+                    ProjectId = dto.ProjectId,
                     StatusTaskId = status.Id,
                 };
                 var createdTask = _mapper.Map<ProjectTaskDto>(await _unitOfWork.ProjectTaskRepository.CreateOne(task, cancellationToken));

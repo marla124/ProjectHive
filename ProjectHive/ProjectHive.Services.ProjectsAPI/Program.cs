@@ -76,7 +76,6 @@ public class Program
         });
         var app = builder.Build();
         app.PrepareDatabaseProject().GetAwaiter().GetResult();
-        app.PrepareDatabaseTasks().GetAwaiter().GetResult();
 
 
         if (app.Environment.IsDevelopment())

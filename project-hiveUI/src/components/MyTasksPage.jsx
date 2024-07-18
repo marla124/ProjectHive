@@ -26,7 +26,7 @@ export default function MyTasksPage(){
       }
   
       try {
-        const response = await axios.get('http://localhost:5170/api/ProjectTask/GetProjectTasks', {
+        const response = await axios.get(`http://localhost:5170/api/ProjectTask/GetUsersProjectTasks/${userId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json'

@@ -10,6 +10,7 @@ public class Mapping : Profile
     public Mapping()
     {
         CreateMap<ProjectDto, Project>().ReverseMap();
+        CreateMap<ProjectTaskStatusDto, StatusTasks>().ReverseMap();
         CreateMap<ProjectDto, ProjectViewModel>().ReverseMap();
         CreateMap<ProjectDto, CreateProjectRequestViewModel>().ReverseMap();
         CreateMap<ProjectDto, UpdateProjectRequestViewModel>().ReverseMap();
