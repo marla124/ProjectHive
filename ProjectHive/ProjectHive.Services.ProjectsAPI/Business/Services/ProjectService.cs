@@ -12,17 +12,13 @@ public class ProjectService : Service<ProjectDto, Project, ProjectHiveProjectDbC
 {
     private readonly IProjectRepository _projectRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IUserService _userService;
-    public ProjectService(IMapper mapper, IUnitOfWork unitOfWork, IConfiguration configuration, IProjectRepository projectRepository, IHttpContextAccessor httpContextAccessor, IUserService userService) : base(projectRepository, mapper)
+    public ProjectService(IMapper mapper, IUnitOfWork unitOfWork, IProjectRepository projectRepository, IUserService userService) : base(projectRepository, mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
-        _configuration = configuration;
         _projectRepository = projectRepository;
-        _httpContextAccessor = httpContextAccessor;
         _userService = userService;
     }
         public async Task<ProjectDto> CreateProject(ProjectDto dto, CancellationToken cancellationToken)
@@ -50,4 +46,11 @@ public class ProjectService : Service<ProjectDto, Project, ProjectHiveProjectDbC
                 throw new Exception("statusId not found");
             }
         }
+
+    public async Task<IEnumerable<ProjectDto>> GetProjectsForUser(Guid userId, CancellationToken cancellationToken)
+    {
+        var projects = await _unitOfWork.ProjectRepository.GetProjectsForUser(userId, cancellationToken);
+        return _mapper.Map<IEnumerable<ProjectDto>>(projects);
+    }
+
 }

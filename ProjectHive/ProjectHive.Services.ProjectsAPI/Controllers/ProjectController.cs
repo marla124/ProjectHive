@@ -25,13 +25,12 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetProjects()
+        public async Task<IActionResult> GetProjects(CancellationToken cancellationToken)
         {
-            var projects = (await projectService.GetMany())
-            .Select(dto => mapper.Map<ProjectDto>(dto))
-            .ToArray();
+            var userId =Guid.Parse(User.FindFirst("userId")?.Value);
+            var projects = await projectService.GetProjectsForUser(userId, cancellationToken);
 
-            return Ok(projects);
+            return Ok(mapper.Map<IEnumerable<ProjectViewModel>>(projects));
         }
 
         [HttpDelete("[action]/{id}")]

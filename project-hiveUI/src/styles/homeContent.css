@@ -1,0 +1,21 @@
+.container-home-auth{
+    display: flex;
+    margin-top: 40px;
+}
+.item-in-home{
+    box-shadow: 0 5px 10px rgba(0.3,0.3,0.3,0.3);
+    height: 40vh;
+    width: 60vh;
+    border-radius: 7px;
+    margin-right: 40px;
+}
+.item-in-home p{
+    color: #0f2d4e;
+    font-size: 23px;
+    margin: 10px;
+}
+.line-block{
+    width: 60vh;
+    height: 1px;
+    background-color: #0f2d4e;
+}

@@ -2,9 +2,11 @@
 using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using ProjectHive.Services.ProjectsAPI.Business.Services;
+using ProjectHive.Services.ProjectsAPI.Data.Entities;
 using ProjectHive.Services.ProjectsAPI.Dto;
 using ProjectHive.Services.ProjectsAPI.Models;
 using ProjectHive.Services.ProjectsAPI.Models.RequestModel;
+using System.Security.Claims;
 
 namespace ProjectHive.Services.ProjectsAPI.Controllers
 {
@@ -43,14 +45,14 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
             return Ok(tasks);
         }
 
-        [HttpGet("[action]/{userId}")]
-        public async Task<IActionResult> GetUsersProjectTasks(Guid userId)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetProjectTasksForUser()
         {
+            var userId = User.FindFirst("userId")?.Value;
             var tasks = (await _taskService.GetMany())
-            .Where(dto => dto.UserId == userId)
+            .Where(dto => dto.ProjectId == Guid.Parse(userId))
             .Select(dto => _mapper.Map<ProjectTaskDto>(dto))
             .ToArray();
-
             return Ok(tasks);
         }
         [HttpGet("[action]")]
