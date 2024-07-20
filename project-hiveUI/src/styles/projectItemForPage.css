@@ -1,0 +1,25 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+  
+.project-item-for-home-page{
+    overflow-y: scroll;
+    width: 260px;
+    height: 90px;
+    outline: 2px solid #d3dde7;
+    border-radius: 7px;
+    color: #0f2d4e;
+    margin: 10px;    
+    word-wrap: break-word;
+}
+::-webkit-scrollbar {
+    width: 5px; 
+}
+
+.name-project-for-home-page{
+    margin: 10px;
+}
+    

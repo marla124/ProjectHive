@@ -19,7 +19,7 @@ public class Program
         builder.Services.RegisterServicesforProjectApi(builder.Configuration);
         builder.Services.AddSwaggerGen(opt =>
         {
-            opt.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "MyApi", Version = "v1" });
+            opt.SwaggerDoc("v1", new OpenApiInfo { Title = "MyApi", Version = "v1" });
             opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,

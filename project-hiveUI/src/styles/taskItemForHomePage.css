@@ -1,0 +1,18 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+  
+.task-item-for-home-page{
+    width: 58vh;
+    height: 4vh;
+    outline: 2px solid #d3dde7;
+    border-radius: 7px;
+    color: #0f2d4e;
+    text-align: left; 
+    margin: 10px;    
+}
+
+    

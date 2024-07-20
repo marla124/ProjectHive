@@ -47,7 +47,7 @@ export default function Menu() {
                 </a>
                 </li>
                 <li className="my-projects-link">
-                <Link to={isUserLoggedIn ? '/projects' : '/login'} >
+                <Link to={isUserLoggedIn ? '/login' : '/projects'} >
                     <i className="icon-file_open" aria-hidden="true"></i>
                     <span className="link_name">Projects</span>
                 </Link>

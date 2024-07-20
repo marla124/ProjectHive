@@ -37,9 +37,11 @@ public class ProjectService : Service<ProjectDto, Project, ProjectHiveProjectDbC
                     UpdatedAt = DateTime.UtcNow,
                     CreatorUserId = user.Id,
                 };
-                var createdTask = _mapper.Map<ProjectDto>(await _unitOfWork.ProjectRepository.CreateOne(project, cancellationToken));
+                project.UserProjects = new List<UserProject>();
+                project.UserProjects.Add(new UserProject { UserId = user.Id });
+                var createdProject = _mapper.Map<ProjectDto>(await _unitOfWork.ProjectRepository.CreateOne(project, cancellationToken));
                 await _unitOfWork.Commit(cancellationToken);
-                return createdTask;
+                return createdProject;
             }
             else
             {
