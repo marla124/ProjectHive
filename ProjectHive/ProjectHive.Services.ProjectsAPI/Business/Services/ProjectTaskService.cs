@@ -14,17 +14,19 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
         private readonly IProjectRepository _projectRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        public ProjectTaskService(IProjectTaskRepository projectTaskRepository, IMapper mapper, IUnitOfWork unitOfWork, IConfiguration configuration, IProjectRepository projectRepository) : base(projectTaskRepository, mapper)
+        public ProjectTaskService(IUserService userService, IProjectTaskRepository projectTaskRepository, IMapper mapper, IUnitOfWork unitOfWork, IConfiguration configuration, IProjectRepository projectRepository) : base(projectTaskRepository, mapper)
         {
             _unitOfWork = unitOfWork;
+            _userService = userService;
             _projectTaskRepository = projectTaskRepository;
             _mapper = mapper;
             _configuration = configuration;
             _projectRepository = projectRepository;
         }
 
-        public async Task<ProjectTaskDto> CreateTask(ProjectTaskDto dto, CancellationToken cancellationToken)
+        public async Task<ProjectTaskDto> CreateTask(ProjectTaskDto dto, Guid userId, CancellationToken cancellationToken)
         {
             var status = await _unitOfWork.StatusTaskRepository.FindBy(s => s.Name == "Open").FirstOrDefaultAsync(cancellationToken);
             if (status != null)
@@ -37,6 +39,7 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
                     CreatedAt = DateTime.UtcNow,
                     Id = Guid.NewGuid(),
                     ProjectId = dto.ProjectId,
+                    UserId = userId,
                     StatusTaskId = status.Id,
                 };
                 var createdTask = _mapper.Map<ProjectTaskDto>(await _unitOfWork.ProjectTaskRepository.CreateOne(task, cancellationToken));

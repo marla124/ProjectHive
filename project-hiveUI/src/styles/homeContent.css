@@ -26,6 +26,9 @@
     overflow: hidden;
     flex-wrap: wrap;
 }
+.projects-items > *:last-child {
+    align-self: flex-end;
+  }
 .mytasks-items{
     margin-top: 25px; 
 }

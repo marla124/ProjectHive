@@ -12,7 +12,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectTaskController : Controller
+    public class ProjectTaskController : BaseController
     {
         private readonly IProjectTaskService _taskService;
         private readonly IProjectTaskStatusService _taskStatusService;
@@ -50,7 +50,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         {
             var userId = User.FindFirst("userId")?.Value;
             var tasks = (await _taskService.GetMany())
-            .Where(dto => dto.ProjectId == Guid.Parse(userId))
+            .Where(dto => dto.UserId == Guid.Parse(userId))
             .Select(dto => _mapper.Map<ProjectTaskDto>(dto))
             .ToArray();
             return Ok(tasks);
@@ -86,8 +86,9 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = Guid.Parse(GetUserId());
                 var dto = _mapper.Map<ProjectTaskDto>(request);
-                var task = await _taskService.CreateTask(dto, cancellationToken);
+                var task = await _taskService.CreateTask(dto, userId, cancellationToken);
                 return Ok(_mapper.Map<ProjectTaskViewModel>(task));
             }
             else
