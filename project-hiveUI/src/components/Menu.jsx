@@ -53,7 +53,7 @@ export default function Menu() {
                 </Link>
                 </li>
                 <li className="my-tasks-link">
-                <Link to={isUserLoggedIn ? '/mytasks' : '/login'} >
+                <Link to={isUserLoggedIn ? '/login' : '/mytasks'} >
 
                     <i className="icon-attachment" aria-hidden="true"></i>
                     <span className="link_name">Tasks</span>

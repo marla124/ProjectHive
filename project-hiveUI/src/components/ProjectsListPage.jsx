@@ -20,8 +20,6 @@ export default function ProjectsListPage() {
   }, [token, navigate]);
 
   const fetchData = async () => {
-    console.log(token);
-
     if (!token) {
       console.error('Токен не найден');
       return;

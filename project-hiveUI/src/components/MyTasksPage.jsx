@@ -7,7 +7,7 @@ import TaskItem from './TaskItem';
 import { Link, useNavigate} from 'react-router-dom';
 
 export default function MyTasksPage(){
-    const [projectTasks, setProjectTasks] = useState([]);
+    const [tasks, setProjectTasks] = useState([]);
     const navigate = useNavigate();
     const token = localStorage.getItem('jwtToken');
   
@@ -26,7 +26,7 @@ export default function MyTasksPage(){
       }
   
       try {
-        const response = await axios.get(`http://localhost:5170/api/ProjectTask/GetUsersProjectTasks/${userId}`, {
+        const response = await axios.get(`http://localhost:5170/api/ProjectTask/GetProjectTasksForUser`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json'
@@ -45,9 +45,9 @@ export default function MyTasksPage(){
         <div className='list-mytasks'>
             <h1 className='title-header-mytasks'>My Tasks</h1>
             <div className='mytask'>
-                {projectTasks.map(projectTask => (
-                <Link to={`/mytasks/${projectTask.id}`} key={projectTask.id}>
-                    <TaskItem projectTask={projectTask} />
+            {tasks.map(task => (
+                <Link to={`/mytasks/${task.id}`} key={task.id}>
+                    <TaskItem task={task} className="tasl-item"/>
                 </Link>
                 ))}
             </div>

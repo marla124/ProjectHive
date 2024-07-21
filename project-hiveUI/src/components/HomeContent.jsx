@@ -9,8 +9,8 @@ import CreateProjectForm from './CreateProjectForm';
 export default function HomeContent() {
   const [projects, setProjects] = useState([]);
   const [tasks, setProjectTasks] = useState([]);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const navigate = useNavigate();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const navigate = useNavigate();
   const token = localStorage.getItem('jwtToken');
   useEffect(() => {
     if (!token) {
@@ -39,13 +39,15 @@ export default function HomeContent() {
       const latestProjects = sortedProjects.slice(0, 5);
       setProjects(latestProjects);
       
-      const responseTasks = await axios.get('http://localhost:5170/api/Project/GetProjectTasksForUser', {
+      const responseTasks = await axios.get('http://localhost:5170/api/ProjectTask/GetProjectTasksForUser', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Accept': 'application/json'
         }
       });
-      setProjectTasks(responseTasks.data); 
+      const sortedProjectTasks = response.data.sort((a, b) => new Date(b.startExecution) - new Date(a.createdDate));
+      const latestProjectTasks = sortedProjectTasks.slice(0, 6);
+      setProjectTasks(latestProjectTasks); 
     } catch (error) {
       console.error('Ошибка при выполнении запроса', error);
     }

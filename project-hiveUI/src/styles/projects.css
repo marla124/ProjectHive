@@ -5,20 +5,28 @@
 }
 
 .projects-container {
-  display: flex;
+    color: #0f2d4e;
+    display: flex;
     margin: 0 auto;
     justify-content: flex-start;
 }
 .projects-list{
   margin-top: 40px;
-  margin-left: 110px;
+    width: 130vh;
+    margin-left: 110px;
 }
 .list {
   display: flex;
   flex-wrap: wrap;
   text-decoration: none !important;
+  outline: 2px solid #d3dde7;
+    border-radius: 7px;
 }
 .projects-list a {
   text-decoration: none;
   color: #0f2d4e;
+}
+.title-header{
+  margin-bottom: 30px;
+
 }
