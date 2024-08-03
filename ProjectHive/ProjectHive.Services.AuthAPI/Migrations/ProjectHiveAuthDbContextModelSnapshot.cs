@@ -45,7 +45,7 @@ namespace ProjectHive.Services.AuthAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.User", b =>
@@ -75,7 +75,7 @@ namespace ProjectHive.Services.AuthAPI.Migrations
 
                     b.HasIndex("UserRoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.UserRole", b =>
@@ -96,7 +96,7 @@ namespace ProjectHive.Services.AuthAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("UserRoles", (string)null);
                 });
 
             modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.RefreshToken", b =>

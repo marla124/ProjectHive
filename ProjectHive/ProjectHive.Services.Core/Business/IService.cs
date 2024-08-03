@@ -7,5 +7,6 @@ public interface IService<TDto>
     public Task<TDto?> Create(TDto dto, CancellationToken cancellationToken);
     public Task DeleteById(Guid id, CancellationToken cancellationToken);
     public Task<TDto?> GetById(Guid Id, CancellationToken cancellationToken);
+    public Task<TDto[]?> GetMany();
     public Task<TDto?> Update(TDto dto, CancellationToken cancellationToken);
 }

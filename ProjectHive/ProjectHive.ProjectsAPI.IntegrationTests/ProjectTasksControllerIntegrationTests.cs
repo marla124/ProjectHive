@@ -20,7 +20,7 @@ public class ProjectTasksControllerIntegrationTests : BaseIntegrationTest
             Name = "name",
             Description = "description",
             Deadline = DateTime.Now,
-            ProjectName = project.Name
+            ProjectId=project.Id,
         };
         var uri = $"{BaseUrl}/CreateTask";
         var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");

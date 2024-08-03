@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ProjectHive.Services.Core.Data;
 using ProjectHive.Services.Core.Data.Repository;
 
@@ -20,6 +21,15 @@ public class Service<TDto, TEntity, TDbContext> : IService<TDto> where TEntity :
     {
         var dto = _mapper.Map<TDto>(await _repository.GetById(Id, cancellationToken));
         return dto;
+    }
+
+    public async Task<TDto[]?> GetMany()
+    {
+        var dtoarr = await _repository
+        .GetAsQueryable()
+        .Select(dto => _mapper.Map<TDto>(dto))
+        .ToArrayAsync();
+        return dtoarr;
     }
 
     public async Task DeleteById(Guid Id, CancellationToken cancellationToken)

@@ -25,6 +25,19 @@ public static class AppBuilderExtensionStatusProject
             await dbContext.ProjectStatuses.AddRangeAsync(status);
             await dbContext.SaveChangesAsync();
         }
+        if (!await dbContext.TasksStatuses.AnyAsync())
+        {
+            var status = new List<StatusTasks>
+            {
+                new StatusTasks { Name = "Open" },
+                new StatusTasks { Name = "In Progress" },
+                new StatusTasks { Name = "Done" },
+                new StatusTasks { Name = "Cancelled" },
+            };
+
+            await dbContext.TasksStatuses.AddRangeAsync(status); 
+            await dbContext.SaveChangesAsync();
+        }
 
         return app;
     }

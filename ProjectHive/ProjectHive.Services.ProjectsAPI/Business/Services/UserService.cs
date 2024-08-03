@@ -12,7 +12,6 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
     public class UserService : Service<UserDto, User, ProjectHiveProjectDbContext>, IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
         public UserService(IUserRepository repository, IMapper mapper, IUnitOfWork unitOfWork) : base(repository, mapper)
         {

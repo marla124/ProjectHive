@@ -1,0 +1,11 @@
+.time-of-day {
+    margin: 0 auto;
+    font-size: 300%;
+    color: #0f2d4e;
+}
+
+.date{
+    margin: 0 auto;
+    font-size: 200%;
+    color: #0f2d4e;
+}

@@ -1,36 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Menu from './Menu';
 import "../styles/mytask.css"
+import axios from 'axios';
 import TaskItem from './TaskItem';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export default function MyTasksPage(){
-    const [tasks, setTasks] = useState([
-        { id: 1, name: 'Task1', status: "In Process", description: "Description1", deadline: "12.07.2024" },
-        { id: 2, name: 'Task2', status: "Done", description: "Description2useeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeei", deadline: "12.07.2024"  },
-        { id: 3, name: 'Task3', status: "Cancelled", description: "Description3", deadline: "12.07.2024"  },
-        { id: 4, name: 'Task4', status: "Open", description: "Dessjhdjshfkjaoihdisuhdiuhuihudhhhhhhhhhhhhhhhhhhiuddddhidhdhudhishdihaishaidiaudshaidhaihdjhsjfhsjhdjon4", deadline: "12.07.2024"  },
-        { id: 5, name: 'Task5', status: "Open", description: "Description5ijoisudfiosudisuhaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabilzzzzzzzzzzzzzzzzzzzzzfdsvbhyklFFFFFFSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSG", deadline: "12.07.2024"  },
-        { id: 6, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        ]);
+export default function MyTasksPage() {
+  const [tasks, setProjectTasks] = useState([]);
+  const [statusTask, setStatusTask] = useState([]);
+  const token = localStorage.getItem('jwtToken');
 
-    return(
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5170/api/ProjectTask/GetProjectTasksForUser`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json'
+        }
+      });
+      setProjectTasks(response.data);
+      const responseStatus = await axios.get('http://localhost:5170/api/ProjectTask/GetStatusProjectTasks', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json'
+        }
+      });
+      setStatusTask(responseStatus.data);
+
+      const taskWithStatus = response.data.map(task => {
+        const status = responseStatus.data.find(status => status.id === task.statusTaskId);
+        return {
+          ...task,
+          statusName: status.name
+        };
+      });
+      setProjectTasks(taskWithStatus);
+    } catch (error) {
+      console.error('Ошибка при выполнении запроса', error);
+    }
+  };
+  return (
     <div className='page-mytasks-container'>
-        <Navbar />
-        <div className='mytasks-container'>
+      <Navbar />
+      <div className='mytasks-container'>
         <Menu />
         <div className='list-mytasks'>
-            <h1 className='title-header-mytasks'>My Tasks</h1>
-            <div className='mytask'>
-                {tasks.map(task => (
-                <Link to='/mytask' key={tasks.id}>
-                    <TaskItem tasks={tasks} />
-                </Link>
-                ))}
-            </div>
+          <h1 className='title-header-mytasks'>My Tasks</h1>
+          <div className='mytask'>
+            {tasks.map(task => (
+              <Link to={`/mytasks/${task.id}`} key={task.id}>
+                <TaskItem task={task} className="tasl-item" />
+              </Link>
+            ))}
+          </div>
         </div>
-    </div>  
+      </div>
     </div>
-    );
+  );
 }

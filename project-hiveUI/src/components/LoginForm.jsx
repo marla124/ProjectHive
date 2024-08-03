@@ -13,16 +13,18 @@ export default function LoginForm() {
     event.preventDefault();
     const data = { email, password }; 
     try {
-    const response= await 
-    axios.post("http://localhost:5183/api/Token/GenerateToken", data);
+      const response = await axios.post("http://localhost:5183/api/Token/GenerateToken", data);
       if (response.status === 201 || response.status === 200) {
+        const { jwtToken, refreshToken } = response.data;
+        localStorage.setItem('jwtToken', jwtToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        console.log(response.data);
         navigate('/');
       }
+    } catch (error) {
+      console.error('Error generating token:', error);
     }
-    catch(error) {
-        console.log(error);
-      };
-  };
+};
 
   return (
     <div className="block">

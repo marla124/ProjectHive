@@ -133,7 +133,7 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ProjectId")
+                    b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("StatusTaskId")
@@ -142,11 +142,16 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
 
                     b.HasIndex("StatusTaskId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ProjectTasks");
                 });
@@ -250,7 +255,9 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                 {
                     b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.Project", "Project")
                         .WithMany("Tasks")
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.StatusTasks", "StatusTask")
                         .WithMany("Tasks")
@@ -258,9 +265,17 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.User", "User")
+                        .WithMany("ProjectTasks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Project");
 
                     b.Navigation("StatusTask");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.UserProject", b =>
@@ -309,6 +324,8 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("CreatedProjects");
+
+                    b.Navigation("ProjectTasks");
 
                     b.Navigation("UserProjects");
                 });

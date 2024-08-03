@@ -5,7 +5,7 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository.Interfase
 {
     public interface IUnitOfWork
     {
-        public IRepository<Project, ProjectHiveProjectDbContext> ProjectRepository { get; }
+        public IProjectRepository ProjectRepository { get; }
         public IRepository<ProjectTask, ProjectHiveProjectDbContext> ProjectTaskRepository { get; }
         public IRepository<StatusTasks, ProjectHiveProjectDbContext> StatusTaskRepository { get; }
         public IRepository<ProjectStatus, ProjectHiveProjectDbContext> ProjectStatusRepository { get; }

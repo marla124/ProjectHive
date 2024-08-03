@@ -93,4 +93,9 @@ public class Repository<TEntity, TDbContext> : IRepository<TEntity, TDbContext> 
     {
         return await _dbSet.ToListAsync(cancellationToken);
     }
+
+    public IQueryable<TEntity> GetAsQueryable()
+    {
+        return _dbSet.AsQueryable();
+    }
 }

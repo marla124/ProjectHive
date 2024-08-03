@@ -40,6 +40,7 @@ public static class TaskServiceCollectionExtention
         services.AddScoped<IValidator<UpdateTaskRequestViewModel>, UpdateTaskValidator>();
 
         services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IProjectTaskStatusRepository, ProjectTaskStatusRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
         services.AddScoped<IRepository<User, ProjectHiveProjectDbContext>, Repository<User, ProjectHiveProjectDbContext>>();
@@ -52,6 +53,7 @@ public static class TaskServiceCollectionExtention
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<IProjectTaskService, ProjectTaskService>();
+        services.AddScoped<IProjectTaskStatusService, ProjectTaskStatusService>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddHttpContextAccessor();
 
