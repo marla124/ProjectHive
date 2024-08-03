@@ -10,12 +10,6 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
   const token = localStorage.getItem('jwtToken');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!token) {
-      navigate('/login');
-    }
-  }, [token, navigate]);
-
   const handleCreateProject = async () => {
     try {
       await axios.post('http://localhost:5170/api/Project/CreateProject', {

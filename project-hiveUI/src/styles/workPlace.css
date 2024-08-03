@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -15,7 +15,8 @@
     flex-wrap: wrap;
     color: #0f2d4e;
 }
-.column-body{
+
+.column-body {
     margin-top: 10px;
     overflow-y: auto;
     max-height: 100vh;

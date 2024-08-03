@@ -8,23 +8,13 @@ import axios from 'axios';
 
 export default function ProjectsListPage() {
   const [projects, setProjects] = useState([]);
-  const navigate = useNavigate();
   const token = localStorage.getItem('jwtToken');
 
   useEffect(() => {
-    if (!token) {
-      navigate('/login');
-    } else {
-      fetchData();
-    }
-  }, [token, navigate]);
+    fetchData();
+  });
 
   const fetchData = async () => {
-    if (!token) {
-      console.error('Токен не найден');
-      return;
-    }
-
     try {
       const response = await axios.get('http://localhost:5170/api/Project/GetProjects', {
         headers: {
@@ -32,7 +22,7 @@ export default function ProjectsListPage() {
           'Accept': 'application/json'
         }
       });
-      setProjects(response.data); 
+      setProjects(response.data);
     } catch (error) {
       console.error('Ошибка при выполнении запроса', error);
     }
@@ -44,7 +34,7 @@ export default function ProjectsListPage() {
       <div className='projects-container'>
         <Menu />
         <div className='projects-list'>
-          <h1 className='title-header'>My Projects</h1>
+          <h1 className='title-header-projects'>My Projects</h1>
           <div className='list'>
             {projects.map(project => (
               <Link to={`/projects/${project.id}`} key={project.id}>

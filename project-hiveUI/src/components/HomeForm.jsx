@@ -6,25 +6,28 @@ import Greeting from './Greeting';
 import HomeContent from './HomeContent';
 
 export default function HomeForm() {
-  const token = localStorage.getItem('jwtToken');
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   useEffect(() => {
-      handleUserLogined();
+    handleUserLogined();
   }, []);
 
   const handleUserLogined = () => {
-      if (token) {
-          setIsUserLoggedIn(true);
-      }
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      setIsUserLoggedIn(true);
+    } else {
+      setIsUserLoggedIn(false);
+    }
   };
-  return (  
+
+  return (
     <div className='container-home'>
-      <Navbar />
+      <Navbar onLogout={handleUserLogined} />
       <div className='title-header'>
         <Menu />
         < div className="title-greeting">
-          <Greeting/>
+          <Greeting />
           {isUserLoggedIn ? <HomeContent /> : <p className='text-description'>Log in to unlock all the features</p>}
         </div>
       </div>
