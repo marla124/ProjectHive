@@ -1,59 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Menu from './Menu';
-import "../styles/workPlace.css"
+import useProjectsTasks from '../hooks/useProjectsTasks';
+import useStatusTasks from '../hooks/useStatusTasks';
+import { useNavigate } from 'react-router-dom';
+import "../styles/workPlace.css";
 import TaskItem from './TaskItem';
+import useUserAuthentication from '../hooks/useUserAuthentication';
+import CreateTaskForm from './CreateTaskForm';
 
 export default function WorkPlacePage() {
-  const [tasks, setProjectTasks] = useState([]);
-  const [statusTask, setStatusTask] = useState([]);
-  const token = localStorage.getItem('jwtToken');
-  const url = window.location.href;
-  const projectId = url.split('/').pop();
+  const statusTasks = useStatusTasks();
+  const navigate = useNavigate();
+  const projectsTasks = useProjectsTasks();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const isUserLoggedIn = useUserAuthentication(false);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-
-    try {
-      const response = await axios.get(`http://localhost:5170/api/ProjectTask/GetProjectTasks/${projectId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Accept': 'application/json'
-        }
-      });
-      console.log('Response data:', response.data);
-      setProjectTasks(response.data);
-
-      const responseStatus = await axios.get('http://localhost:5170/api/ProjectTask/GetStatusProjectTasks', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Accept': 'application/json'
-        }
-      });
-      console.log('Response data:', responseStatus.data);
-      setStatusTask(responseStatus.data);
-
-    } catch (error) {
-      console.error('Ошибка при выполнении запроса', error);
+  const handleTaskButtonClick = () => {
+    if (isUserLoggedIn) {
+      setModalIsOpen(true);
+    } else {
+      navigate('/login');
     }
   };
-
   return (
     <div className='page-container'>
       <Navbar />
       <div className='tasks-container'>
         <Menu />
         <div className='tasks-list'>
-          {statusTask.map(status => (
+          {statusTasks.map(status => (
             <div key={status.id} className='column'>
               <h2 className='column-header'>{status.name}</h2>
               <div className='column-body'>
-                {tasks.filter(task => task.statusTaskId === status.id).map(filteredTask => (
+                {status.name === 'Open' && (
+                  <div>
+                    <button className='more-item-place' onClick={handleTaskButtonClick}>
+                      <i className="icon-plus" aria-hidden="true"></i>
+                    </button>
+                    <CreateTaskForm isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} />
+                  </div>
+                )}
+                {projectsTasks.filter(task => task.statusTaskId === status.id).map(filteredTask => (
                   <TaskItem task={filteredTask} key={filteredTask.id} />
                 ))}
               </div>

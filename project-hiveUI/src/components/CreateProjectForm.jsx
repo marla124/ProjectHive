@@ -9,7 +9,6 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
   const [description, setDescription] = useState('');
   const token = localStorage.getItem('jwtToken');
   const navigate = useNavigate();
-
   const handleCreateProject = async () => {
     try {
       await axios.post('http://localhost:5170/api/Project/CreateProject', {

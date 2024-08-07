@@ -2,31 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Menu from './Menu';
 import "../styles/projects.css";
+import useProject from '../hooks/useProject';
 import ProjectItem from './ProjectItem';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function ProjectsListPage() {
-  const [projects, setProjects] = useState([]);
-  const token = localStorage.getItem('jwtToken');
-
-  useEffect(() => {
-    fetchData();
-  });
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:5170/api/Project/GetProjects', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Accept': 'application/json'
-        }
-      });
-      setProjects(response.data);
-    } catch (error) {
-      console.error('Ошибка при выполнении запроса', error);
-    }
-  };
+  const projects = useProject([]);
 
   return (
     <div className='page-container'>

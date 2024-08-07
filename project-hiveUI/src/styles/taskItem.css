@@ -39,6 +39,10 @@
     justify-content: space-between;
 }
 
+.name-task {
+    margin-bottom: 10px;
+}
+
 .status-task {
     margin-top: 10px;
     background-color: #d4e2f1;
