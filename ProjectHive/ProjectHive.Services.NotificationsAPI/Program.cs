@@ -45,7 +45,7 @@ namespace ProjectHive.Services.NotificationsAPI
 
             app.MapControllers();
 
-            app.Run();
+            app.RunAsync();
         }
     }
 }
