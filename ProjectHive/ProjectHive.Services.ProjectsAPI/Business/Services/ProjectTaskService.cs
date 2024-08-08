@@ -35,9 +35,9 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
                     Name = dto.Name,
                     CreatedAt = DateTime.UtcNow,
                     Id = Guid.NewGuid(),
-                    ProjectId = Guid.Parse(dto.ProjectId),
+                    ProjectId = dto.ProjectId,
                     UserId = userId,
-                    StatusTaskId = Guid.Parse(dto.StatusTaskId),
+                    StatusTaskId = dto.StatusTaskId,
                 };
                 var createdTask = _mapper.Map<ProjectTaskDto>(await _unitOfWork.ProjectTaskRepository.CreateOne(task, cancellationToken));
                 await _unitOfWork.Commit(cancellationToken);
