@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectHive.Services.AuthAPI.Dto;
 using ProjectHive.Services.AuthAPI.FluentValidation;
@@ -12,7 +13,7 @@ namespace ProjectHive.Services.AuthAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserController(IUserService userService, IMapper mapper) : Controller
+public class UserController(IUserService userService, IMapper mapper) : BaseController
 {
     [HttpGet("[action]/{id}")]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
@@ -23,6 +24,20 @@ public class UserController(IUserService userService, IMapper mapper) : Controll
             return NotFound();
         }
         return Ok(project);
+    }
+    [HttpGet("[action]")]
+    public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
+    {
+        var projects = mapper.Map<UserViewModel>(await userService.GetMany(cancellationToken));
+        return Ok(projects);
+    }
+    [Authorize]
+    [HttpGet("[action]")]
+    public async Task<IActionResult> GetFrendlyUsers(CancellationToken cancellationToken)
+    {
+        var userId = Guid.Parse(GetUserId());
+        var projects = mapper.Map<UserViewModel>(await userService.GetFriendlyUsers(userId, cancellationToken));
+        return Ok(projects);
     }
 
     [HttpDelete("[action]/{id}")]

@@ -10,4 +10,6 @@ public interface IUserRepository : IRepository<User, ProjectHiveAuthDbContext>
             params Expression<Func<User, object>>[] includes);
 
     public Task<User> GetByRefreshToken(Guid refreshToken, CancellationToken cancellationToken);
+    public Task<List<User>> GetFriendlyUsers(Guid userId, CancellationToken cancellationToken);
+
 }

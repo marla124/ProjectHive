@@ -5,7 +5,8 @@
             {
                 public List<Comment>? Comments { get; set; }
                 public List<Project>? CreatedProjects { get; set; } 
-                public List<UserProject>? UserProjects { get; set; } 
-                public List<ProjectTask>? ProjectTasks { get; set; }
+                public List<UserProject>? UserProjects { get; set; }
+                public List<ProjectTask>? CreatedTasks { get; set; }
+                public List<ProjectTask>? ExecutedTasks { get; set; }
             }
         }

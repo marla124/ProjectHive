@@ -22,6 +22,21 @@ namespace ProjectHive.Services.AuthAPI.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.Friends", b =>
+                {
+                    b.Property<Guid>("UserOneId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserTwoId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserOneId", "UserTwoId");
+
+                    b.HasIndex("UserTwoId");
+
+                    b.ToTable("Friends");
+                });
+
             modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -45,7 +60,7 @@ namespace ProjectHive.Services.AuthAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens", (string)null);
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.User", b =>
@@ -75,7 +90,7 @@ namespace ProjectHive.Services.AuthAPI.Migrations
 
                     b.HasIndex("UserRoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.UserRole", b =>
@@ -96,7 +111,26 @@ namespace ProjectHive.Services.AuthAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.Friends", b =>
+                {
+                    b.HasOne("ProjectHive.Services.AuthAPI.Data.Entities.User", "UserOne")
+                        .WithMany("Friends")
+                        .HasForeignKey("UserOneId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProjectHive.Services.AuthAPI.Data.Entities.User", "UserTwo")
+                        .WithMany()
+                        .HasForeignKey("UserTwoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("UserOne");
+
+                    b.Navigation("UserTwo");
                 });
 
             modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.RefreshToken", b =>
@@ -123,6 +157,8 @@ namespace ProjectHive.Services.AuthAPI.Migrations
 
             modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.User", b =>
                 {
+                    b.Navigation("Friends");
+
                     b.Navigation("RefreshTokens");
                 });
 

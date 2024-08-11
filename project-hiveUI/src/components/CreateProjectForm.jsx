@@ -8,6 +8,7 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const token = localStorage.getItem('jwtToken');
+  const url = window.location.href;
   const navigate = useNavigate();
   const handleCreateProject = async () => {
     try {

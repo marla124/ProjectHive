@@ -8,8 +8,10 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Entities
         public DateTime? Deadline { get; set; }
         public Guid StatusTaskId { get; set; }
         public StatusTasks StatusTask { get; set; }
-        public Guid UserId { get; set; }
-        public User User {  get; set; }
+        public Guid? UserExecutorId { get; set; }
+        public User UserExecutor {  get; set; }
+        public Guid UserCreatorId { get; set; }
+        public User UserCreator { get; set; }
         public Guid ProjectId { get; set; }
         public Project Project { get; set; }
     }

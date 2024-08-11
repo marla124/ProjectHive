@@ -35,9 +35,9 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         }
 
         [HttpGet("[action]/{projectId}")]
-        public async Task<IActionResult> GetProjectTasks(Guid projectId)
+        public async Task<IActionResult> GetProjectTasks(Guid projectId, CancellationToken cancellationToken)
         {
-            var tasks = (await _taskService.GetMany())
+            var tasks = (await _taskService.GetMany(cancellationToken))
             .Where(dto=>dto.ProjectId==projectId)
             .Select(dto => _mapper.Map<ProjectTaskDto>(dto))
             .ToArray();
@@ -46,19 +46,19 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetProjectTasksForUser()
+        public async Task<IActionResult> GetProjectTasksForUser(CancellationToken cancellationToken)
         {
             var userId = User.FindFirst("userId")?.Value;
-            var tasks = (await _taskService.GetMany())
+            var tasks = (await _taskService.GetMany(cancellationToken))
             .Where(dto => dto.UserId == Guid.Parse(userId))
             .Select(dto => _mapper.Map<ProjectTaskDto>(dto))
             .ToArray();
             return Ok(tasks);
         }
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetStatusProjectTasks()
+        public async Task<IActionResult> GetStatusProjectTasks(CancellationToken cancellationToken)
         {
-            var projectTaskStatuses= (await _taskStatusService.GetMany())
+            var projectTaskStatuses= (await _taskStatusService.GetMany(cancellationToken))
             .Select(dto => _mapper.Map<ProjectTaskStatusDto>(dto))
             .ToArray();
 

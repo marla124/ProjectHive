@@ -30,4 +30,16 @@ public class UserRepository : Repository<User, ProjectHiveAuthDbContext>, IUserR
         var resultQuery = _dbSet.AsQueryable();
         return await resultQuery.FirstOrDefaultAsync(entity => entity.RefreshTokens.Any(rt => rt.Id == refreshToken), cancellationToken);
     }
+
+    public async Task<List<User>> GetFriendlyUsers(Guid userId, CancellationToken cancellationToken)
+    {
+        var friends = await _dbSet
+            .Where(u => u.Friends.Any(f => f.UserOneId == userId || f.UserTwoId == userId))
+            .SelectMany(u => u.Friends)
+            .Where(f => f.UserOneId == userId || f.UserTwoId == userId)
+            .Select(f => f.UserOneId == userId ? f.UserTwo : f.UserOne)
+            .ToListAsync(cancellationToken);
+
+        return friends;
+    }
 }

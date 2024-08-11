@@ -23,12 +23,12 @@ public class Service<TDto, TEntity, TDbContext> : IService<TDto> where TEntity :
         return dto;
     }
 
-    public async Task<TDto[]?> GetMany()
+    public async Task<TDto[]?> GetMany(CancellationToken cancellationToken)
     {
         var dtoarr = await _repository
         .GetAsQueryable()
         .Select(dto => _mapper.Map<TDto>(dto))
-        .ToArrayAsync();
+        .ToArrayAsync(cancellationToken);
         return dtoarr;
     }
 

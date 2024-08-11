@@ -38,10 +38,11 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
                     'Accept': 'application/json',
                 },
             });
-            alert('Проект успешно создан!');
+            alert('The task has been successfully created!');
+            window.location.reload();
         } catch (error) {
             console.error('Ошибка при выполнении запроса', error);
-            alert('Произошла ошибка при создании задачи. Пожалуйста, попробуйте снова.');
+            alert('An error occurred while creating the task. Please try again.');
         }
     };
 

@@ -8,7 +8,7 @@
         public DateTime StartExecution { get; set; }
         public DateTime Deadline { get; set; }
         public Guid UserId { get; set; }
-        public string StatusTaskId { get; set; }
-        public string ProjectId { get; set; }
+        public Guid StatusTaskId { get; set; }
+        public Guid ProjectId { get; set; }
     }
 }

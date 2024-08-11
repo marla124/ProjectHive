@@ -19,6 +19,7 @@ export default function WorkPlacePage() {
   const handleTaskButtonClick = () => {
     if (isUserLoggedIn) {
       setModalIsOpen(true);
+
     } else {
       navigate('/login');
     }

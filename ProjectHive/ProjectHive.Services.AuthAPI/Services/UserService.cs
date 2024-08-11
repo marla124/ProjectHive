@@ -79,4 +79,9 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
         return _mapper.Map<UserDto>(user);
     }
 
+    public async Task<IEnumerable<UserDto>> GetFriendlyUsers(Guid userId, CancellationToken cancellationToken)
+    {
+        var users = await _userRepository.GetFriendlyUsers(userId, cancellationToken);
+        return _mapper.Map<IEnumerable<UserDto>>(users);
+    }
 }
