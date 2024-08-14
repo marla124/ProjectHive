@@ -15,6 +15,11 @@
     outline: none;
 }
 
+.autocomplete-task {
+    margin-top: 10px;
+    width: 250px;
+}
+
 .status-select {
     height: 49px;
     border-radius: 7px;

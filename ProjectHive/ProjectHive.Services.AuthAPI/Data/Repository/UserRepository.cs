@@ -8,10 +8,37 @@ namespace ProjectHive.Services.AuthAPI.Data.Repository;
 
 public class UserRepository : Repository<User, ProjectHiveAuthDbContext>, IUserRepository
 {
+    private readonly ProjectHiveAuthDbContext _dbContext;
     public UserRepository(ProjectHiveAuthDbContext dBContext) : base(dBContext)
     {
+        _dbContext= dBContext;
+    }
+
+    public async Task<User> AddFriendlyUser(Guid friendlyUserId, Guid userId, CancellationToken cancellationToken)
+    {
+        var userOne = await _dbSet.FindAsync(userId, cancellationToken);
+        var userTwo = await _dbSet.FindAsync(friendlyUserId, cancellationToken);
+
+        if (userOne == null || userTwo == null)
+        {
+            throw new Exception("User not found");
+        }
+
+        var friendship = new Friends
+        {
+            UserOneId = userOne.Id,
+            UserOne = userOne,
+            UserTwoId = userTwo.Id,
+            UserTwo = userTwo
+        };
+
+        _dbContext.Friends.Add(friendship);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return userOne;
 
     }
+
     public async Task<User> GetByEmail(string email, CancellationToken cancellationToken,
                 params Expression<Func<User, object>>[] includes)
     {

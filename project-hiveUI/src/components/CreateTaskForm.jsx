@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 import useStatusTask from '../hooks/useStatusTasks';
+import useFriends from '../hooks/useFriends'; import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/lab/Autocomplete';
 import DatePicker from 'react-datepicker';
 import "../styles/createTask.css";
 import 'react-datepicker/dist/react-datepicker.css';
@@ -11,11 +13,13 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [deadline, setDeadline] = useState(null);
+    const [userExecutorId, setUserExecutorId] = useState(null);
     const url = window.location.href;
     const projectId = url.split('/').pop();
     const [statusTaskId, setStatusTaskId] = useState('');
     const token = localStorage.getItem('jwtToken');
     const statuses = useStatusTask();
+    const friends = useFriends();
 
     useEffect(() => {
         const openStatus = statuses.find(status => status.name === 'Open');
@@ -24,6 +28,7 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
         }
     }, [statuses]);
 
+
     const handleCreateProject = async () => {
         try {
             await axios.post('http://localhost:5170/api/ProjectTask/CreateTask', {
@@ -31,7 +36,8 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
                 description,
                 deadline: deadline ? deadline.toISOString() : null,
                 projectId,
-                statusTaskId
+                statusTaskId,
+                userExecutorId
             }, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -61,6 +67,22 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
                         <option key={status.id} value={status.id}>{status.name}</option>
                     ))}
                 </select>
+                <Autocomplete
+                    className='autocomplete-task'
+                    freeSolo
+                    autoComplete
+                    autoHighlight
+                    options={friends}
+                    getOptionLabel={(option) => option.name}
+                    onChange={(event, newValue) => setUserExecutorId(newValue)}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="outlined"
+                            label="Enter the performer's user"
+                        />
+                    )}
+                />
                 <button className="button-form" onClick={handleCreateProject}>Create</button>
             </Modal>
         </div>

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,15 @@ public class UserController(IUserService userService, IMapper mapper) : BaseCont
         var userId = Guid.Parse(GetUserId());
         var projects = mapper.Map<UserViewModel>(await userService.GetFriendlyUsers(userId, cancellationToken));
         return Ok(projects);
+    }
+
+    [Authorize]
+    [HttpPost("[action]")]
+    public async Task<IActionResult> AddFrendlyUser(Guid friendlyUserId, CancellationToken cancellationToken)
+    {
+        var userId = Guid.Parse(GetUserId());
+        await userService.AddFriendlyUser(friendlyUserId, userId, cancellationToken);
+        return Ok();
     }
 
     [HttpDelete("[action]/{id}")]
