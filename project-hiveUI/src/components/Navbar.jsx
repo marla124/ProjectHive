@@ -2,11 +2,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import "../styles/navbar.css";
 import "../assets/mfglabs-iconset-master/css/mfglabs_iconset.css";
 import React, { useEffect, useState } from "react";
+import SearchForm from './SearchForm';
 import axios from 'axios';
 
 export default function Navbar({ onLogout }) {
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
+
+    const handleButtonClick = () => {
+        if (isUserLoggedIn) {
+            setModalIsOpen(true);
+        } else {
+            navigate('/login');
+        }
+    };
 
     useEffect(() => {
         const token = localStorage.getItem('jwtToken');
@@ -43,9 +53,10 @@ export default function Navbar({ onLogout }) {
                 </Link>
             </div>
             <div className="button_items">
-                <Link to="/search" className="search_butt">
+                <SearchForm isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} />
+                <button className="search_butt" onClick={handleButtonClick}>
                     <i className="icon-magnifying" aria-hidden="true"></i>
-                </Link>
+                </button>
                 <Link to="/notifications" className="notifications_butt">
                     <i className="icon-ringbell" aria-hidden="true"></i>
                 </Link>

@@ -40,6 +40,8 @@
   text-decoration: none;
   color: #0f2d4e;
   margin-right: 10px;
+  border: none;
+  background: none;
 }
 
 .login_butt {

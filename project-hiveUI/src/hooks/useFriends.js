@@ -1,21 +1,21 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function useProject() {
-    const [projects, setProjects] = useState([]);
+export default function useFriends() {
+    const [friends, setFriends] = useState([]);
     const token = localStorage.getItem('jwtToken');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5170/api/Project/GetProjects', {
+                const response = await axios.get('http://localhost:5183/api/User/GetFriendlyUser', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json'
                     }
                 });
-                const sortedProjects = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdDate));
-                setProjects(sortedProjects);
+                const newFriends = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdDate));
+                setFriends(newFriends);
             } catch (error) {
                 console.error('Ошибка при выполнении запроса', error);
             }
@@ -24,5 +24,5 @@ export default function useProject() {
         fetchData();
     }, [])
 
-    return projects;
+    return friends;
 }
