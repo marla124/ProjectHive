@@ -4,10 +4,8 @@ const useUserAuthentication = () => {
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsUserLoggedIn(true);
-        }
+        const token = localStorage.getItem('jwtToken');
+        setIsUserLoggedIn(!!token);
     }, []);
 
     return { isUserLoggedIn };

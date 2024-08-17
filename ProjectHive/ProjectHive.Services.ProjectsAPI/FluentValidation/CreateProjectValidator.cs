@@ -10,7 +10,7 @@ namespace ProjectHive.Services.ProjectsAPI.FluentValidation
             RuleFor(project => project.Name)
                 .NotEmpty().MaximumLength(20);
             RuleFor(project => project.Description)
-                .NotEmpty().MaximumLength(400);
+                .MaximumLength(400);
         }
     }
 }

@@ -1,12 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
 import "../styles/navbar.css";
 import "../assets/mfglabs-iconset-master/css/mfglabs_iconset.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SearchForm from './SearchForm';
 import axios from 'axios';
+import useUserAuthentication from '../hooks/useUserAuthentication';
 
 export default function Navbar({ onLogout }) {
-    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+    const { isUserLoggedIn, setIsUserLoggedIn } = useUserAuthentication();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -17,13 +18,6 @@ export default function Navbar({ onLogout }) {
             navigate('/login');
         }
     };
-
-    useEffect(() => {
-        const token = localStorage.getItem('jwtToken');
-        if (token) {
-            setIsUserLoggedIn(true);
-        }
-    }, []);
 
     const handleLogout = async () => {
         const refreshToken = localStorage.getItem('refreshToken');
@@ -36,6 +30,7 @@ export default function Navbar({ onLogout }) {
                 });
                 localStorage.removeItem('jwtToken');
                 localStorage.removeItem('refreshToken');
+                window.location.reload();
                 setIsUserLoggedIn(false);
                 onLogout();
                 navigate('/');

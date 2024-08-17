@@ -50,7 +50,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         {
             var userId = User.FindFirst("userId")?.Value;
             var tasks = (await _taskService.GetMany(cancellationToken))
-            .Where(dto => dto.UserId == Guid.Parse(userId))
+            .Where(dto => dto.UserExecutorId == Guid.Parse(userId))
             .Select(dto => _mapper.Map<ProjectTaskDto>(dto))
             .ToArray();
             return Ok(tasks);
@@ -86,9 +86,10 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userId = Guid.Parse(GetUserId());
+                var userCreatorId = Guid.Parse(GetUserId());
                 var dto = _mapper.Map<ProjectTaskDto>(request);
-                var task = await _taskService.CreateTask(dto, userId, cancellationToken);
+                dto.UserCreatorId= userCreatorId;
+                var task = await _taskService.CreateTask(dto, userCreatorId, cancellationToken);
                 return Ok(_mapper.Map<ProjectTaskViewModel>(task));
             }
             else

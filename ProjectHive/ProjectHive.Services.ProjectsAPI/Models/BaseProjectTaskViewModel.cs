@@ -7,4 +7,5 @@ public class BaseProjectTaskViewModel
     public DateTime? Deadline { get; set; }
     public string ProjectId { get; set; }
     public string StatusTaskId { get; set; }
+    public string UserExecutorId { get; set; }
 }

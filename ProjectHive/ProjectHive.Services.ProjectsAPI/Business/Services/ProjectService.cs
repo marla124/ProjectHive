@@ -21,33 +21,37 @@ public class ProjectService : Service<ProjectDto, Project, ProjectHiveProjectDbC
         _projectRepository = projectRepository;
         _userService = userService;
     }
-        public async Task<ProjectDto> CreateProject(ProjectDto dto, CancellationToken cancellationToken)
+    public async Task<ProjectDto> CreateProject(ProjectDto dto, CancellationToken cancellationToken)
+    {
+        var user = await _userService.CreateUser(dto, cancellationToken);
+        var status = await _unitOfWork.ProjectStatusRepository.FindBy(s => s.Name == "Processing").FirstOrDefaultAsync(cancellationToken);
+        if (status != null)
         {
-            var user = await _userService.CreateUser(dto, cancellationToken);
-            var status = await _unitOfWork.ProjectStatusRepository.FindBy(s => s.Name == "Processing").FirstOrDefaultAsync(cancellationToken);
-            if (status != null)
+            var project = new Project()
             {
-                var project = new Project()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = dto.Name,
-                    CreatedAt = DateTime.UtcNow,
-                    Description = dto.Description,
-                    StatusProjectId = status.Id,
-                    UpdatedAt = DateTime.UtcNow,
-                    CreatorUserId = user.Id,
-                };
-                project.UserProjects = new List<UserProject>();
-                project.UserProjects.Add(new UserProject { UserId = user.Id });
-                var createdProject = _mapper.Map<ProjectDto>(await _unitOfWork.ProjectRepository.CreateOne(project, cancellationToken));
-                await _unitOfWork.Commit(cancellationToken);
-                return createdProject;
-            }
-            else
+                Id = Guid.NewGuid(),
+                Name = dto.Name,
+                CreatedAt = DateTime.UtcNow,
+                Description = dto.Description,
+                StatusProjectId = status.Id,
+                UpdatedAt = DateTime.UtcNow,
+                CreatorUserId = user.Id,
+            };
+            project.UserProjects = new List<UserProject>
             {
-                throw new Exception("statusId not found");
-            }
+                new UserProject { UserId = user.Id }
+            };
+            project.UserProjects.AddRange(dto.Users.Select(u => new UserProject { UserId = u }));
+            var createdProject = _mapper.Map<ProjectDto>(await _unitOfWork.ProjectRepository.CreateOne(project, cancellationToken));
+            await _unitOfWork.Commit(cancellationToken);
+            return createdProject;
         }
+        else
+        {
+            throw new Exception("statusId not found");
+        }
+    }
+
 
     public async Task<IEnumerable<ProjectDto>> GetProjectsForUser(Guid userId, CancellationToken cancellationToken)
     {

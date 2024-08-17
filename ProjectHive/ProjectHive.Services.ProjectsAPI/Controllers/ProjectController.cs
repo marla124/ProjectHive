@@ -52,6 +52,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [Route("[action]")]
         public async Task<IActionResult> CreateProject(CreateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
+            Console.WriteLine();
             if (ModelState.IsValid)
             {
                 var userId = Guid.Parse(GetUserId());

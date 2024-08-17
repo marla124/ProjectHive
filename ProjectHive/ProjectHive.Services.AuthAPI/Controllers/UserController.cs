@@ -29,21 +29,21 @@ public class UserController(IUserService userService, IMapper mapper) : BaseCont
     [HttpGet("[action]")]
     public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
     {
-        var projects = mapper.Map<UserViewModel>(await userService.GetMany(cancellationToken));
+        var projects = mapper.Map<List<UserViewModel>>(await userService.GetMany(cancellationToken));
         return Ok(projects);
     }
     [Authorize]
     [HttpGet("[action]")]
-    public async Task<IActionResult> GetFrendlyUsers(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetFriendlyUsers(CancellationToken cancellationToken)
     {
         var userId = Guid.Parse(GetUserId());
-        var projects = mapper.Map<UserViewModel>(await userService.GetFriendlyUsers(userId, cancellationToken));
+        var projects = mapper.Map<List<UserViewModel>>(await userService.GetFriendlyUsers(userId, cancellationToken));
         return Ok(projects);
     }
 
     [Authorize]
-    [HttpPost("[action]")]
-    public async Task<IActionResult> AddFrendlyUser(Guid friendlyUserId, CancellationToken cancellationToken)
+    [HttpPost("[action]/{friendlyUserId}")]
+    public async Task<IActionResult> AddFriendlyUser(Guid friendlyUserId, CancellationToken cancellationToken)
     {
         var userId = Guid.Parse(GetUserId());
         await userService.AddFriendlyUser(friendlyUserId, userId, cancellationToken);

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 import useStatusTask from '../hooks/useStatusTasks';
-import useFriends from '../hooks/useFriends'; import TextField from '@mui/material/TextField';
+import useFriends from '../hooks/useFriends';
+import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/lab/Autocomplete';
 import DatePicker from 'react-datepicker';
 import "../styles/createTask.css";
@@ -26,8 +27,8 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
         if (openStatus) {
             setStatusTaskId(openStatus.id);
         }
+        console.log(friends)
     }, [statuses]);
-
 
     const handleCreateProject = async () => {
         try {
@@ -54,7 +55,7 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
 
     return (
         <div className="create-project-window">
-            <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="react-modal">
+            <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="react-modal-create">
                 <h2 className='title-text-create-project'>Create task</h2>
                 <input type="text" className='name-form' placeholder="Enter the name of the task" value={name} onChange={(e) => setName(e.target.value)} required />
                 <textarea type="text" className='description-form' placeholder="Enter the description of the task" value={description} onChange={(e) => setDescription(e.target.value)} required />
@@ -73,8 +74,8 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
                     autoComplete
                     autoHighlight
                     options={friends}
-                    getOptionLabel={(option) => option.name}
-                    onChange={(event, newValue) => setUserExecutorId(newValue)}
+                    getOptionLabel={(option) => option.email}
+                    onChange={(event, newValue) => setUserExecutorId(newValue.id)}
                     renderInput={(params) => (
                         <TextField
                             {...params}
@@ -83,7 +84,9 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
                         />
                     )}
                 />
-                <button className="button-form" onClick={handleCreateProject}>Create</button>
+                <button className="button-form" onClick={handleCreateProject}>
+                    Create Task
+                </button>
             </Modal>
         </div>
     );
