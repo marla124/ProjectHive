@@ -1,5 +1,6 @@
 
-using ProjectHive.Services.NotificationsAPI.Handlers;
+
+using ProjectHive.Services.NotificationsAPI.Controllers;
 
 namespace ProjectHive.Services.NotificationsAPI
 {
@@ -24,24 +25,16 @@ namespace ProjectHive.Services.NotificationsAPI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            var webSocketHandler = new WebSocketHandler();
-            app.UseWebSockets();
-            app.Use(async (context, next) =>
-            {
-                if (context.WebSockets.IsWebSocketRequest)
-                {
-                    var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                    await webSocketHandler.Echo(webSocket);
-                }
-                else
-                {
-                    await next();
-                }
-            });
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            services.AddSignalR();
+            app.UseRouting();
 
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<NotificationsHub>("/notificationsHub");
+            });
 
             app.MapControllers();
 

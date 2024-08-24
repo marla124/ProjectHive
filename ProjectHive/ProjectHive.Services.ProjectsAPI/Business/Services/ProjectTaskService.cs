@@ -26,7 +26,7 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
             _projectRepository = projectRepository;
         }
 
-        public async Task<ProjectTaskDto> CreateTask(ProjectTaskDto dto, Guid userId, CancellationToken cancellationToken)
+        public async Task<ProjectTaskDto> CreateTask(ProjectTaskDto dto, CancellationToken cancellationToken)
         {
                 var task = new ProjectTask()
                 {
@@ -36,7 +36,6 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
                     CreatedAt = DateTime.UtcNow,
                     Id = Guid.NewGuid(),
                     ProjectId = dto.ProjectId,
-                    UserId = userId,
                     StatusTaskId = dto.StatusTaskId,
                 };
                 var createdTask = _mapper.Map<ProjectTaskDto>(await _unitOfWork.ProjectTaskRepository.CreateOne(task, cancellationToken));
