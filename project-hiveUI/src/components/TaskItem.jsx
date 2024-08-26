@@ -1,11 +1,8 @@
 import React from 'react';
 import "../styles/taskItem.css"
+import { formatDate } from "../utils/formatDate"
 
 export default function TaskItem(props) {
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-EN', options);
-  };
   return (
     <div className='task-item'>
       <div className='p-container'>

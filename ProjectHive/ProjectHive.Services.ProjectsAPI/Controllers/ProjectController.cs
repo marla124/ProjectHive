@@ -11,7 +11,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ProjectController(IMapper mapper, IProjectService projectService) : BaseController
+    public class ProjectController(IMapper mapper, IProjectService projectService, IProjectStatusService projectStatusService) : BaseController
     {
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
@@ -22,6 +22,16 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
                 return NotFound();
             }
             return Ok(project);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetStatusProject(CancellationToken cancellationToken)
+        {
+            var projectStatuses = (await projectStatusService.GetMany(cancellationToken))
+            .Select(dto => mapper.Map<ProjectStatusDto>(dto))
+            .ToArray();
+
+            return Ok(projectStatuses);
         }
 
         [HttpGet("[action]")]

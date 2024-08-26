@@ -1,6 +1,6 @@
 import "../styles/menu.css";
 import { Link, useNavigate } from 'react-router-dom';
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CreateProjectForm from './CreateProjectForm';
 import useUserAuthentication from '../hooks/useUserAuthentication';
 
@@ -8,7 +8,6 @@ export default function Menu() {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
-    const token = localStorage.getItem('jwtToken');
     const isUserLoggedIn = useUserAuthentication(false);
 
     const handleButtonClick = () => {

@@ -25,3 +25,11 @@
 .name-project-for-home-page {
     margin: 10px;
 }
+
+.status-project-for-home-page {
+    font-size: 14px !important;
+    background-color: #d4e2f1;
+    border-radius: 7px;
+    padding-inline: 20px;
+    display: inline-block;
+}

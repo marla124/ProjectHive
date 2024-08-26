@@ -17,6 +17,12 @@ export default function SearchForm({ isOpen, onRequestClose }) {
   const [showAddFriendForm, setShowAddFriendForm] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (searchOption) {
+      getDataFromAPI();
+    }
+  }, [searchOption]);
+
   const getDataFromAPI = async () => {
     try {
       let response;
@@ -67,7 +73,6 @@ export default function SearchForm({ isOpen, onRequestClose }) {
     setIsSelectValid(value !== "0");
     setErrorMessage('');
     setSearchOption(value);
-    getDataFromAPI(value);
   };
 
   const handleSearchClick = () => {

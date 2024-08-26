@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Autocomplete } from '@mui/material';
-import useFriends from '../hooks/useFriends'; // Импортируем хук
+import useFriends from '../hooks/useFriends';
 import "../styles/createProjectWindow.css";
 
 export default function CreateProjectForm({ isOpen, onRequestClose }) {
@@ -14,6 +14,7 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
   const [newUsers, setNewUsers] = useState('');
   const friends = useFriends();
   const navigate = useNavigate();
+
 
   const handleCreateProject = async () => {
     const userIds = users.map(user => (user.id));
