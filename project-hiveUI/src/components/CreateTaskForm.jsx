@@ -32,7 +32,7 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
 
     const handleCreateProject = async () => {
         try {
-            await axios.post('http://localhost:5170/api/ProjectTask/CreateTask', {
+            await axios.post(process.env.REACT_APP_API_BASE_URL_PROJECT + '/ProjectTask/CreateTask', {
                 name,
                 description,
                 deadline: deadline ? deadline.toISOString() : null,

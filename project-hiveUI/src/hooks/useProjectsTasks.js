@@ -9,7 +9,7 @@ export default function useProjectsTasks() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5170/api/ProjectTask/GetProjectTasks/${projectId}`, {
+                const response = await axios.get(process.env.REACT_APP_API_BASE_URL_PROJECT + `/ProjectTask/GetProjectTasks/${projectId}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json'

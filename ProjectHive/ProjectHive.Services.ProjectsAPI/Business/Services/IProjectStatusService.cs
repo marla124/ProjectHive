@@ -5,5 +5,6 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
 {
     public interface IProjectStatusService : IService<ProjectStatusDto>
     {
+        Task<ProjectStatusDto[]> GetProjectStatuses(CancellationToken cancellationToken);
     }
 }

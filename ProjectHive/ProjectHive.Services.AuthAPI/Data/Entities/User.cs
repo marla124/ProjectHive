@@ -9,5 +9,5 @@ public class User : BaseEntity
     public Guid UserRoleId { get; set; }
     public UserRole UserRole { get; set; }
     public List<RefreshToken> RefreshTokens { get; set; }
-    public List<Friends>? Friends { get; set; }
+    public List<UserFriend>? Friends { get; set; }
 }

@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using Azure.Core;
-using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectHive.Services.AuthAPI.Dto;
-using ProjectHive.Services.AuthAPI.FluentValidation;
 using ProjectHive.Services.AuthAPI.Model;
 using ProjectHive.Services.AuthAPI.Models;
 using ProjectHive.Services.AuthAPI.Models.RequestModel;
@@ -26,27 +23,43 @@ public class UserController(IUserService userService, IMapper mapper) : BaseCont
         }
         return Ok(project);
     }
+
     [HttpGet("[action]")]
     public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
     {
         var projects = mapper.Map<List<UserViewModel>>(await userService.GetMany(cancellationToken));
         return Ok(projects);
     }
+
     [Authorize]
     [HttpGet("[action]")]
-    public async Task<IActionResult> GetFriendlyUsers(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetFriendlyUsers(CancellationToken cancellationToken)  
     {
-        var userId = Guid.Parse(GetUserId());
-        var projects = mapper.Map<List<UserViewModel>>(await userService.GetFriendlyUsers(userId, cancellationToken));
-        return Ok(projects);
+        var userId = GetUserId();
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        var userGuid = Guid.Parse(userId);
+        var friendlyUsers = await userService.GetFriendlyUsers(userGuid, cancellationToken);
+        var users = mapper.Map<List<UserViewModel>>(friendlyUsers);
+
+        return Ok(users);
     }
 
     [Authorize]
     [HttpPost("[action]/{friendlyUserId}")]
     public async Task<IActionResult> AddFriendlyUser(Guid friendlyUserId, CancellationToken cancellationToken)
     {
-        var userId = Guid.Parse(GetUserId());
-        await userService.AddFriendlyUser(friendlyUserId, userId, cancellationToken);
+        var userId = GetUserId();
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        var userGuid = Guid.Parse(userId);
+        await userService.AddFriendlyUser(friendlyUserId, userGuid, cancellationToken);
         return Ok();
     }
 

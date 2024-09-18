@@ -9,7 +9,7 @@ export default function AddFriendForm({ isOpen, onRequestClose, friend }) {
     const handleAddFriend = async () => {
         try {
             setIsButtonDisabled(true);
-            await axios.post(`http://localhost:5183/api/User/AddFriendlyUser/${friend.id}`, {}, {
+            await axios.post(process.env.REACT_APP_API_BASE_URL_USER + `/User/AddFriendlyUser/${friend.id}`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json',
@@ -18,7 +18,7 @@ export default function AddFriendForm({ isOpen, onRequestClose, friend }) {
             alert('Success');
         } catch (error) {
             console.error('Ошибка при выполнении запроса', error);
-            alert('Please try again.');
+            alert('An error occurred when adding a friend. Please try again.');
             setIsButtonDisabled(false);
         }
     };

@@ -7,15 +7,15 @@ namespace ProjectHive.Services.ProjectsAPI.Data.Repository;
 
 public class ProjectRepository : Repository<Project, ProjectHiveProjectDbContext>, IProjectRepository
 {
-    private readonly ProjectHiveProjectDbContext _dBContext;
-    public ProjectRepository(ProjectHiveProjectDbContext dBContext) : base(dBContext)
+    private readonly ProjectHiveProjectDbContext _dbContext;
+    public ProjectRepository(ProjectHiveProjectDbContext dbContext) : base(dbContext)
     {
-        _dBContext = dBContext;
+        _dbContext = dbContext;
     }
 
     public async Task<IEnumerable<Project>> GetProjectsForUser(Guid userId, CancellationToken cancellationToken)
     {
-        var userProjects = await _dBContext.UserProjects
+        var userProjects = await _dbContext.UserProjects
             .Where(up => up.UserId == userId)
             .Select(up => up.Project)
             .ToListAsync(cancellationToken);

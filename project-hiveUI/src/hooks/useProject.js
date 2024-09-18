@@ -8,7 +8,7 @@ export default function useProject() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5170/api/Project/GetProjects', {
+                const response = await axios.get(process.env.REACT_APP_API_BASE_URL_PROJECT + '/Project/GetProjects', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json'

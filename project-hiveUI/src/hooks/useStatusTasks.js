@@ -8,7 +8,7 @@ export default function useStatusTasks() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const responseStatus = await axios.get('http://localhost:5170/api/ProjectTask/GetStatusProjectTasks', {
+                const responseStatus = await axios.get(process.env.REACT_APP_API_BASE_URL_PROJECT + '/ProjectTask/GetStatusProjectTasks', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json'

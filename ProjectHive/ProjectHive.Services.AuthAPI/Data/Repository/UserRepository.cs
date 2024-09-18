@@ -9,33 +9,33 @@ namespace ProjectHive.Services.AuthAPI.Data.Repository;
 public class UserRepository : Repository<User, ProjectHiveAuthDbContext>, IUserRepository
 {
     private readonly ProjectHiveAuthDbContext _dbContext;
-    public UserRepository(ProjectHiveAuthDbContext dBContext) : base(dBContext)
+    public UserRepository(ProjectHiveAuthDbContext dbContext) : base(dbContext)
     {
-        _dbContext= dBContext;
+        _dbContext= dbContext;
     }
 
     public async Task<User> AddFriendlyUser(Guid friendlyUserId, Guid userId, CancellationToken cancellationToken)
     {
-        var userOne = await _dbSet.FindAsync(userId, cancellationToken);
-        var userTwo = await _dbSet.FindAsync(friendlyUserId, cancellationToken);
+        var userA = await _dbSet.FindAsync(userId, cancellationToken);
+        var userB = await _dbSet.FindAsync(friendlyUserId, cancellationToken);
 
-        if (userOne == null || userTwo == null)
+        if (userA == null || userB == null)
         {
-            throw new Exception("User not found");
+            throw new KeyNotFoundException("User not found");
         }
 
-        var friendship = new Friends
+        var friendship = new UserFriend
         {
-            UserOneId = userOne.Id,
-            UserOne = userOne,
-            UserTwoId = userTwo.Id,
-            UserTwo = userTwo
+            UserAId = userA.Id,
+            UserA = userA,
+            UserBId = userB.Id,
+            UserB = userB
         };
 
         _dbContext.Friends.Add(friendship);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        return userOne;
+        return userA;
 
     }
 
@@ -61,12 +61,12 @@ public class UserRepository : Repository<User, ProjectHiveAuthDbContext>, IUserR
     public async Task<List<User>> GetFriendlyUsers(Guid userId, CancellationToken cancellationToken)
     {
         var friends = await _dbSet
-            .Where(u => u.Friends.Any(f => f.UserOneId == userId || f.UserTwoId == userId))
+            .Where(u => u.Friends.Any(f => f.UserAId == userId || f.UserBId == userId))
             .SelectMany(u => u.Friends)
-            .Where(f => f.UserOneId == userId || f.UserTwoId == userId)
-            .Select(f => f.UserOneId == userId ? f.UserTwo : f.UserOne)
+            .Where(f => f.UserAId == userId || f.UserBId == userId)
+            .Select(f => f.UserAId == userId ? f.UserB : f.UserA)
             .ToListAsync(cancellationToken);
 
-        return friends;
+        return friends ?? new List<User>();
     }
 }

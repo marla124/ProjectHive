@@ -8,7 +8,7 @@ export default function useFriends() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5183/api/User/GetFriendlyUsers', {
+                const response = await axios.get(process.env.REACT_APP_API_BASE_URL_USER + '/User/GetFriendlyUsers', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json'

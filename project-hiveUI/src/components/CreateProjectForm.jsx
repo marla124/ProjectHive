@@ -19,7 +19,7 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
   const handleCreateProject = async () => {
     const userIds = users.map(user => (user.id));
     try {
-      const response = await axios.post('http://localhost:5170/api/Project/CreateProject', {
+      const response = await axios.post(process.env.REACT_APP_API_BASE_URL_PROJECT + '/Project/CreateProject', {
         name,
         description,
         users: userIds
@@ -33,7 +33,7 @@ export default function CreateProjectForm({ isOpen, onRequestClose }) {
       navigate('/projects');
     } catch (error) {
       console.error('Ошибка при выполнении запроса', error);
-      alert('Произошла ошибка при создании проекта. Пожалуйста, попробуйте снова.');
+      alert('An error occurred while creating the project. Please try again.');
     }
   };
 

@@ -8,7 +8,7 @@ export default function useTasks() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5170/api/ProjectTask/GetProjectTasksForUser`, {
+                const response = await axios.get(process.env.REACT_APP_API_BASE_URL_PROJECT + `/ProjectTask/GetProjectTasksForUser`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json'
@@ -16,7 +16,7 @@ export default function useTasks() {
                 });
                 const sortedProjectTasks = response.data.sort((a, b) => new Date(b.startExecution) - new Date(a.createdDate));
 
-                const responseUser = await axios.get(`http://localhost:5183/api/User/GetUsers`, {
+                const responseUser = await axios.get(process.env.REACT_APP_API_BASE_URL_USER + `/User/GetUsers`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json'

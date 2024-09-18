@@ -48,7 +48,7 @@ public class ProjectService : Service<ProjectDto, Project, ProjectHiveProjectDbC
         }
         else
         {
-            throw new Exception("statusId not found");
+            throw new KeyNotFoundException("userId not found");
         }
     }
 

@@ -48,19 +48,20 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> GetProjectTasksForUser(CancellationToken cancellationToken)
         {
-            var userId = User.FindFirst("userId")?.Value;
-            var tasks = (await _taskService.GetMany(cancellationToken))
-            .Where(dto => dto.UserExecutorId == Guid.Parse(userId))
-            .Select(dto => _mapper.Map<ProjectTaskDto>(dto))
-            .ToArray();
+            var userId = GetUserId();
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var userGuid = Guid.Parse(userId);
+            var tasks = await _taskService.GetProjectTasksForUser(userGuid, cancellationToken);
             return Ok(tasks);
         }
         [HttpGet("[action]")]
         public async Task<IActionResult> GetStatusProjectTasks(CancellationToken cancellationToken)
         {
-            var projectTaskStatuses= (await _taskStatusService.GetMany(cancellationToken))
-            .Select(dto => _mapper.Map<ProjectTaskStatusDto>(dto))
-            .ToArray();
+            var projectTaskStatuses = await _taskStatusService.GetStatusProjectTasks(cancellationToken);
 
             return Ok(projectTaskStatuses);
         }
@@ -86,10 +87,16 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userCreatorId = Guid.Parse(GetUserId());
+                var userId = GetUserId();
+                if (userId == null)
+                {
+                    return Unauthorized();
+                }
+
+                var userGuid = Guid.Parse(userId);
                 var dto = _mapper.Map<ProjectTaskDto>(request);
-                dto.UserCreatorId= userCreatorId;
-                var task = await _taskService.CreateTask(dto, userCreatorId, cancellationToken);
+                dto.UserCreatorId= userGuid;
+                var task = await _taskService.CreateTask(dto, userGuid, cancellationToken);
                 return Ok(_mapper.Map<ProjectTaskViewModel>(task));
             }
             else

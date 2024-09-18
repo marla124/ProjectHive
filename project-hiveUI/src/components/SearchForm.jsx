@@ -28,7 +28,7 @@ export default function SearchForm({ isOpen, onRequestClose }) {
       let response;
       switch (searchOption) {
         case "users":
-          response = await axios.get('http://localhost:5183/api/User/GetUsers', {
+          response = await axios.get(process.env.REACT_APP_API_BASE_URL_USER + '/User/GetUsers', {
             headers: {
               'Authorization': `Bearer ${token}`,
               'Accept': 'application/json'
@@ -39,7 +39,7 @@ export default function SearchForm({ isOpen, onRequestClose }) {
           setMyOptions(optionsUsers);
           break;
         case "projects":
-          response = await axios.get('http://localhost:5170/api/Project/GetProjects', {
+          response = await axios.get(process.env.REACT_APP_API_BASE_URL_PROJECT + '/Project/GetProjects', {
             headers: {
               'Authorization': `Bearer ${token}`,
               'Accept': 'application/json'
@@ -50,7 +50,7 @@ export default function SearchForm({ isOpen, onRequestClose }) {
           setMyOptions(optionsProject);
           break;
         case "tasks":
-          response = await axios.get('http://localhost:5170/api/ProjectTask/GetProjectTasksForUser', {
+          response = await axios.get(process.env.REACT_APP_API_BASE_URL_PROJECT + '/ProjectTask/GetProjectTasksForUser', {
             headers: {
               'Authorization': `Bearer ${token}`,
               'Accept': 'application/json'
@@ -66,6 +66,7 @@ export default function SearchForm({ isOpen, onRequestClose }) {
 
     } catch (error) {
       console.error("Error fetching data: ", error);
+      alert('An error occurred during registration. Please try again.')
     }
   };
   const handleSelectChange = (event) => {
