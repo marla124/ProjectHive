@@ -13,17 +13,17 @@ public class ProjectHiveAuthDbContext(DbContextOptions<ProjectHiveAuthDbContext>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<UserFriend>()
-            .HasKey(f => new { f.UserOneId, f.UserTwoId });
+            .HasKey(f => new { f.UserAId, f.UserBId });
 
         modelBuilder.Entity<UserFriend>()
-            .HasOne(f => f.UserOne)
+            .HasOne(f => f.UserA)
             .WithMany(u => u.Friends)
-            .HasForeignKey(f => f.UserOneId)
+            .HasForeignKey(f => f.UserAId)
             .OnDelete(DeleteBehavior.Restrict);
         modelBuilder.Entity<UserFriend>()
-            .HasOne(f => f.UserTwo)
+            .HasOne(f => f.UserB)
             .WithMany()
-            .HasForeignKey(f => f.UserTwoId)
+            .HasForeignKey(f => f.UserBId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
