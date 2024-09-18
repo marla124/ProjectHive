@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿        using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace ProjectHive.Services.Core.Data.Repository;
@@ -54,16 +54,24 @@ public class Repository<TEntity, TDbContext> : IRepository<TEntity, TDbContext> 
         var resultQuery = _dbSet.AsQueryable();
         if (includes.Any())
         {
-            resultQuery = includes.Aggregate(resultQuery,
-                (current, include)
-                    => current.Include(include));
+            resultQuery = includes.Aggregate(resultQuery, (current, include) => current.Include(include));
         }
-        return await resultQuery.FirstOrDefaultAsync(entity => entity.Id.Equals(id), cancellationToken);
+        var entity = await resultQuery.FirstOrDefaultAsync(entity => entity.Id.Equals(id), cancellationToken);
+        if (entity == null)
+        {
+            throw new KeyNotFoundException("Entity not found");
+        }
+        return entity;
     }
 
     public async Task<TEntity> GetByIdAsNoTracking(Guid id, CancellationToken cancellationToken)
     {
-        return await _dbSet.AsNoTracking().FirstOrDefaultAsync(entities => entities.Id.Equals(id), cancellationToken);
+        var entity = await _dbSet.AsNoTracking().FirstOrDefaultAsync(entities => entities.Id.Equals(id), cancellationToken);
+        if (entity == null)
+        {
+            throw new KeyNotFoundException("Entity not found");
+        }
+        return entity;
     }
 
 
@@ -92,5 +100,10 @@ public class Repository<TEntity, TDbContext> : IRepository<TEntity, TDbContext> 
     public async Task<List<TEntity>> FindBy(CancellationToken cancellationToken)
     {
         return await _dbSet.ToListAsync(cancellationToken);
+    }
+
+    public IQueryable<TEntity> GetAsQueryable()
+    {
+        return _dbSet.AsQueryable();
     }
 }

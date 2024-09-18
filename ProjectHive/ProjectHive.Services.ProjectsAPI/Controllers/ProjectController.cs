@@ -11,7 +11,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ProjectController(IMapper mapper, IProjectService projectService) : BaseController
+    public class ProjectController(IMapper mapper, IProjectService projectService, IProjectStatusService projectStatusService) : BaseController
     {
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
@@ -22,6 +22,28 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
                 return NotFound();
             }
             return Ok(project);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetStatusProject(CancellationToken cancellationToken)
+        {
+            var projectStatuses = await projectStatusService.GetProjectStatuses(cancellationToken);
+            return Ok(projectStatuses);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetProjects(CancellationToken cancellationToken)
+        {
+            var userId = GetUserId();
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var userGuid = Guid.Parse(userId);
+            var projects = await projectService.GetProjectsForUser(userGuid, cancellationToken);
+
+            return Ok(mapper.Map<IEnumerable<ProjectViewModel>>(projects));
         }
 
         [HttpDelete("[action]/{id}")]
@@ -45,10 +67,16 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userId = Guid.Parse(GetUserId());
+                var userId = GetUserId();
+                if (userId == null)
+                {
+                    return Unauthorized();
+                }
+
+                var userGuid = Guid.Parse(userId);
 
                 var dto = mapper.Map<ProjectDto>(request);
-                dto.CreatorUserId = userId;
+                dto.CreatorUserId = userGuid;
 
                 return Ok(mapper.Map<ProjectViewModel>(await projectService.CreateProject(dto, cancellationToken)));
             }

@@ -26,9 +26,9 @@ public class TokenController(ITokenService tokenService, IUserService userServic
     }
 
     [HttpPost]
-    [Route("Refresh")]
+    [Route("[action]")]
 
-    public async Task<IActionResult> GenerateToken(RefreshTokenModel request, CancellationToken cancellationToken)
+    public async Task<IActionResult> GenerateTokenByRefresh(RefreshTokenModel request, CancellationToken cancellationToken)
     {
         var userAgent = HttpContext.Request.Headers["User-Agent"].ToString();
 

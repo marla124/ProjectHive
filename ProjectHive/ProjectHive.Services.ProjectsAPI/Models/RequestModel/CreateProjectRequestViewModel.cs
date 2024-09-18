@@ -1,7 +1,7 @@
-﻿namespace ProjectHive.Services.ProjectsAPI.Models.RequestModel
-{
-    public class CreateProjectRequestViewModel : BaseProjectViewModel
+﻿    namespace ProjectHive.Services.ProjectsAPI.Models.RequestModel
     {
+        public class CreateProjectRequestViewModel : BaseProjectViewModel
+        {
 
+        }
     }
-}

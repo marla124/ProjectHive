@@ -133,7 +133,7 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ProjectId")
+                    b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("StatusTaskId")
@@ -142,11 +142,21 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid>("UserCreatorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UserExecutorId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
 
                     b.HasIndex("StatusTaskId");
+
+                    b.HasIndex("UserCreatorId");
+
+                    b.HasIndex("UserExecutorId");
 
                     b.ToTable("ProjectTasks");
                 });
@@ -250,7 +260,9 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                 {
                     b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.Project", "Project")
                         .WithMany("Tasks")
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.StatusTasks", "StatusTask")
                         .WithMany("Tasks")
@@ -258,9 +270,24 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.User", "UserCreator")
+                        .WithMany("CreatedTasks")
+                        .HasForeignKey("UserCreatorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProjectHive.Services.ProjectsAPI.Data.Entities.User", "UserExecutor")
+                        .WithMany("ExecutedTasks")
+                        .HasForeignKey("UserExecutorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Project");
 
                     b.Navigation("StatusTask");
+
+                    b.Navigation("UserCreator");
+
+                    b.Navigation("UserExecutor");
                 });
 
             modelBuilder.Entity("ProjectHive.Services.ProjectsAPI.Data.Entities.UserProject", b =>
@@ -309,6 +336,10 @@ namespace ProjectHive.Services.ProjectsAPI.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("CreatedProjects");
+
+                    b.Navigation("CreatedTasks");
+
+                    b.Navigation("ExecutedTasks");
 
                     b.Navigation("UserProjects");
                 });

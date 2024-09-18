@@ -26,6 +26,16 @@ public class ProjectHiveProjectDbContext : DbContext
             .HasOne(up => up.Project)
             .WithMany(p => p.UserProjects)
             .HasForeignKey(up => up.ProjectId);
+        modelBuilder.Entity<ProjectTask>()
+            .HasOne(pt => pt.UserCreator)
+            .WithMany(u => u.CreatedTasks)
+            .HasForeignKey(pt => pt.UserCreatorId)
+            .OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<ProjectTask>()
+            .HasOne(pt => pt.UserExecutor)
+            .WithMany(u => u.ExecutedTasks)
+            .HasForeignKey(pt => pt.UserExecutorId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
 

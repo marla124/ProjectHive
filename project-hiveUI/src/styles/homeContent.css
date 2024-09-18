@@ -1,0 +1,62 @@
+.container-home-auth {
+    display: flex;
+    margin-top: 40px;
+}
+
+.item-in-home {
+    position: relative;
+    box-shadow: 0 5px 10px rgba(0.3, 0.3, 0.3, 0.3);
+    height: 42vh;
+    width: 60vh;
+    border-radius: 7px;
+    margin-right: 40px;
+}
+
+.item-in-home p {
+    color: #0f2d4e;
+    font-size: 20px;
+    margin: 10px;
+}
+
+.line-block {
+    width: 60vh;
+    height: 1px;
+    background-color: #9bafc5;
+    margin-bottom: 5px;
+}
+
+.projects-items {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+
+.mytasks-items {
+    margin-top: 25px;
+}
+
+.more-item {
+    width: 260px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #9bafc5;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 10px;
+    background: none;
+    padding: 0;
+}
+
+.icon-chevron_down {
+    color: #9bafc5;
+    font-size: 23px;
+    bottom: 1%;
+    position: absolute;
+}
+
+.icon-plus {
+    color: #9bafc5;
+}

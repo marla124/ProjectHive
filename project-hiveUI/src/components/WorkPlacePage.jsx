@@ -1,51 +1,59 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Menu from './Menu';
-import "../styles/workPlace.css"
+import useProjectsTasks from '../hooks/useProjectsTasks';
+import useStatusTasks from '../hooks/useStatusTasks';
+import { useNavigate } from 'react-router-dom';
+import "../styles/workPlace.css";
 import TaskItem from './TaskItem';
+import useUserAuthentication from '../hooks/useUserAuthentication';
+import CreateTaskForm from './CreateTaskForm';
 
-export default function WorkPlacePage(){
-    const [tasks, setTasks] = useState([
-        { id: 1, name: 'Task1', status: "In Process", description: "Description1", deadline: "12.07.2024" },
-        { id: 2, name: 'Task2', status: "Done", description: "Description2useeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeei", deadline: "12.07.2024"  },
-        { id: 3, name: 'Task3', status: "Cancelled", description: "Description3", deadline: "12.07.2024"  },
-        { id: 4, name: 'Task4', status: "Open", description: "Dessjhdjshfkjaoihdisuhdiuhuihudhhhhhhhhhhhhhhhhhhiuddddhidhdhudhishdihaishaidiaudshaidhaihdjhsjfhsjhdjon4", deadline: "12.07.2024"  },
-        { id: 5, name: 'Task5', status: "Open", description: "Description5ijoisudfiosudisuhaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabilzzzzzzzzzzzzzzzzzzzzzfdsvbhyklFFFFFFSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSG", deadline: "12.07.2024"  },
-        { id: 6, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 7, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 8, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 9, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 10, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 11, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 12, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 13, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 14, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 15, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 16, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 17, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 18, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 19, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-        { id: 20, name: 'Task6', status: "In Process", description: "Description6", deadline: "12.07.2024"  },
-    ]);
-    const statusValues = ['Open', 'Done', 'In Process', 'Cancelled'];
-    return(
+export default function WorkPlacePage() {
+  const statusTasks = useStatusTasks([]);
+  const navigate = useNavigate();
+  const projectsTasks = useProjectsTasks([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const isUserLoggedIn = useUserAuthentication(false);
+
+  const handleTaskButtonClick = () => {
+    if (isUserLoggedIn) {
+      setModalIsOpen(true);
+    } else {
+      navigate('/login');
+    }
+  };
+
+  return (
     <div className='page-container'>
-        <Navbar />
-        <div className='tasks-container'>
-            <Menu />
-            <div className='tasks-list'>
-            {statusValues.map(status => (
-            <div key={status} className='column'>
-                <h2 className='column-header'>{status}</h2>
+      <Navbar />
+      <div className='tasks-container'>
+        <Menu />
+        <div className='tasks-list'>
+          {statusTasks.length > 0 ? (
+            statusTasks.map(status => (
+              <div key={status.id} className='column'>
+                <h2 className='column-header'>{status.name}</h2>
                 <div className='column-body'>
-                {tasks.filter(task => task.status === status).map(filteredTask => (
+                  {status.name === 'Open' && (
+                    <div>
+                      <button className='more-item-place' onClick={handleTaskButtonClick}>
+                        <i className="icon-plus" aria-hidden="true"></i>
+                      </button>
+                      <CreateTaskForm isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} />
+                    </div>
+                  )}
+                  {projectsTasks.length > 0 && projectsTasks.filter(task => task.statusTaskId === status.id).map(filteredTask => (
                     <TaskItem task={filteredTask} key={filteredTask.id} />
-                ))}
+                  ))}
                 </div>
-            </div>
-        ))}
+              </div>
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
+      </div>
     </div>
-        </div>  
-    </div>
-    );
+  );
 }

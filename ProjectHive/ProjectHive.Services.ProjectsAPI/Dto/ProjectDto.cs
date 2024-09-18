@@ -7,5 +7,6 @@
         public string Description { get; set; }
         public Guid StatusProjectId { get; set; }
         public Guid CreatorUserId { get; set; }
+        public List<Guid> Users { get; set; }
     }
 }

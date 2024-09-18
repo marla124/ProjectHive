@@ -1,39 +1,51 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-.task-item{
+}
+
+.task-item {
     border-radius: 10px;
     background-color: rgb(255, 255, 255);
     align-items: center;
     width: 300px;
     height: auto;
-    box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.3);
     margin: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
     color: #0f2d4e;
-    
+
 }
 
-.deadline-task{
+.deadline-task {
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
 }
 
-.p-container{
+.p-container {
     margin: 10px;
 }
 
-.deadline-text{
+.deadline-text {
     margin-left: 5px;
-    font-size: 13px;
 }
 
-.description-task{
+.bottom-part-task {
+    display: flex;
     font-size: 13px;
+    justify-content: space-between;
+}
+
+.name-task {
+    margin-bottom: 10px;
+}
+
+.status-task {
+    margin-top: 10px;
+    background-color: #d4e2f1;
+    border-radius: 7px;
+    padding-inline: 5%;
 }
