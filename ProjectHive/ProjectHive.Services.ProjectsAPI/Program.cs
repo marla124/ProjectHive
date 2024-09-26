@@ -12,17 +12,14 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-
         builder.Services.AddControllers();
 
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.RegisterServicesforProjectApi(builder.Configuration);
         builder.Services.AddSwaggerGen(opt =>
         {
-            opt.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "MyApi", Version = "v1" });
+            opt.SwaggerDoc("v1", new OpenApiInfo { Title = "MyApi", Version = "v1" });
             opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,
@@ -68,23 +65,28 @@ public class Program
                 IssuerSigningKey = new SymmetricSecurityKey(key)
             };
         });
-
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policyBuilder =>
+            {
+                policyBuilder.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
+        });
         var app = builder.Build();
         app.PrepareDatabaseProject().GetAwaiter().GetResult();
-        app.PrepareDatabaseTasks().GetAwaiter().GetResult();
 
 
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
+        app.UseCors();
         app.UseHttpsRedirection();
 
         app.UseAuthentication();
-
         app.UseAuthorization();
 
         app.MapControllers();

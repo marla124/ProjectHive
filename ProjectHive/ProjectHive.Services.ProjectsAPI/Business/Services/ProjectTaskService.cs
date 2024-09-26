@@ -36,12 +36,25 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
                     CreatedAt = DateTime.UtcNow,
                     Id = Guid.NewGuid(),
                     ProjectId = dto.ProjectId,
+                    UserCreatorId = dto.UserCreatorId,
                     StatusTaskId = dto.StatusTaskId,
+                    UserExecutorId = dto.UserExecutorId
                 };
                 var createdTask = _mapper.Map<ProjectTaskDto>(await _unitOfWork.ProjectTaskRepository.CreateOne(task, cancellationToken));
                 await _unitOfWork.Commit(cancellationToken);
                 return createdTask;
         }
 
+        public async Task<ProjectTaskDto[]> GetProjectTasksForUser(Guid userId, CancellationToken cancellationToken)
+        {
+            var tasks = await GetMany(cancellationToken);
+            if (tasks == null)
+            {
+                return Array.Empty<ProjectTaskDto>();
+            }
+            return tasks.Where(dto => dto.UserExecutorId == userId)
+                        .Select(dto => _mapper.Map<ProjectTaskDto>(dto))
+                        .ToArray();
+        }
     }
 }

@@ -25,7 +25,7 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
         _mapper = mapper;
     }
 
-    public async Task<int> RegisterUser(UserDto dto, CancellationToken cancellationToken)
+    public async Task<UserDto> RegisterUser(UserDto dto, CancellationToken cancellationToken)
     {
         var userRole = await _unitOfWork.UserRoleRepository
         .FindBy(role => role.Role
@@ -41,7 +41,8 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
         };
         await _unitOfWork.UserRepository.CreateOne(user, cancellationToken);
 
-        return await _unitOfWork.Commit(cancellationToken);
+        await _unitOfWork.Commit(cancellationToken);
+        return _mapper.Map<UserDto>(user);
     }
     private string MdHashGenerate(string input)
     {
@@ -52,6 +53,11 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
             byte[] HashBytes = md5.ComputeHash(inputBytes);
             return Convert.ToHexString(HashBytes);
         }
+    }
+    public async Task<UserDto> GetByEmail(string email, CancellationToken cancellationToken)
+    {
+        var user = await _userRepository.GetByEmail(email, cancellationToken);
+        return _mapper.Map<UserDto>(user);
     }
     public bool IsUserExists(string email)
     {
@@ -67,16 +73,21 @@ public class UserService : Service<UserDto, User, ProjectHiveAuthDbContext>, IUs
         return currentPasswordHash?.Equals(passwordHash) ?? false;
     }
 
-    public async Task<UserDto> GetByEmail(string email, CancellationToken cancellationToken)
-    {
-        var user = await _userRepository.GetByEmail(email, cancellationToken);
-        return _mapper.Map<UserDto>(user);
-    }
-
     public async Task<UserDto> GetUserByRefreshToken(Guid refreshToken, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetByRefreshToken(refreshToken, cancellationToken);
         return _mapper.Map<UserDto>(user);
     }
 
+    public async Task<List<UserDto>> GetFriendlyUsers(Guid userId, CancellationToken cancellationToken)
+    {
+        var users = await _userRepository.GetFriendlyUsers(userId, cancellationToken);
+        return _mapper.Map<List<UserDto>>(users);
+    }
+
+    public async Task AddFriendlyUser(Guid friendlyUserId, Guid userId, CancellationToken cancellationToken)
+    {
+        await _userRepository.AddFriendlyUser(friendlyUserId, userId, cancellationToken);
+        return;
+    }
 }

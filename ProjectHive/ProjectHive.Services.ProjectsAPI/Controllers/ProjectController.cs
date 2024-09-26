@@ -11,7 +11,7 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ProjectController(IMapper mapper, IProjectService projectService) : BaseController
+    public class ProjectController(IMapper mapper, IProjectService projectService, IProjectStatusService projectStatusService) : BaseController
     {
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
@@ -22,6 +22,28 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
                 return NotFound();
             }
             return Ok(project);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetStatusProject(CancellationToken cancellationToken)
+        {
+            var projectStatuses = await projectStatusService.GetProjectStatuses(cancellationToken);
+            return Ok(projectStatuses);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetProjects(CancellationToken cancellationToken)
+        {
+            var userId = GetUserId();
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var userGuid = Guid.Parse(userId);
+            var projects = await projectService.GetProjectsForUser(userGuid, cancellationToken);
+
+            return Ok(mapper.Map<IEnumerable<ProjectViewModel>>(projects));
         }
 
         [HttpDelete("[action]/{id}")]
@@ -43,12 +65,25 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [Route("[action]")]
         public async Task<IActionResult> CreateProject(CreateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
-            var userId = Guid.Parse(GetUserId());
+            if (ModelState.IsValid)
+            {
+                var userId = GetUserId();
+                if (userId == null)
+                {
+                    return Unauthorized();
+                }
 
-            var dto = mapper.Map<ProjectDto>(request);
-            dto.CreatorUserId = userId;
+                var userGuid = Guid.Parse(userId);
 
-            return Ok(mapper.Map<ProjectViewModel>(await projectService.CreateProject(dto, cancellationToken)));
+                var dto = mapper.Map<ProjectDto>(request);
+                dto.CreatorUserId = userGuid;
+
+                return Ok(mapper.Map<ProjectViewModel>(await projectService.CreateProject(dto, cancellationToken)));
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
@@ -63,9 +98,16 @@ namespace ProjectHive.Services.ProjectsAPI.Controllers
         [Route("[action]")]
         public async Task<IActionResult> UpdateProject(UpdateProjectRequestViewModel request, CancellationToken cancellationToken)
         {
-            var dto = mapper.Map<ProjectDto>(request);
+            if (ModelState.IsValid)
+            {
+                var dto = mapper.Map<ProjectDto>(request);
 
-            return Ok(mapper.Map<ProjectViewModel>(await projectService.Update(dto, cancellationToken)));
+                return Ok(mapper.Map<ProjectViewModel>(await projectService.Update(dto, cancellationToken)));
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

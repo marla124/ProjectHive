@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectHive.Services.AuthAPI.Dto;
 using ProjectHive.Services.AuthAPI.Model;
@@ -10,7 +11,7 @@ namespace ProjectHive.Services.AuthAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserController(IUserService userService, IMapper mapper) : Controller
+public class UserController(IUserService userService, IMapper mapper) : BaseController
 {
     [HttpGet("[action]/{id}")]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
@@ -23,6 +24,45 @@ public class UserController(IUserService userService, IMapper mapper) : Controll
         return Ok(project);
     }
 
+    [HttpGet("[action]")]
+    public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
+    {
+        var projects = mapper.Map<List<UserViewModel>>(await userService.GetMany(cancellationToken));
+        return Ok(projects);
+    }
+
+    [Authorize]
+    [HttpGet("[action]")]
+    public async Task<IActionResult> GetFriendlyUsers(CancellationToken cancellationToken)  
+    {
+        var userId = GetUserId();
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        var userGuid = Guid.Parse(userId);
+        var friendlyUsers = await userService.GetFriendlyUsers(userGuid, cancellationToken);
+        var users = mapper.Map<List<UserViewModel>>(friendlyUsers);
+
+        return Ok(users);
+    }
+
+    [Authorize]
+    [HttpPost("[action]/{friendlyUserId}")]
+    public async Task<IActionResult> AddFriendlyUser(Guid friendlyUserId, CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        var userGuid = Guid.Parse(userId);
+        await userService.AddFriendlyUser(friendlyUserId, userGuid, cancellationToken);
+        return Ok();
+    }
+
     [HttpDelete("[action]/{id}")]
     public async Task<IActionResult> DeleteById(Guid id, CancellationToken cancellationToken)
     {
@@ -33,19 +73,31 @@ public class UserController(IUserService userService, IMapper mapper) : Controll
     [HttpPost("[action]")]
     public async Task<IActionResult> CreateUser(RegisterModel request, CancellationToken cancellationToken)
     {
-        var dto = mapper.Map<UserDto>(request);
-
-        await userService.RegisterUser(dto, cancellationToken);
-        var user = await userService.GetByEmail(request.Email, cancellationToken);
-        return Created($"users/{user.Id}", user);
+        if (ModelState.IsValid)
+        {
+            var dto = mapper.Map<UserDto>(request);
+            var user=await userService.RegisterUser(dto, cancellationToken);
+            return Created($"users/{user.Id}", user);
+        }
+        else
+        {
+            return BadRequest();
+        }
     }
 
     [HttpPatch]
     [Route("[action]")]
     public async Task<IActionResult> UpdateUser(UpdateUserRequestViewModel request, CancellationToken cancellationToken)
     {
-        var dto = mapper.Map<UserDto>(request);
+        if (ModelState.IsValid)
+        {
+            var dto = mapper.Map<UserDto>(request);
 
-        return Ok(mapper.Map<UserViewModel>(await userService.Update(dto, cancellationToken)));
+            return Ok(mapper.Map<UserViewModel>(await userService.Update(dto, cancellationToken)));
+        }
+        else
+        {
+            return BadRequest();
+        }
     }
 }

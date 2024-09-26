@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.model-open {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 700px;
+    width: 100%;
+    color: #0f2d4e;
+    background: #fff;
+    border-radius: 7px;
+    padding: 2rem;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.p {
+    color: #0f2d4e;
+
+}
+
+.title-task-name {
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.descript-task {
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.bot-part {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.user-exx {
+    margin-left: auto;
+    outline: 2px solid #d3dde7;
+    border-radius: 7px;
+    padding-inline: 20px;
+}
+
+.status-usertask {
+    background-color: #d4e2f1;
+    border-radius: 7px;
+    padding-inline: 5%;
+}
+
+.icon-calendar {
+    color: #51769e;
+
+}

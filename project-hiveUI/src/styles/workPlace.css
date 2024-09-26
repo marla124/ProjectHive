@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.tasks-container {
+    display: flex;
+}
+
+.tasks-list {
+    margin-top: 40px;
+    margin-left: 110px;
+    display: flex;
+    flex-wrap: wrap;
+    color: #0f2d4e;
+}
+
+.more-item-place {
+    width: 300px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0px;
+    background-color: #dce3eb;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 10px;
+    padding: 0;
+}
+
+.icon-plus {
+    color: #8a9bad;
+}
+
+.column-body {
+    margin-top: 10px;
+    overflow-y: auto;
+    height: calc(100vh - 90px);
+    width: 320px;
+}

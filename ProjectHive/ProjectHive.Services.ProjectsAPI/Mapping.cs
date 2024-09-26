@@ -10,6 +10,7 @@ public class Mapping : Profile
     public Mapping()
     {
         CreateMap<ProjectDto, Project>().ReverseMap();
+        CreateMap<ProjectTaskStatusDto, StatusTasks>().ReverseMap();
         CreateMap<ProjectDto, ProjectViewModel>().ReverseMap();
         CreateMap<ProjectDto, CreateProjectRequestViewModel>().ReverseMap();
         CreateMap<ProjectDto, UpdateProjectRequestViewModel>().ReverseMap();
@@ -17,6 +18,7 @@ public class Mapping : Profile
         CreateMap<ProjectTaskDto, ProjectTask>().ReverseMap();
         CreateMap<ProjectTaskDto, UpdateTaskRequestViewModel>().ReverseMap();
         CreateMap<ProjectTaskDto, CreateTaskRequestViewModel>().ReverseMap();
+        CreateMap<ProjectStatusDto, ProjectStatus>().ReverseMap();
         CreateMap<User, UserDto>().ReverseMap();
     }
 }

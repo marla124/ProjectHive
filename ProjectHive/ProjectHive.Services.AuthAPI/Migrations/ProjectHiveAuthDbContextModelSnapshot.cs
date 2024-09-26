@@ -22,6 +22,21 @@ namespace ProjectHive.Services.AuthAPI.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.Friends", b =>
+                {
+                    b.Property<Guid>("UserOneId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserTwoId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserOneId", "UserTwoId");
+
+                    b.HasIndex("UserTwoId");
+
+                    b.ToTable("Friends");
+                });
+
             modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -99,6 +114,25 @@ namespace ProjectHive.Services.AuthAPI.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.Friends", b =>
+                {
+                    b.HasOne("ProjectHive.Services.AuthAPI.Data.Entities.User", "UserOne")
+                        .WithMany("Friends")
+                        .HasForeignKey("UserOneId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProjectHive.Services.AuthAPI.Data.Entities.User", "UserTwo")
+                        .WithMany()
+                        .HasForeignKey("UserTwoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("UserOne");
+
+                    b.Navigation("UserTwo");
+                });
+
             modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.RefreshToken", b =>
                 {
                     b.HasOne("ProjectHive.Services.AuthAPI.Data.Entities.User", "User")
@@ -123,6 +157,8 @@ namespace ProjectHive.Services.AuthAPI.Migrations
 
             modelBuilder.Entity("ProjectHive.Services.AuthAPI.Data.Entities.User", b =>
                 {
+                    b.Navigation("Friends");
+
                     b.Navigation("RefreshTokens");
                 });
 

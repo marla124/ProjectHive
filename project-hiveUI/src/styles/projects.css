@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.projects-container {
+  color: #0f2d4e;
+  display: flex;
+  margin: 0 auto;
+  justify-content: flex-start;
+}
+
+.projects-list {
+  margin-top: 40px;
+  width: 130vh;
+  margin-left: 110px;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  text-decoration: none !important;
+  outline: 2px solid #d3dde7;
+  border-radius: 7px;
+}
+
+.projects-list a {
+  text-decoration: none;
+  color: #0f2d4e;
+}
+
+.title-header-projects {
+  margin-bottom: 30px;
+
+}

@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using ProjectHive.Services.ProjectsAPI.Models;
 using ProjectHive.Services.ProjectsAPI.Models.RequestModel;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace ProjectHive.ProjectAPI.IntegrationTests;
@@ -14,7 +15,6 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
     public async Task GetById_ProjectExists_ReturnSuccess()
     {
         var project = await PopulateProgectToDatabaseProject();
-
         var response = await _httpClient.GetAsync($"{BaseUrl}/GetById/{project.Id}");
 
         response.EnsureSuccessStatusCode();
@@ -65,7 +65,6 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
         var project = await PopulateProgectToDatabaseProject();
         var model = new UpdateProjectRequestViewModel
         {
-            Id = project.Id,
             Name = "TestProject1",
             Description = "This is test project update"
         };
@@ -76,7 +75,6 @@ public class ProjectControllerIntegrationTests : BaseIntegrationTest
         var returnedProject = JsonConvert.DeserializeObject<ProjectViewModel>(await response.Content.ReadAsStringAsync());
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        Assert.Equal(model.Id, returnedProject!.Id);
         Assert.Equal(model.Name, returnedProject.Name);
         Assert.Equal(model.Description, returnedProject.Description);
     }

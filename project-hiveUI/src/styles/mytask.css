@@ -1,0 +1,28 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+  .list-mytasks{
+    margin-top: 40px;
+    margin-left: 110px;
+    width: 130vh;
+  }
+  .mytask {
+    outline: 2px solid #d3dde7;
+    border-radius: 7px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .title-header-mytasks{
+    margin-bottom: 30px;
+    margin-left: 10px;
+    color: #0f2d4e;
+  }
+  .mytasks-container{
+    display: flex;
+  }
+  .task-item{
+    margin: 10px;
+  }
