@@ -26,8 +26,12 @@ namespace ProjectHive.Services.ProjectsAPI.Business.Services
             _projectRepository = projectRepository;
         }
 
-        public async Task<ProjectTaskDto> CreateTask(ProjectTaskDto dto, CancellationToken cancellationToken)
+        public async Task<ProjectTaskDto> CreateTask(ProjectTaskDto dto, Guid userId, CancellationToken cancellationToken)
         {
+            if (userId == null)
+            {
+                throw new ArgumentNullException("userId");
+            }
                 var task = new ProjectTask()
                 {
                     Deadline = dto.Deadline,
